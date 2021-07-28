@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210728
+ * @date updated: 20210729
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -602,10 +602,16 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     myWidthAsPixel=16;
     myHeightAsPixel=16;
 */
+
+/*
+//removed by Mike, 20210729
     //TO-DO: -add: auto-set width and height based on grid tile
     //note: we use image texture scale COMMANDS, et cetera
+    //edited by Mike, 20210729
+    //add offset due to non-transparent sprite image smaller than tile size
     myWidthAsPixel=71;
     myHeightAsPixel=80;
+*/
     
 	  //added by Mike, 20210726
 		//TO-DO: -add: auto-compute grid tile
@@ -679,7 +685,7 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
   iColumnCountMax=18;
   iHeightCountMax=10;
     	
-	fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
+  fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
   fGridSquareHeight = myWindowHeight/iRowCountMax; //example: 76.80
 	
 	
@@ -701,6 +707,19 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     stepY=fGridSquareHeight/9;
     stepZ=fGridSquareWidth/9;
 */
+
+	//added by Mike, 20210729
+    //auto-set width and height based on grid tile
+    //note: we use image texture scale COMMANDS, et cetera
+    //add offset due to non-transparent sprite image smaller than tile size
+    //TO-DO: -update: collision instructions due to Pilot gets stuck to tile
+    int iOffsetXPosAsPixel=16;
+    int iOffsetYPosAsPixel=16;
+    
+    myWidthAsPixel=fGridSquareWidth-iOffsetXPosAsPixel;
+    myHeightAsPixel=fGridSquareHeight-iOffsetYPosAsPixel;
+	
+
 	//added by Mike, 20210728
 	bHasHitWall=false;
 	
