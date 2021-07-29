@@ -3,6 +3,7 @@
 # Usbong Automotive: Image Processing Automation
 # Usbong Computer Aided Design (CAD): 3D Tool 
 # Usbong Map System
+# Usbong Story
 #
 # C++ Computer Language and OpenGL
 #
@@ -11,7 +12,7 @@
 # @company: USBONG
 # @author: SYSON, MICHAEL B.
 # @date created: 20200930
-# @last updated: 20210712
+# @last updated: 20210729
 # @website address: http://www.usbong.ph
 #
 # References:
@@ -50,7 +51,7 @@ g++ -c Level2D.cpp
 #g++ -o ./output/UsbongVolleyLinux mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o Beam.o Asteroid.o Level.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o -lGL -lGLU -lglut
 
 #macOS Machine
-g++ -framework OpenGL -framework GLUT -o ./output/UsbongMapMac mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o Beam.o Asteroid.o Level.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o Ball.o Text.o Level2D.o
+g++ -framework OpenGL -framework GLUT -o ./output/UsbongStoryMac mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o Beam.o Asteroid.o Level.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o Ball.o Text.o Level2D.o
 
 #added by Mike, 20210220; removed by Mike, 20210521
 #cp -r ./*.o ./objectFilesLinux/

@@ -712,7 +712,6 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     //auto-set width and height based on grid tile
     //note: we use image texture scale COMMANDS, et cetera
     //add offset due to non-transparent sprite image smaller than tile size
-    //TO-DO: -update: collision instructions due to Pilot gets stuck to tile
 /*    iOffsetXPosAsPixel=16;
     iOffsetYPosAsPixel=16;
 */    
@@ -720,7 +719,11 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     iOffsetXPosAsPixel=0;
     iOffsetYPosAsPixel=0;
 */
-    iOffsetXPosAsPixel=12;
+    //edited by Mike, 20210729;
+    //TO-DO: -reverify: setXPosAsPixel(...) after collision detected with tile; not centered?
+    //-reverify: with another machine; previously iOffsetXPosAsPixel=12; OK in Linux machine due to window screen width and height?
+//    iOffsetXPosAsPixel=12;
+    iOffsetXPosAsPixel=20;
     iOffsetYPosAsPixel=12;
 
     
@@ -797,6 +800,8 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     //edited by Mike, 20201201; edited by Mike, 20210502
 //	currentFacingState=FACING_UP;
 	currentFacingState=FACING_RIGHT;
+    //added by Mike, 20210729
+    prevFacingState=FACING_RIGHT;
 
 	armAngles[LEFT] = 0.0;
 	armAngles[RIGHT] = 0.0;
@@ -4763,9 +4768,14 @@ void Pilot::drawPilotObject()
 		
     //note: vertex position sequence to be auto-drawn
     //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
-		
-    if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {				
-			//note: vertex positions sequence: counter-clock-wise
+    //edited by Mike, 20210729
+//    if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+    if ((currentFacingState==FACING_RIGHT) ||
+        (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+            (prevFacingState==FACING_RIGHT))
+        || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+
+        //note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: clock-wise
     	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     		//glTexCoord2f(fTx, fTy);
@@ -4786,7 +4796,11 @@ void Pilot::drawPilotObject()
     	glEnd();
     }
     //edited by Mike, 20210729
-    else if ((currentFacingState==FACING_LEFT) || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {				
+//    else if ((currentFacingState==FACING_LEFT) || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
+    else if ((currentFacingState==FACING_LEFT) ||
+             (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+              (prevFacingState==FACING_LEFT))
+             || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
 			//note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: counter-clock-wise
     	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
@@ -6282,7 +6296,11 @@ void Pilot::move(int key)
 		  else {
 					//added by Mike, 20210728; edited by Mike, 20210729
 					//TO-DO: -update: this
-          currentFacingState=FACING_UP;
+              //added by Mike, 20210729; removed by Mike, 20210729;
+              //yoko scroll
+//              prevFacingState=currentFacingState;
+              
+              currentFacingState=FACING_UP;
 		  }
 		  
           currentMovingState=WALKING_MOVING_STATE;
@@ -6331,8 +6349,12 @@ void Pilot::move(int key)
 	      if (bIsFiringBeam) {	      	
 		  }
 		  else {
-					//added by Mike, 20210728
-          currentFacingState=FACING_DOWN;
+              //added by Mike, 20210729; removed by Mike, 20210729
+              //yoko scroll
+//              prevFacingState=currentFacingState;
+
+              //added by Mike, 20210728
+              currentFacingState=FACING_DOWN;
 		  }
 
            currentMovingState=WALKING_MOVING_STATE;
@@ -6406,8 +6428,15 @@ void Pilot::move(int key)
 	      if (bIsFiringBeam) {	      	
 		  }
 		  else {
-//added by Mike, 20210502			  
-          currentFacingState=FACING_LEFT;
+              //added by Mike, 20210729; edited by Mike, 20210729
+              //prevFacingState=currentFacingState;
+//              if (currentFacingState==FACING_LEFT) {
+              if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_LEFT)) {
+                  prevFacingState=currentFacingState;
+              }
+
+              //added by Mike, 20210502
+              currentFacingState=FACING_LEFT;
 		  }
 
            //edited by Mike, 20210613
@@ -6484,7 +6513,13 @@ void Pilot::move(int key)
 	  		if (bIsFiringBeam) {	      	
 				}
 				else {
-          		currentFacingState=FACING_RIGHT;
+                    //added by Mike, 20210729; edited by Mike, 20210729
+                    //prevFacingState=currentFacingState;
+                    if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_LEFT)) {
+                        prevFacingState=currentFacingState;
+                    }
+                    
+                    currentFacingState=FACING_RIGHT;
 				}
 		  
            //edited by Mike, 20210613
