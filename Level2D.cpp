@@ -1423,49 +1423,27 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //    int iTileColumn = myUsbongUtils->autoIdentifyColumnInputInLevelMapContainer(sTileId); //column
 //    int iTileRow = myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId); //row
 
-//    std::cout << "sTileId: " << sTileId << "\n";
+    std::cout << "sTileId: " << sTileId << "\n";
 /*
     std::cout << "iTileXPos: " << iTileXPos << "\n";
     std::cout << "iTileYPos: " << iTileYPos << "\n";
 */
 
+		//edited by Mike, 20210729
     //note: there exist quotation marks in sTileId
     //"0-0": wall
-    if (sTileId.compare("\"0-0\"") == 0) {//True
+		
+		//added by Mike, 20210729
+    //note: select saved tile .csv file do not include quotation marks    
+		sTileId = myUsbongUtils->autoDeleteQuotationMark(sTileId);
+
+//    std::cout << "autoDeleted sTileId: " << sTileId << "\n";
+		
+    if (sTileId.compare("0-0") == 0) {//True
+//    if (sTileId.compare("\"0-0\"") == 0) {//True
         //OK
-        //printf(">>HALLO");
+//        printf(">>HALLO");
         //mdo...
-				//TO-DO: -reverify: cause of noticeable tile collision        
-/* //edited by Mike, 20210728				
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel() +mdo->getStepY()+1);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel() -mdo->getStepY()-1);
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-//        	mdo->setXPosAsPixel(this->getXAsPixel() +this->getWidthAsPixel() +mdo->getStepX());
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel() +mdo->getStepX()+1);    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-//        	mdo->setXPosAsPixel(this->getXAsPixel() -mdo->getStepX());
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel() -mdo->getStepX()-1);      	
-        }        
-*/
-//edited by Mike, 20210728
-/*        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()-1);      	
-        }        
-*/			
 /*	//edited by Mike, 20210728
         if (mdo->getCurrentFacing()==FACING_UP) {
         	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
@@ -1480,20 +1458,25 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()-1);      	
         }      
 */        
-
+  
+/*
+				//note: step *6 result, pushed back hit distance
+				//zelda?
         if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY()*2);
+        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY()*6);
         }
         else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-mdo->getStepY()*2);
+        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-mdo->getStepY()*6);
         }        
         else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+mdo->getStepX()*2);
+        printf(">>>>>>>>>>>>>>>>>>>>>>>>>> FACING_LEFT\n");
+        
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+mdo->getStepX()*6);
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX()*2);      	
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX()*6);      	
         }   
-
+*/
 /*
 				if (mdo->getCurrentFacing()==FACING_UP) {
         	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY());
@@ -1508,39 +1491,34 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX());      	
         }   
 */
-                
-/*	//removed by Mike, 20210728
-				//TO-DO: -add: identify if Pilot
-				//add offset due to Pilot width and height smaller than grid tile
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()-mdo->getHeightAsPixel()/4);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()+mdo->getHeightAsPixel()/4);
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()-mdo->getWidthAsPixel()/4);    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()+mdo->getWidthAsPixel()/4);      	
-        }        
-*/
 /*
-				//TO-DO: -add: identify if Pilot
-				//add offset due to Pilot width and height smaller than grid tile
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()-mdo->getHeightAsPixel()/8);
+				if (mdo->getCurrentFacing()==FACING_UP) {
+        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY()*2);
         }
         else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()+mdo->getHeightAsPixel()/8);
+        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-mdo->getStepY()*2);
         }        
         else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()-mdo->getWidthAsPixel()/8);    	
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+mdo->getStepX()*2);
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()+mdo->getWidthAsPixel()/8);      	
-        }        
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX()*2);      	
+        }  
 */
+
+        if (mdo->getCurrentFacing()==FACING_UP) {
+        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
+        }
+        else if (mdo->getCurrentFacing()==FACING_DOWN) {
+        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
+        }        
+        else if (mdo->getCurrentFacing()==FACING_LEFT) {
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);    	
+        }
+        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()-1);      	
+        }      
+
 
 /*        
         if (mdo->getCurrentFacing()==FACING_UP) {

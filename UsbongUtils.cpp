@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20201210
- * @date updated: 20210726
+ * @date updated: 20210729
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -415,4 +415,26 @@ int UsbongUtils::autoIdentifyRowInputInLevelMapContainer(std::string sInput)
 	}
 
 	return iOutput;
+}
+
+//added by Mike, 20210729
+//example input#1: "0-3"
+//output: 0-3
+std::string UsbongUtils::autoDeleteQuotationMark(std::string sInput)
+{
+  int iLength=sInput.length();
+	int iCountLeftToRight=0;	
+	std::string sOutput="";
+	
+	//character from left to right
+	for (iCountLeftToRight=0; iCountLeftToRight<iLength; iCountLeftToRight++) {
+		if (sInput[iCountLeftToRight]=='"') {
+			continue;
+		}
+		
+		sOutput = sOutput + sInput[iCountLeftToRight];		
+//		std::cout << "sOutput: " << sOutput << "\n";
+	}
+
+	return sOutput;
 }

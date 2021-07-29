@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20201210
- * @date updated: 20210720
+ * @date updated: 20210729
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -104,6 +104,9 @@ public:
 	//added by Mike, 20210720
 	int autoIdentifyColumnInputInLevelMapContainer(std::string sInput);
 	int autoIdentifyRowInputInLevelMapContainer(std::string sInput);
+	
+	//added by Mike, 20210729
+	std::string autoDeleteQuotationMark(std::string sInput);
 	
 	//reminder: "rand" NOT random due to there exists pattern
 	//example: based on clock time, based on excess value in container

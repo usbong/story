@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200930
- * @date updated: 20210725
+ * @date updated: 20210729
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -154,6 +154,10 @@ public:
     float stepX;
     float stepY;
     float stepZ;
+    
+    //added by Mike, 20210729
+    int iOffsetXPosAsPixel;
+    int iOffsetYPosAsPixel;    
 				
     //added by Mike, 20210527
     bool bIsMovingDown;

@@ -713,12 +713,24 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     //note: we use image texture scale COMMANDS, et cetera
     //add offset due to non-transparent sprite image smaller than tile size
     //TO-DO: -update: collision instructions due to Pilot gets stuck to tile
-    int iOffsetXPosAsPixel=16;
-    int iOffsetYPosAsPixel=16;
+/*    iOffsetXPosAsPixel=16;
+    iOffsetYPosAsPixel=16;
+*/    
+/*
+    iOffsetXPosAsPixel=0;
+    iOffsetYPosAsPixel=0;
+*/
+    iOffsetXPosAsPixel=12;
+    iOffsetYPosAsPixel=12;
+
     
+/*    
     myWidthAsPixel=fGridSquareWidth-iOffsetXPosAsPixel;
     myHeightAsPixel=fGridSquareHeight-iOffsetYPosAsPixel;
-	
+*/	
+    myWidthAsPixel=fGridSquareWidth;
+    myHeightAsPixel=fGridSquareHeight;
+
 
 	//added by Mike, 20210728
 	bHasHitWall=false;
