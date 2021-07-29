@@ -4785,7 +4785,8 @@ void Pilot::drawPilotObject()
     		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
     	glEnd();
     }
-		else {
+    //edited by Mike, 20210729
+    else if ((currentFacingState==FACING_LEFT) || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {				
 			//note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: counter-clock-wise
     	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
@@ -4809,6 +4810,9 @@ void Pilot::drawPilotObject()
 				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
     		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
     	glEnd();    	
+		}
+		//TO-DO: -add: facing_up, facing_down
+		else {
 		}
 
     glDisable(GL_TEXTURE_2D);
@@ -6248,7 +6252,9 @@ void Pilot::move(int key)
          }
          else {         
          			//added by Mike, 20210728
+         			//edited by Mike, 20210729; TO-DO: -update: this
          		  if ((bHasHitWall) and (getCurrentFacingState()==FACING_UP)) {
+//         		  if ((bHasHitWall)) {
          		  	return;
          		  }
          		           		  
@@ -6274,7 +6280,8 @@ void Pilot::move(int key)
 	      if (bIsFiringBeam) {	      	
 		  }
 		  else {
-					//added by Mike, 20210728
+					//added by Mike, 20210728; edited by Mike, 20210729
+					//TO-DO: -update: this
           currentFacingState=FACING_UP;
 		  }
 		  
@@ -6618,6 +6625,8 @@ void Pilot::hitBy(MyDynamicObject* mdo)
         move(KEY_K);
     }
 */
+
+/*	//removed by Mike, 20210729
         //added by Mike, 20210613
         if (myKeysDown[KEY_D]==TRUE) {
             currentFacingState=FACING_RIGHT;
@@ -6625,6 +6634,7 @@ void Pilot::hitBy(MyDynamicObject* mdo)
         else if (myKeysDown[KEY_A]==TRUE) {
             currentFacingState=FACING_LEFT;
         }
+*/
     
     
 //		mdo->updateDirection();
