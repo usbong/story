@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210728
+ * @date updated: 20210730
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -1516,7 +1516,8 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);    	
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()-1);      	
+        	//edited by Mike, 20210730
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
         }      
 
 

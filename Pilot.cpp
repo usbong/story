@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210729
+ * @date updated: 20210730
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -719,13 +719,15 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     iOffsetXPosAsPixel=0;
     iOffsetYPosAsPixel=0;
 */
+
+/* //removed by Mike, 20210730
     //edited by Mike, 20210729;
     //TO-DO: -reverify: setXPosAsPixel(...) after collision detected with tile; not centered?
     //-reverify: with another machine; previously iOffsetXPosAsPixel=12; OK in Linux machine due to window screen width and height?
 //    iOffsetXPosAsPixel=12;
     iOffsetXPosAsPixel=20;
     iOffsetYPosAsPixel=12;
-
+*/
     
 /*    
     myWidthAsPixel=fGridSquareWidth-iOffsetXPosAsPixel;
@@ -733,6 +735,34 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
 */	
     myWidthAsPixel=fGridSquareWidth;
     myHeightAsPixel=fGridSquareHeight;
+
+    //edited by Mike, 20210730;
+    //TO-DO: -reverify: setXPosAsPixel(...) after collision detected with tile; not centered?
+    //-reverify: with another machine; previously iOffsetXPosAsPixel=12; OK in Linux machine due to window screen width and height?
+//    iOffsetXPosAsPixel=12;
+
+/*  //note: execution crash problem in Windows 7 machine; 
+	//due to multiply by fraction to output integer, i.e. whole number?
+	//OK Compile & Run after Rebuild All Command
+	iOffsetXPosAsPixel=fGridSquareWidth*0.28;
+    iOffsetYPosAsPixel=fGridSquareHeight*0.15;	
+*/
+/*  execution crash problem in Windows 7 machine; 
+    iOffsetXPosAsPixel=fGridSquareWidth*28/100;
+    iOffsetYPosAsPixel=fGridSquareHeight*15/100;	
+
+    iOffsetXPosAsPixel=20;
+    iOffsetYPosAsPixel=12;	
+
+	iOffsetXPosAsPixel=30;
+    iOffsetYPosAsPixel=12;	
+*/
+	//OK Compile & Run after Rebuild All Command
+//    iOffsetXPosAsPixel=fGridSquareWidth*28/100;
+//    iOffsetYPosAsPixel=fGridSquareHeight*15/100;	
+
+	iOffsetXPosAsPixel=fGridSquareWidth*0.28;
+    iOffsetYPosAsPixel=fGridSquareHeight*0.15;	
 
 
 	//added by Mike, 20210728
