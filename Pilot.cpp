@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210730
+ * @date updated: 20210801
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -6727,6 +6727,7 @@ void Pilot::setOpenGLCanvas(OpenGLCanvas* c)
 
 void Pilot::reset()
 {
+/*  //removed by Mike, 20210801
      changeState(INITIALIZING_STATE);
      myXPos=0;
      myYPos=0;
@@ -6742,6 +6743,7 @@ void Pilot::reset()
     bIsExecutingKick=false;
     iKickAnimationCount=0;
     iKickAnimationCountDelay=0;
+*/
 }
 int Pilot::getState()
 {

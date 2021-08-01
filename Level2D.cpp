@@ -879,13 +879,17 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     //		glTranslatef(-0.1f-0.05f, 0.0f, 0.0f);
     //re-verify: cause of 0.01f; due to Linux machine?
     //		glTranslatef(-0.1f-0.05f-0.01f, 0.0f, 0.0f);
-    
+
+    //edited by Mike, 20210801
     glTranslatef(0.0f, fGridTileHeightVertexPosition, 0.0f);
+//    glTranslatef(0.0f, -fGridTileHeightVertexPosition, 0.0f);
+//    glTranslatef(0.0f, fGridTileHeightVertexPosition*2, 0.0f);
+//    glTranslatef(fGridTileWidthVertexPosition, fGridTileHeightVertexPosition, 0.0f);
 
     //added by Mike, 20210717
     //		glRotatef(180, 1.0f, 0.0f, 0.0f);
     
-    float fTx = 0.0f; 
+    float fTx = 0.0f;
     float fTy = 0.0f;
     
     //added by Mike, 20210719
@@ -962,8 +966,8 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 //    fTy = 1.0f-2*0.0625f*(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)); //row    
 
     	
-//		printf(">>>%i\n",(myUsbongUtils->autoIdentifyColumnInputInLevelMapContainer(sTileId)));
-//		printf(">>>%i\n",(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)));
+		printf(">>>%i\n",(myUsbongUtils->autoIdentifyColumnInputInLevelMapContainer(sTileId)));
+		printf(">>>%i\n",(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)));
 
 //    printf(">>>fTx: %f;fTy: %f\n",fTx,fTy);
 
@@ -980,6 +984,13 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 		//printf("fGridTileWidthVertexPosition: %f\n",fGridTileWidthVertexPosition);
 //    	glColor3f(1.0f, 0.0f, 0.0f); //red
 
+    
+    //added by Mike, 20210801; TO-DO: -update: this
+    //due flipped vertically
+//    glRotatef(240, 0.0f, 0.0f, 1.0f);
+//    glRotatef(180, 0.0f, 1.0f, 0.0f);
+//    glRotatef(180, 0.0f, 0.0f, 1.0f);
+    
 		//added by Mike, 20210724
 		//TO-DO: -add: animation sequence based on sTileId
 		//background color of tile
@@ -988,7 +999,12 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
 */
-    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    //TO-DO: -reverify: cause of not auto-drawn;
+    //TO-DO: -fix: auto-drawn flipped horizontal texture image
+    
+//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    glColor3f(1.0f, 0.0f, 0.0f); //set to default, i.e. white
+
     //note: 3rd quadrant
     glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     	glVertex3f(0.0f, 0.0f, 0.0f);   	
@@ -997,7 +1013,7 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
    	glEnd();
 //-----		
-
+/*
     glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     	glTexCoord2f(fTx, fTy);
     	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -1011,7 +1027,7 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     	glTexCoord2f(fTx, fTy + fTileSideYAxis);
     	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
     glEnd();
-
+*/
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     
@@ -1443,22 +1459,6 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //    if (sTileId.compare("\"0-0\"") == 0) {//True
         //OK
 //        printf(">>HALLO");
-        //mdo...
-/*	//edited by Mike, 20210728
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getHeightAsPixel()-1);      	
-        }      
-*/        
-  
 /*
 				//note: step *6 result, pushed back hit distance
 				//zelda?
@@ -1477,34 +1477,6 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX()*6);      	
         }   
 */
-/*
-				if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY());
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-mdo->getStepY());
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+mdo->getStepX());
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX());      	
-        }   
-*/
-/*
-				if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+mdo->getStepY()*2);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-mdo->getStepY()*2);
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+mdo->getStepX()*2);
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-mdo->getStepX()*2);      	
-        }  
-*/
 
         if (mdo->getCurrentFacing()==FACING_UP) {
         	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
@@ -1518,26 +1490,13 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
         	//edited by Mike, 20210730
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
-        }      
-
-
-/*        
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel() +mdo->getStepY());
         }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel() -mdo->getStepY());
-        }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-//        	mdo->setXPosAsPixel(this->getXAsPixel() +this->getWidthAsPixel() +mdo->getStepX());
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel() +mdo->getStepX());    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-//        	mdo->setXPosAsPixel(this->getXAsPixel() -mdo->getStepX());
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getStepX());      	
-        }     
-*/           
     }
+    //TO-DO: -update: this
+    else if (sTileId.compare("0-2") == 0) {//True
+        
+    }
+    
         
         //removed by Mike, 20201001
     /*
@@ -1573,6 +1532,7 @@ void Level2D::hitBy(MyDynamicObject* mdo)
 
 void Level2D::reset()
 {
+/* //removed by Mike, 20210801
     changeState(INITIALIZING_STATE);
     myXPos=0;
     myYPos=0;
@@ -1580,6 +1540,7 @@ void Level2D::reset()
     thrust=0.0f;
     setCollidable(false);
     invincibleCounter=0;
+*/
 }
 int Level2D::getState()
 {

@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20201210
- * @date updated: 20210729
+ * @date updated: 20210801
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -370,11 +370,20 @@ int UsbongUtils::autoIdentifyColumnInputInLevelMapContainer(std::string sInput)
 			break;
 		}
 	}
+
+    //added by Mike, 20210801
+//    std::cout << ">>iCountLeftToRight: " << iCountLeftToRight << "\n";
+//    std::cout << "sInput[iCountLeftToRight]: " << sInput[iCountLeftToRight-1] << "\n";
+    //if only 1 digit
+    if (iCountLeftToRight-1<=0) {
+        iOutput=sInput[iCountLeftToRight-1]-'0';
+        return iOutput;
+    }
     
     //character from right to left
 	//note: left-most character, i.e. quotation mark not included
 	for (iCountRightToLeft=iCountLeftToRight-1; iCountRightToLeft>0; iCountRightToLeft--) {
-			iOutput = iOutput+ (sInput[iCountRightToLeft]-'0')*iDigitCountFromRightToLeft;
+            iOutput = iOutput+ (sInput[iCountRightToLeft]-'0')*iDigitCountFromRightToLeft;
 			iDigitCountFromRightToLeft = iDigitCountFromRightToLeft*10;
 	}
 
@@ -405,7 +414,20 @@ int UsbongUtils::autoIdentifyRowInputInLevelMapContainer(std::string sInput)
 	}
 	
 	iDelimeterPosition=iCountLeftToRight;
-	
+
+    //added by Mike, 20210801
+    //if only 1 digit
+    if (iLength-2<=iDelimeterPosition) {
+        
+//         std::cout << ">>iLength: " << iLength << "\n";
+        
+        iOutput=sInput[iLength-1]-'0';
+        
+//        std::cout << ">>iOutput: " << iOutput << "\n";
+        
+        return iOutput;
+    }
+    
 	//character from right to left	
 	//note: left-most character, i.e. quotation mark not included
 	//therefore, -2, instead of -1
