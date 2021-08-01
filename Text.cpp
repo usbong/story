@@ -924,14 +924,18 @@ void Text::drawTextBackgroundAsQuadWithTexture()
     //edited by Mike, 20210626
     glScalef(0.26f,0.26f,1.0f);
     
-/* //removed by Mike, 20210801 due to incorrect output using 1366x768 computer monitor; TO-DO: -reverify
+/* //removed by Mike, 20210801 due to incorrect output using 1366x768 computer monitor; 
+   //reverified: output using 1024x718 computer monitor to still be OK; 
+   //TO-DO: -reverify: update speed instructions in main.cpp 
+   //due to noticeable variation when using faster Win 7 machine,
+   //e.g. Intel i3 processor @2.30GHz, 64-bit OS, 4GB RAM
+   //Intel 1.87GHZm 32-bit OS, 3GB RAM
     //Windows Machine
 #ifdef _WIN32
     //y-axis from bottom
     //glTranslatef(-myUsbongUtils->autoConvertFromPixelToVertexPointX(myWindowWidth*0.01f), myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.01f), 0.0f);
     glTranslatef(0.5f, 0.3f, 0.0f);
     glScalef(0.8f,0.8f,1.0f);
-
 #endif
 */
     //removed by Mike, 20210702
@@ -986,7 +990,7 @@ void Text::drawTextBackgroundAsQuadWithTexture()
         //        for (int iRowCountToSetDefault=0; iRowCountToSetDefault<MAX_TEXT_CHAR_ROW; iRowCountToSetDefault++) {draw_string
         for (int iRowCountToSetDefault=0; iRowCountToSetDefault<MAX_TEXT_CHAR_ROW_RAM; iRowCountToSetDefault++) {
             for (int iColumnCount=0; iColumnCount<MAX_TEXT_CHAR_COLUMN; iColumnCount++) {
-                tempText[iRowCountToSetDefault][iColumnCount]='\0'; //verified: in macOS, with Japanese keyboard ro-maji input, "Â¥0", backspace is "Â¥"
+                tempText[iRowCountToSetDefault][iColumnCount]='\0'; //verified: in macOS, with Japanese keyboard ro-maji input, "¥0", backspace is "¥"
             }
         }
         
