@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210725
+ * @date updated: 20210801
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -924,17 +924,16 @@ void Text::drawTextBackgroundAsQuadWithTexture()
     //edited by Mike, 20210626
     glScalef(0.26f,0.26f,1.0f);
     
-    //added by Mike, 20210724
-    //TO-DO: -reverify: this due to caused by
-    //incorrect actual window width and height computation
+/* //removed by Mike, 20210801 due to incorrect output using 1366x768 computer monitor; TO-DO: -reverify
     //Windows Machine
 #ifdef _WIN32
     //y-axis from bottom
     //glTranslatef(-myUsbongUtils->autoConvertFromPixelToVertexPointX(myWindowWidth*0.01f), myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.01f), 0.0f);
     glTranslatef(0.5f, 0.3f, 0.0f);
     glScalef(0.8f,0.8f,1.0f);
+
 #endif
-    
+*/
     //removed by Mike, 20210702
     //    glTranslatef(0.26f, 1.1f, 0.0f); //note: y-axis; inverted; +value goes down
     
