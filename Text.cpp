@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210801
+ * @date updated: 20210802
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -817,6 +817,10 @@ void Text::drawTextBackgroundAsQuadWithTexture()
         idrawPressNextSymbolCount=idrawPressNextSymbolCount+1;
     }
     
+    
+    //added by Mike, 20210802
+    glPushMatrix();
+
     //added by Mike, 20210614
     //set TOP-LEFT origin/anchor/reference point; quadrant 4, y-axis inverted; x and y positive
     glMatrixMode(GL_PROJECTION);
@@ -990,7 +994,7 @@ void Text::drawTextBackgroundAsQuadWithTexture()
         //        for (int iRowCountToSetDefault=0; iRowCountToSetDefault<MAX_TEXT_CHAR_ROW; iRowCountToSetDefault++) {draw_string
         for (int iRowCountToSetDefault=0; iRowCountToSetDefault<MAX_TEXT_CHAR_ROW_RAM; iRowCountToSetDefault++) {
             for (int iColumnCount=0; iColumnCount<MAX_TEXT_CHAR_COLUMN; iColumnCount++) {
-                tempText[iRowCountToSetDefault][iColumnCount]='\0'; //verified: in macOS, with Japanese keyboard ro-maji input, "¥0", backspace is "¥"
+                tempText[iRowCountToSetDefault][iColumnCount]='\0'; //verified: in macOS, with Japanese keyboard ro-maji input, "Â¥0", backspace is "Â¥"
             }
         }
         
@@ -1142,12 +1146,9 @@ void Text::drawTextBackgroundAsQuadWithTexture()
 				
 	   glDisable(GL_TEXTURE_2D);
 	   glBindTexture(GL_TEXTURE_2D, 0);
-	   
-    /*	   //added by Mike, 20210618; removed by Mike, 20210618
-     if (isAtMaxTextCharRow) {
-     drawPressNextSymbol();
-     }
-     */
+	       
+    //added by Mike, 20210802
+		glPopMatrix();
 }
 
 
