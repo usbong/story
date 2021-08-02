@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210802
+ * @date updated: 20210803
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -4720,6 +4720,9 @@ void Pilot::drawPilotObject()
     glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
     glEnable(GL_TEXTURE_2D);
     
+    //added by Mike, 20210803
+    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+
     //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
     //16x16pixels; 256x256pixels width x height .tga image file
     //texture coordinates;

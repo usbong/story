@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210802
+ * @date updated: 20210803
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -999,21 +999,43 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
 */
+    
     //TO-DO: -reverify: cause of not auto-drawn;
     //TO-DO: -fix: auto-drawn flipped horizontal texture image
-    
-//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
-    glColor3f(1.0f, 0.0f, 0.0f); //set to default, i.e. white
+    //added by Mike, 20210803
 
-    //note: 3rd quadrant
-    glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    //    glColor3f(1.0f, 0.0f, 0.0f); //red
+
+    //edited by Mike, 20210803
+    //triangle tile with 90degrees angle
+    if (sTileId.compare("0-2") == 0) {//True
+/*  //flipped horizontally from original texture image
+        glBegin(GL_TRIANGLES);
+            glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+            glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+            glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+        glEnd();
+*/
+        glBegin(GL_TRIANGLES);
+          glVertex3f(0.0f, 0.0f, 0.0f);
+          glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+          glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+        glEnd();
+    }
+    else {
+      //note: 3rd quadrant; counter clock-wise
+      glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     	glVertex3f(0.0f, 0.0f, 0.0f);   	
     	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);    	
     	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);    	
     	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
-   	glEnd();
+   	  glEnd();
+    }
+        
 //-----		
-/*
+
+/*  //flipped horizontally from original image texture
     glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     	glTexCoord2f(fTx, fTy);
     	glVertex3f(0.0f, 0.0f, 0.0f);
@@ -1028,6 +1050,20 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
     glEnd();
 */
+    glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+      glTexCoord2f(fTx + fTileSideXAxis, fTy);
+      glVertex3f(0.0f, 0.0f, 0.0f);
+    
+      glTexCoord2f(fTx, fTy);
+      glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+
+      glTexCoord2f(fTx, fTy + fTileSideYAxis);
+      glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    
+      glTexCoord2f(fTx + fTileSideXAxis, fTy + fTileSideYAxis);
+      glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    glEnd();
+    
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     
@@ -1492,7 +1528,7 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
         }
     }
-    //TO-DO: -update: this
+    //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
     else if (sTileId.compare("0-2") == 0) {//True
         
     }
