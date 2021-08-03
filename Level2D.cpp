@@ -21,6 +21,9 @@
  * Reference:
  * 1) Astle, D. and Hawkin, K. (2004). "Beginning OpenGL game programming". USA: Thomson Course Technology
  *
+ * 2) https://www.mathsisfun.com/sine-cosine-tangent.html;
+ *	 last accessed: 20210803
+ *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007):
  * Syson, M., Camacho, R., Gonzales, D., Del Rosario, R., Vidal, E., et al.
@@ -1504,8 +1507,13 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 
 //    std::cout << "autoDeleted sTileId: " << sTileId << "\n";
 		
-    if (sTileId.compare("0-0") == 0) {//True
-//    if (sTileId.compare("\"0-0\"") == 0) {//True
+		//edited by Mike, 20210803		
+		//TO-DO: -set: all tiles in row 0, classifed as wall collision?
+//    if (sTileId.compare("0-0") == 0) {//True
+    if ((sTileId.compare("0-0") == 0) ||
+//    if (sTileId.compare("\"0-0\"") == 0) {//True			
+    	 (sTileId.compare("1-0") == 0) ||
+    	 (sTileId.compare("2-0") == 0)) {
         //OK
 //        printf(">>HALLO");
 /*
@@ -1527,6 +1535,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         }   
 */
 
+/* //edited by Mike, 20210803
         if (mdo->getCurrentFacing()==FACING_UP) {
         	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
         }
@@ -1540,11 +1549,92 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	//edited by Mike, 20210730
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
         }
+*/
+        if (mdo->getCurrentFacing()==FACING_UP) {
+        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
+        }
+        else if (mdo->getCurrentFacing()==FACING_DOWN) {
+        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
+        }        
+        else if (mdo->getCurrentFacing()==FACING_LEFT) {
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);
+        	
+        	//added by Mike, 20210803
+        	//TO-DO: -add: auto-identify if need to push upward as wall	
+        	mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+        }
+        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
+
+					//added by Mike, 20210803
+        	//TO-DO: -add: auto-identify if need to push upward as wall	
+        	mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+        }
         
         return true;
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
     else if (sTileId.compare("0-2") == 0) {//True
+       /*if (mdo->getCurrentFacing()==FACING_UP) {
+        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()/2+1);
+        }
+        else if (mdo->getCurrentFacing()==FACING_DOWN) {
+        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()/2-1);
+        }
+        else*/ /*if (mdo->getCurrentFacing()==FACING_LEFT) {
+        	mdo->setYPosAsPixel(-mdo->getStepY()+iTileYPos +this->getHeightAsPixel()/2+1); //GO DOWN
+        	mdo->setXPosAsPixel(-mdo->getStepX()+iTileXPos +this->getWidthAsPixel()/2+1);    	
+        }
+        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
+        	mdo->setYPosAsPixel(mdo->getStepY()+iTileYPos -this->getHeightAsPixel()/2-1); //GO UP
+        	mdo->setXPosAsPixel(mdo->getStepX()+iTileXPos -mdo->getWidthAsPixel()/2-1);
+        }*/
+        
+        int iTileAngle=45;
+/*      //GO UP
+        mdo->setYPosAsPixel(mdo->getYAsPixel()-sin(iTileAngle)*mdo->getStepY());
+        mdo->setXPosAsPixel(mdo->getXAsPixel()-cos(iTileAngle)*mdo->getStepX());
+*/
+
+
+ 				//Recommended Reading:
+ 				//1) https://www.mathsisfun.com/sine-cosine-tangent.html;
+ 				//last accessed: 20210803
+				
+        if (mdo->getCurrentFacing()==FACING_UP) {
+        	return false;
+        }
+        else if (mdo->getCurrentFacing()==FACING_DOWN) {
+        	return false;
+        }
+        else if (mdo->getCurrentFacing()==FACING_LEFT) {
+					//GO LEFT
+/*        	mdo->setYPosAsPixel(mdo->getYAsPixel()+cos(iTileAngle)*mdo->getStepY());
+        	mdo->setXPosAsPixel(mdo->getXAsPixel()-sin(iTileAngle)*mdo->getStepX());
+*/        	
+        	mdo->setYPosAsPixel(mdo->getYAsPixel()+cos(iTileAngle)*mdo->getStepY());
+        	mdo->setXPosAsPixel(mdo->getXAsPixel()-sin(iTileAngle)*mdo->getStepX());
+        	
+        	
+					//added by Mike, 20210803
+					//TO-DO: -reverify: this
+        	//note: push down; gravity?
+//        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1);        	
+        }
+        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
+					//GO RIGHT
+/*        	mdo->setYPosAsPixel(mdo->getYAsPixel()-cos(iTileAngle)*mdo->getStepY());
+        	mdo->setXPosAsPixel(mdo->getXAsPixel()+sin(iTileAngle)*mdo->getStepX());
+*/        	
+        	mdo->setYPosAsPixel(mdo->getYAsPixel()-cos(iTileAngle)*mdo->getStepY());
+        	mdo->setXPosAsPixel(mdo->getXAsPixel()+sin(iTileAngle)*mdo->getStepX());
+        	
+
+					//added by Mike, 20210803
+					//TO-DO: -reverify: this
+        	//note: push down; gravity?
+//        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY()
+        }
 
         return true;
     }
