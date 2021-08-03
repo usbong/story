@@ -1446,15 +1446,16 @@ bool Level2D::isLevel2DCollideWith(MyDynamicObject* mdo)
     	
         						//this->hitBy(mdo);
 
-                                //added by Mike, 20210725
-                                this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount], 			
+                                //added by Mike, 20210725; edited by Mike, 20210803
+                                return this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount],
                                 					0.0f+fGridSquareWidth*(iColumnCount), //note: no -1 in iColumnCount
                                 					0.0f+fGridSquareHeight*(iRowCount));
                                 
                                 //removed by Mike, 20210725
  //       						mdo->hitBy(this);
-                                
-                                return true;
+                        
+                                //removed by Mike, 20210803
+                                //return true;
        						}       																										
 		        }
 		   }
@@ -1465,7 +1466,9 @@ bool Level2D::isLevel2DCollideWith(MyDynamicObject* mdo)
 
 //added by Mike, 20210725; edited by Mike, 20210728
 //void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId)
-void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXPos, int iTileYPos)
+//edited by Mike, 20210803
+//void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXPos, int iTileYPos)
+bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXPos, int iTileYPos)
 {
     //changeState(DEATH_STATE);
     //setCollidable(false);
@@ -1527,13 +1530,17 @@ void Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	//edited by Mike, 20210730
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
         }
+        
+        return true;
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
     else if (sTileId.compare("0-2") == 0) {//True
-        
+
+        return true;
     }
     
-        
+    return false;
+    
         //removed by Mike, 20201001
     /*
      zing = sound->load_sound_clip(RESETSOUND);
