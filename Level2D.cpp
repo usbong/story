@@ -790,6 +790,11 @@ void Level2D::drawTileAsQuadWithoutTexture()
 //void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 {
+
+		//added by Mike, 20210803
+		sTileId = myUsbongUtils->autoDeleteQuotationMark(sTileId);
+//std::cout << "sTileId: " << sTileId << "\n";
+
     
     glBindTexture(GL_TEXTURE_2D, iLevelTextureObject);
     glEnable(GL_TEXTURE_2D);
@@ -1007,9 +1012,14 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
     //    glColor3f(1.0f, 0.0f, 0.0f); //red
 
+		//added by Mike, 20210803
+//std::cout << "sTileId: " << sTileId << "\n";
+//		sTileId = myUsbongUtils->autoDeleteQuotationMark(sTileId);
+
     //edited by Mike, 20210803
     //triangle tile with 90degrees angle
     if (sTileId.compare("0-2") == 0) {//True
+    
 /*  //flipped horizontally from original texture image
         glBegin(GL_TRIANGLES);
             glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
@@ -1026,10 +1036,10 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     else {
       //note: 3rd quadrant; counter clock-wise
       glBegin(GL_QUADS); // Each set of 4 vertices form a quad
-    	glVertex3f(0.0f, 0.0f, 0.0f);   	
-    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);    	
-    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);    	
-    	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    	  glVertex3f(0.0f, 0.0f, 0.0f);   	
+    	  glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);    	
+    	  glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);    	
+    	  glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
    	  glEnd();
     }
         
