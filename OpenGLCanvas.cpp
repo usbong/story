@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210803
+ * @date updated: 20210804
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -584,12 +584,15 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
 		//edited by Mike, 20210728
 /*    myPilot = new Pilot(myWindowWidthAsPixel/2,myWindowHeightAsPixel/2,0.0f,
     										myWindowWidthAsPixel,myWindowHeightAsPixel);
-*/    										
-    myPilot = new Pilot(myWindowWidthAsPixel/3,myWindowHeightAsPixel/3,0.0f,
+*/
+		//edited by Mike, 20210804    										
+/*    myPilot = new Pilot(myWindowWidthAsPixel/3,myWindowHeightAsPixel/3,0.0f,
+    										myWindowWidthAsPixel,myWindowHeightAsPixel);
+*/
+    myPilot = new Pilot(myWindowWidthAsPixel/3,myWindowHeightAsPixel-myWindowHeightAsPixel/2,0.0f,
     										myWindowWidthAsPixel,myWindowHeightAsPixel);
 
 
-        
     //edited by Mike, 20210710
     //    myPilot->setOpenGLCanvas(this, fGridSquareWidth);.
     myPilot->setOpenGLCanvas(this, fGridSquareWidth, fGridSquareHeight);
@@ -3322,6 +3325,10 @@ void OpenGLCanvas::update()
         myPilotPlayer2->update(1);
         myPilotPlayer2Partner->update(1);
         
+        
+        //added by Mike, 20210804
+//        myLevel2D->update(1);
+  
         
 /* //removed by Mike, 20210727         
         if (myPilot->getX()+myPilot->getWidthAsPixel() >= myBall->getX()) {

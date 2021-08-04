@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210803
+ * @date updated: 20210804
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -5754,6 +5754,14 @@ void Pilot::updatePrev(float dt)
 //added by Mike, 20210423
 void Pilot::update(float dt)
 {
+    //added by Mike, 20210804
+    //note: gravity
+    if (bHasHitWall) {
+    }
+    else {
+    		this->setYPosAsPixel(this->getYAsPixel()+this->getStepY());
+    }
+
     switch (currentState)
     {
            case INITIALIZING_STATE:

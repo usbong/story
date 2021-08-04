@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210803
+ * @date updated: 20210804
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -1191,6 +1191,7 @@ void Level2D::drawLevelWithTextureUsingInputFile()
 //added by Mike, 20210423
 void Level2D::update(float dt)
 {
+/*	//removed by Mike, 20210804
     switch (currentState)
     {
         case INITIALIZING_STATE:
@@ -1210,6 +1211,8 @@ void Level2D::update(float dt)
         default: //STANDING STATE
             break;//do nothing
     }
+*/    
+
 }
 
 void Level2D::changeState(int s)
@@ -1440,7 +1443,7 @@ bool Level2D::isLevel2DCollideWith(MyDynamicObject* mdo)
         for (int iColumnCount=0; iColumnCount<iColumnCountMax; iColumnCount++) {
     				//note: "0" for empty, instead of "-1"
     				//with "0", no need to add quotation marks
-            if (sCurrentLevelMapContainer[iRowCount][iColumnCount].compare("0") == 0) { //TRUE            
+            if (sCurrentLevelMapContainer[iRowCount][iColumnCount].compare("0") == 0) { //TRUE
             }
             else {
 							  	//add +1.0f in x-axis and y-axis due to 3rd quadrant in the draw function
@@ -1506,7 +1509,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 		sTileId = myUsbongUtils->autoDeleteQuotationMark(sTileId);
 
 //    std::cout << "autoDeleted sTileId: " << sTileId << "\n";
-		
+
 		//edited by Mike, 20210803		
 		//TO-DO: -set: all tiles in row 0, classifed as wall collision?
 //    if (sTileId.compare("0-0") == 0) {//True
@@ -1550,27 +1553,25 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
         }
 */
-        if (mdo->getCurrentFacing()==FACING_UP) {
+
+				//removed by Mike, 20210804
+/*        if (mdo->getCurrentFacing()==FACING_UP) {
         	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()+1);
         }
         else if (mdo->getCurrentFacing()==FACING_DOWN) {
         	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
         }        
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);
-        	
-        	//added by Mike, 20210803
-        	//TO-DO: -add: auto-identify if need to push upward as wall	
-        	mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+        else*/if (mdo->getCurrentFacing()==FACING_LEFT) {
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);        	
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);      	
-
-					//added by Mike, 20210803
-        	//TO-DO: -add: auto-identify if need to push upward as wall	
-        	mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+        	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);
         }
-        
+
+        //added by Mike, 20210804
+        //TO-DO: -add: auto-identify if need to push upward as wall	
+        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+      
         return true;
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
@@ -1601,13 +1602,14 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
  				//1) https://www.mathsisfun.com/sine-cosine-tangent.html;
  				//last accessed: 20210803
 				
+/*	//removed by Mike, 20210804			
         if (mdo->getCurrentFacing()==FACING_UP) {
         	return false;
         }
         else if (mdo->getCurrentFacing()==FACING_DOWN) {
         	return false;
         }
-        else if (mdo->getCurrentFacing()==FACING_LEFT) {
+        else*/ if (mdo->getCurrentFacing()==FACING_LEFT) {
 					//GO LEFT
 /*        	mdo->setYPosAsPixel(mdo->getYAsPixel()+cos(iTileAngle)*mdo->getStepY());
         	mdo->setXPosAsPixel(mdo->getXAsPixel()-sin(iTileAngle)*mdo->getStepX());
@@ -1634,10 +1636,13 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 					//TO-DO: -reverify: this
         	//note: push down; gravity?
 //        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY()
-        }
+        }       
+        
+        this->setYPosAsPixel(this->getYAsPixel()-this->getStepY());
 
         return true;
     }
+
     
     return false;
     
