@@ -1458,15 +1458,16 @@ bool Level2D::isLevel2DCollideWith(MyDynamicObject* mdo)
 										//note: no -1 in iColumnCount due to not draw function
                     if (mdo->collideWithLevel2DTileRectAsPixel(0.0f+fGridSquareWidth*(iColumnCount),0.0f+fGridSquareHeight*(iRowCount), fGridSquareWidth, fGridSquareHeight)) {
 
-                printf(">>dito>>>>>>>>>>>>>>>>>>>>>>>.");
-    	
         						//this->hitBy(mdo);
 
-                                //added by Mike, 20210725; edited by Mike, 20210803
-                                return this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount],
+                                //added by Mike, 20210725; edited by Mike, 20210804
+                                /*return this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount],
                                 					0.0f+fGridSquareWidth*(iColumnCount), //note: no -1 in iColumnCount
                                 					0.0f+fGridSquareHeight*(iRowCount));
-                                
+                        */
+                        
+//                        return true;
+                        
                                 //removed by Mike, 20210725
  //       						mdo->hitBy(this);
                         
@@ -1561,17 +1562,22 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         else if (mdo->getCurrentFacing()==FACING_DOWN) {
         	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()-1);
         }        
-        else*/if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);        	
+        else*/
+/*
+    //TO-DO: -add: -identify which side of tile Pilot hit
+        if (mdo->getCurrentFacing()==FACING_LEFT) {
+        	mdo->setXPosAsPixel(iTileXPos +this->getWidthAsPixel()+1);
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
         	mdo->setXPosAsPixel(iTileXPos -mdo->getWidthAsPixel()-1);
         }
-
         //added by Mike, 20210804
-        //TO-DO: -add: auto-identify if need to push upward as wall	
-        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
-      
+        //TO-DO: -add: auto-identify if need to push upward as wall
+        //edited by Mike, 20210804
+//        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+//        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*2);
+        return true;
+*/
         return true;
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
@@ -1638,7 +1644,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY()
         }       
         
-        this->setYPosAsPixel(this->getYAsPixel()-this->getStepY());
+//        this->setYPosAsPixel(this->getYAsPixel()-this->getStepY());
 
         return true;
     }

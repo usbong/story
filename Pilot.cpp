@@ -4578,6 +4578,8 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
     glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(myXPosAsPixel), myUsbongUtils->autoConvertFromPixelToVertexPointY(myYPosAsPixel), 0);
 		
 	
+    printf(">>\n");
+    
 /* //removed by Mike, 20210521	
 	glScalef(1.2f, 1.2f, 1.2f); //noticeable vertical movement; reverify scale to trans ratio	
 	
@@ -5752,8 +5754,10 @@ void Pilot::updatePrev(float dt)
 }
 
 //added by Mike, 20210423
+//TO-DO: -update: this
 void Pilot::update(float dt)
 {
+/*
     //added by Mike, 20210804
     //note: gravity
     if (bHasHitWall) {
@@ -5761,6 +5765,7 @@ void Pilot::update(float dt)
     else {
     		this->setYPosAsPixel(this->getYAsPixel()+this->getStepY());
     }
+*/
 
     switch (currentState)
     {
@@ -6678,10 +6683,39 @@ void Pilot::move(int key)
 		}
 	}
 */
+    //added by Mike, 20210804
+    //gravity
+    if (myLevel2D->isLevel2DCollideWith(this)) {
+        bHasHitWall=true;
+        return;
+    }
+    else {
+        
+        printf(">>>> HALLO");
+        
+        if (bHasHitWall) {
+            return;
+        }
+        
+        if (getIsPlayer1()) { //Player1: Unit Chief
+            myYPosAsPixel+=stepY;
+        }
+    }
+    bHasHitWall=false;
+
+/*
+    if (bHasHitWall) {
+        return;
+    }
     
+    if (getIsPlayer1()) { //Player1: Unit Chief
+        myYPosAsPixel+=stepY;
+    }
+*/
 }
+
 void Pilot::hitBy(MyDynamicObject* mdo)
-{		
+{
 /*	//removed by Mike, 20210611stepX=fGridSquareWidth/8;
 		//auto-identify if Ball object
     if (dynamic_cast<Ball*>(mdo)->getIsBall()) {    	

@@ -3318,13 +3318,14 @@ void OpenGLCanvas::update()
         //TO-DO: -add: goal defender, e.g. animal as nature?
         
         //added by Mike, 20210206
+/*  //removed by Mike, 20210804
         myPilot->update(1); //dt
         myPilotPartner->update(1); //added by Mike, 20210530
         
         //added by Mike, 20210613
         myPilotPlayer2->update(1);
         myPilotPlayer2Partner->update(1);
-        
+*/
         
         //added by Mike, 20210804
 //        myLevel2D->update(1);
@@ -3359,7 +3360,8 @@ void OpenGLCanvas::update()
             myPilotPlayer2Partner->setCurrentFacingState(FACING_RIGHT);
         }
 */        
-        
+
+/* //removed by Mike, 20210804
         //added by Mike, 20210502
         myPilotPlayer2->update(1); //dt
         myPilotPlayer2Partner->update(1); //added by Mike, 20210530
@@ -3375,6 +3377,7 @@ void OpenGLCanvas::update()
         
         myBall->collideWith(myPilotPlayer2);
         myBall->collideWith(myPilotPlayer2Partner);
+*/
         
         //added by Mike, 20210528
         //use these instructions to be football
