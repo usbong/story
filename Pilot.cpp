@@ -809,8 +809,9 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
 	bIsFiringBeam=false;
 	
 	//added by Mike, 20210126
-//	bIsExecutingDash=false, //removed by Mike, 20210128
-	bIsDashReady=false;
+    bIsExecutingDash=false, //removed by Mike, 20210128; added again by Mike, 20210805
+
+    bIsDashReady=false;
 	//edited by Mike, 20210128
 //	iInputWaitCount=0;
 	
@@ -4692,9 +4693,30 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
 																		
 												drawPilotObject();
 												
-												//added by Mike, 20210805
-												drawAccelerationEffectAsQuadWithTexture();
-												
+												//added by Mike, 20210805; edited by Mike, 20210805
+												//drawAccelerationEffectAsQuadWithTexture();
+                                    if (prevFacingState==currentFacingState) {
+//                                        if (bIsExecutingDash) {
+/*                                        if (bIsExecutingDashArray[KEY_D] ||
+                                            bIsExecutingDashArray[KEY_A]) {
+*/
+                                        if (bIsExecutingDash) {
+                                        }
+                                        else {
+                                            if (bIsExecutingDashArray[KEY_D] ||
+                                                bIsExecutingDashArray[KEY_A]) {
+                                                bIsExecutingDash=true;
+                                            }
+
+                                            if (bIsExecutingDash) {
+                                                drawAccelerationEffectAsQuadWithTexture();
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        drawAccelerationEffectAsQuadWithTexture();
+                                    }
+                                    
 												break;
 												
 												case ATTACKING_MOVING_STATE:
@@ -4967,39 +4989,68 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 		}
 */
 
-    //added by Mike, 20210805
-    //TO-DO: -add: in loop, increasing size AND movement
+    //added by Mike, 20210724
+    //background color of tile
+    //-----
+    /*
+     glDisable(GL_TEXTURE_2D);
+     glBindTexture(GL_TEXTURE_2D, 0);
+     */
     
+    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    //    glColor3f(1.0f, 0.0f, 0.0f); //red
+
+    //added by Mike, 20210805
     if (currentFacingState==FACING_RIGHT) {
         //added by Mike, 20210805
         //note: remove when drawing quad, instead of circle
         //note: circle radius 0.25f; OK; reminder: anchor top-left
-//        glTranslatef(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
-//        glTranslatef(0.0f-fGridTileWidthVertexPosition/2.0f, 0.0f, 0.0f);
-
-        glTranslatef(0.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+        //        glTranslatef(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+        //        glTranslatef(0.0f-fGridTileWidthVertexPosition/2.0f, 0.0f, 0.0f);
+        
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/2.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
     }
     else if (currentFacingState==FACING_LEFT) {
         //note: circle radius 0.25f; OK; reminder: anchor top-left
         //glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
         //note: y-axis:  0.0f-fGridTileHeightVertexPosition/2.0f at middle
-        glTranslatef(0.0f+fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+//        glTranslatef(0.0f+fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/2.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+    }
+    
+    //Reference: https://stackoverflow.com/questions/46258919/drawing-circle-with-gl-polygon-radius-out-of-scale;
+    //question by: emic, 20170916T2216;
+    //edited by: Rabbid76, 20180531T1930
+    //answer by: Rabbid76, 20170917T0735
+    
+    //TO-DO: -reverify: this due to drawn shape ellipse, not circle
+    //glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+    //glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
+    //note: -reverify: anchor; facing right at center, facing left at back; trailing
+    
+    printf("myWindowWidth: %i\n",myWindowWidth); //example output: 1366
+    printf("myWindowHeight: %i\n",myWindowHeight); //example output: 768
+    //		glScalef(0.56f, 1.0f, 1.0f);
+    
+    //TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
+    //AND which side is longer
+    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    
+//--
+    //TO-DO: -add: in loop, increasing size AND movement
+for (int iCount=0; iCount<3; iCount++) {
+    
+    if (currentFacingState==FACING_RIGHT) {
+        glTranslatef(0.0f-fGridTileWidthVertexPosition/4.0f, 0.0f, 0.0f);
+    }
+    else if (currentFacingState==FACING_LEFT) {
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/4.0f, 0.0f, 0.0f);
     }
 	else {
 	  	glPopMatrix();
 	  	return;
 	}
 
-		//added by Mike, 20210724
-		//background color of tile
-//-----
-/*
-    glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
-*/
-
-    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
-//    glColor3f(1.0f, 0.0f, 0.0f); //red
     
 /*    
     //note: 3rd quadrant
@@ -5011,24 +5062,11 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
    	glEnd();
 */   	
 
-		//Reference: https://stackoverflow.com/questions/46258919/drawing-circle-with-gl-polygon-radius-out-of-scale;
-		//question by: emic, 20170916T2216;
-		//edited by: Rabbid76, 20180531T1930
-		//answer by: Rabbid76, 20170917T0735
-
-		//TO-DO: -reverify: this due to drawn shape ellipse, not circle
-		//glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
-		//glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
-		//note: -reverify: anchor; facing right at center, facing left at back; trailing
-		
-		printf("myWindowWidth: %i\n",myWindowWidth); //example output: 1366
-		printf("myWindowHeight: %i\n",myWindowHeight); //example output: 768
-//		glScalef(0.56f, 1.0f, 1.0f);		
-		
-		//TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
-		//AND which side is longer
-		glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);		
-		
+        //added by Mike, 20210805
+        //glScalef(1.0f*(iCount+1), 1.0f*(iCount+1), 1.0f);
+        //glScalef(0.5f*(iCount+1), 0.5f*(iCount+1), 1.0f);
+        glScalef(0.6f*(iCount+1), 0.6f*(iCount+1), 1.0f);
+    
 		float fCircleCenterX=0.0f;
 		float fCircleCenterY=0.0f;
 		float fPI=3.14f;
@@ -5044,6 +5082,7 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 		//reset scaled shape
 		glScalef(1.0f, 1.0f, 1.0f);		
    	
+}
 //-----		
 
 
@@ -6912,6 +6951,7 @@ void Pilot::move(int key)
            
           //added by Mike, 20210805
           iStepYCount=0;
+          bIsExecutingDash=false;
 		  break;		  		  
    }
 

@@ -237,7 +237,7 @@ private:
 	bool bIsExecutingPunch,	
 		 bIsExecutingDefend, //added by Mike, 20210112; edited by Mike, 20210121
 		 //removed by Mike, 20210128
-//		 bIsExecutingDash, //added by Mike, 20210126
+		 bIsExecutingDash, //added by Mike, 20210126
 		 bIsDashReady; //added by Mike, 20210126
     
     //added by Mike, 20210613
