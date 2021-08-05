@@ -4967,15 +4967,28 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 		}
 */
 
+    //added by Mike, 20210805
+    //TO-DO: -add: in loop, increasing size AND movement
+    
     if (currentFacingState==FACING_RIGHT) {
-		}
+        //added by Mike, 20210805
+        //note: remove when drawing quad, instead of circle
+        //note: circle radius 0.25f; OK; reminder: anchor top-left
+//        glTranslatef(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+//        glTranslatef(0.0f-fGridTileWidthVertexPosition/2.0f, 0.0f, 0.0f);
+
+        glTranslatef(0.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+    }
     else if (currentFacingState==FACING_LEFT) {
-      glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
-		}
-	  else {
+        //note: circle radius 0.25f; OK; reminder: anchor top-left
+        //glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
+        //note: y-axis:  0.0f-fGridTileHeightVertexPosition/2.0f at middle
+        glTranslatef(0.0f+fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+    }
+	else {
 	  	glPopMatrix();
 	  	return;
-	  }		
+	}
 
 		//added by Mike, 20210724
 		//background color of tile
@@ -4985,8 +4998,9 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
     glBindTexture(GL_TEXTURE_2D, 0);
 */
 
-//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
-    glColor3f(1.0f, 0.0f, 0.0f); //red
+    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+//    glColor3f(1.0f, 0.0f, 0.0f); //red
+    
 /*    
     //note: 3rd quadrant
     glBegin(GL_QUADS); // Each set of 4 vertices form a quad
@@ -5018,7 +5032,7 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 		float fCircleCenterX=0.0f;
 		float fCircleCenterY=0.0f;
 		float fPI=3.14f;
-		float fRadius=0.25f; //0.1f; //0.25f;
+        float fRadius=0.02f;//0.25f; //0.1f; //0.25f;
 				
 		//draw ellipse
     glBegin(GL_POLYGON);
@@ -6583,9 +6597,23 @@ void Pilot::move(int key)
          			if (bIsExecutingDashArray[KEY_W]) {
             			myYPosAsPixel+=-stepY*2;
 		 					}
-*/		 					
-            	myYPosAsPixel+=-stepY;
-		 					
+*/
+                //edited by Mike, 20210805
+                //in macOS machine, Pilot does not move up due to gravity;
+                //OK in LUBUNTU machine; JUMP height low; exerting effort to move up, but pulled by heavy force
+//            	myYPosAsPixel+=-stepY;
+//            	myYPosAsPixel+=(-stepY*2);
+//            	myYPosAsPixel+=(-stepY*1.1);
+             
+             iStepYCountMax=20;
+             if (iStepYCount>=iStepYCountMax) {
+             }
+             else {
+                myYPosAsPixel+=(-stepY*1.1);
+                iStepYCount+=1;
+             }
+             
+
 		 					bHasHitWall=false;
 		 		}
 			//added by Mike, 20210521		
@@ -6881,6 +6909,9 @@ void Pilot::move(int key)
 		  //bIsExecutingPunch=false; //added by Mike, 20210111
 		  
 		  bIsExecutingDefend=false; //added by Mike, 20210121
+           
+          //added by Mike, 20210805
+          iStepYCount=0;
 		  break;		  		  
    }
 
