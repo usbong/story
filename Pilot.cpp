@@ -4879,10 +4879,10 @@ void Pilot::drawPilotObject()
 //added by Mike, 20210805
 void Pilot::drawAccelerationEffectAsQuadWithTexture()
 {
-    
+/*	//removed by Mike, 20210805    
     glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
     glEnable(GL_TEXTURE_2D);
-    
+*/    
     //added by Mike, 20210803
     glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
 
@@ -4933,9 +4933,159 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
     //added by Mike, 20210720
     fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
     fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
-		
+
+/*		
 		//added by Mike, 20210727        
     glTranslatef(0.0f, -fGridTileHeightVertexPosition, 0.0f);
+*/
+    
+    float fTx = 0.0f; 
+    float fTy = 0.0f;
+    
+    float fTileSideXAxis = 0.0625f;
+    //from bottom; anchor; start fTy at 1.0f
+    float fTileSideYAxis = -0.0625f;
+
+ 		//put at back of Pilot's feet
+/* 		
+    if ((currentFacingState==FACING_RIGHT) ||
+        (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+            (prevFacingState==FACING_RIGHT))
+        || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+
+    }
+    else if ((currentFacingState==FACING_LEFT) ||
+             (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+              (prevFacingState==FACING_LEFT))
+             || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
+             
+         glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
+		}		
+		else if (currentFacingState==FACING_UP) {
+		}
+		else if (currentFacingState==FACING_DOWN) {
+		}
+*/
+
+    if (currentFacingState==FACING_RIGHT) {
+		}
+    else if (currentFacingState==FACING_LEFT) {
+      glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
+		}
+	  else {
+	  	glPopMatrix();
+	  	return;
+	  }		
+
+		//added by Mike, 20210724
+		//background color of tile
+//-----
+/*
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+*/
+
+//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    glColor3f(1.0f, 0.0f, 0.0f); //red
+/*    
+    //note: 3rd quadrant
+    glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+    	glVertex3f(0.0f, 0.0f, 0.0f);   	
+    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);    	
+    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);    	
+    	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+   	glEnd();
+*/   	
+
+		//Reference: https://stackoverflow.com/questions/46258919/drawing-circle-with-gl-polygon-radius-out-of-scale;
+		//question by: emic, 20170916T2216;
+		//edited by: Rabbid76, 20180531T1930
+		//answer by: Rabbid76, 20170917T0735
+
+		//TO-DO: -reverify: this due to drawn shape ellipse, not circle
+		//glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+		//glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
+		//note: -reverify: anchor; facing right at center, facing left at back; trailing
+		
+		float fCircleCenterX=0.0f;
+		float fCircleCenterY=0.0f;
+		float fPI=3.14f;
+		float fRadius=0.25f; //0.1f; //0.25f;
+		
+		//draw ellipse
+    glBegin(GL_POLYGON);
+        for(double i = 0; i < 2 * fPI; i += fPI / 24) {
+            glVertex3f((cos(i) * fRadius) + fCircleCenterX,(sin(i) * fRadius) + fCircleCenterY, 0.0);
+        }
+    glEnd();   	
+   	
+   	
+//-----		
+
+
+/*	//removed by Mike, 20210805    
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+*/
+    
+    glPopMatrix();
+}
+
+/*
+//added by Mike, 20210805
+//Tile Block delivery trailer?
+void Pilot::drawAccelerationEffectAsQuadWithTextureTileBlock()
+{
+    //added by Mike, 20210803
+    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+
+    //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
+    //16x16pixels; 256x256pixels width x height .tga image file
+    //texture coordinates;
+    //width: 1.0/16.0 = 0.0625
+    //height: 1.0/16.0 = 0.0625
+
+    glPushMatrix();
+    
+    printf("drawAccelerationEffectAsQuadWithTexture\n");
+    
+    //TO-DO: -update: this
+    
+//    printf(">>Pilot.cpp; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
+//    printf(">>Pilot.cpp; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
+
+    
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
+    
+//    printf(">>>fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+ 
+    //get positive value
+    if (fGridTileWidthVertexPosition<0) {
+        fGridTileWidthVertexPosition=fGridTileWidthVertexPosition*(-1);
+    }    
+    if (fGridTileHeightVertexPosition<0) {
+        fGridTileHeightVertexPosition=fGridTileHeightVertexPosition*(-1);
+    }
+    
+    //  	printf (">>> fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+    
+    //added by Mike, 20210715
+    //note: add this set of instructions due to excess border visible
+    //verified: screen/monitor width and height to be OK
+    //10/3 = 3.3333... cause of problem?
+    //added by Mike, 20210717
+    //note: partly border visible occurs in Linux machine;
+    //due to instructions that I wrote
+    
+#if defined(__APPLE__)
+    //note: right border of tile only partly visible
+    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
+#endif
+    
+    //added by Mike, 20210720
+    fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
+    fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
     
     float fTx = 0.0f; 
     float fTy = 0.0f;
@@ -4946,13 +5096,10 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 
 		//added by Mike, 20210724
 		//background color of tile
-//-----
-/*
-    glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
-*/
 
-    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    glColor3f(1.0f, 0.0f, 0.0f); //red
+    
     //note: 3rd quadrant
     glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     	glVertex3f(0.0f, 0.0f, 0.0f);   	
@@ -4963,72 +5110,9 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
    	
 //-----		
 
-/*	//removed by Mike, 20210805
-		//added by Mike, 20210727
-		//due flipped vertically
-		glRotatef(180, 0.0f, 0.0f, 1.0f);		
-		
-    //note: vertex position sequence to be auto-drawn
-    //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
-    //edited by Mike, 20210729
-//    if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
-    if ((currentFacingState==FACING_RIGHT) ||
-        (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
-            (prevFacingState==FACING_RIGHT))
-        || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
-
-        //note: vertex positions sequence: counter-clock-wise
-			//note:texture positions sequence: clock-wise
-    	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
-    		//glTexCoord2f(fTx, fTy);
-				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);
-    		glVertex3f(0.0f, 0.0f, 0.0f);
-    		
-    		//glTexCoord2f(fTx + fTileSideXAxis, fTy);
-      	glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	
-    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
-    		
-    		//glTexCoord2f(fTx + fTileSideXAxis, fTy + fTileSideYAxis);
-      	glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
-    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
-    		
-    		//glTexCoord2f(fTx, fTy + fTileSideYAxis);
-      	glTexCoord2f(0.25+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f); //0.5f);
-    		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
-    	glEnd();
-    }
-    //edited by Mike, 20210729
-//    else if ((currentFacingState==FACING_LEFT) || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
-    else if ((currentFacingState==FACING_LEFT) ||
-             (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
-              (prevFacingState==FACING_LEFT))
-             || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
-			//note: vertex positions sequence: counter-clock-wise
-			//note:texture positions sequence: counter-clock-wise
-    	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
-				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	            
-    		glVertex3f(0.0f, 0.0f, 0.0f);
-    		
-        glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);	
-    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
-    		
-				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
-    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
-    		
-				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
-    		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
-    	glEnd();    	
-		}
-		//TO-DO: -add: facing_up, facing_down
-		else {
-		}
-*/
-    glDisable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
     glPopMatrix();
 }
-
+*/
 
 //added by Mike, 20210523; edited by Mike, 20210726
 //TO-DO: -update: this to use computer instructions in Level2D's Tile
