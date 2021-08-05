@@ -5007,18 +5007,28 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
 		//glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
 		//note: -reverify: anchor; facing right at center, facing left at back; trailing
 		
+		printf("myWindowWidth: %i\n",myWindowWidth); //example output: 1366
+		printf("myWindowHeight: %i\n",myWindowHeight); //example output: 768
+//		glScalef(0.56f, 1.0f, 1.0f);		
+		
+		//TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
+		//AND which side is longer
+		glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);		
+		
 		float fCircleCenterX=0.0f;
 		float fCircleCenterY=0.0f;
 		float fPI=3.14f;
 		float fRadius=0.25f; //0.1f; //0.25f;
-		
+				
 		//draw ellipse
     glBegin(GL_POLYGON);
         for(double i = 0; i < 2 * fPI; i += fPI / 24) {
             glVertex3f((cos(i) * fRadius) + fCircleCenterX,(sin(i) * fRadius) + fCircleCenterY, 0.0);
         }
     glEnd();   	
-   	
+   			
+		//reset scaled shape
+		glScalef(1.0f, 1.0f, 1.0f);		
    	
 //-----		
 
