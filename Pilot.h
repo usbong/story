@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210729
+ * @date updated: 20210805
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -484,6 +484,9 @@ public:
 	void drawPilotObjectPrev(); //added by Mike, 20210727
 
 	void drawPilotObjectWith3DVertexPositions();//added by Mike, 20210523
+
+	//added by Mike, 20210805
+	void drawAccelerationEffectAsQuadWithTexture();
 
 	// draws the entire robot
 	//void drawRobot(float xPos, float yPos, float zPos);

@@ -325,11 +325,12 @@ bool MyDynamicObject::collideWithLevel2DTileRectAsPixel(int iTilePosXAsPixel, in
 //    printf("iTileHeightAsPixel: %i\n",iTileHeightAsPixel); //example 80
 
   //TO-DO: -update: width and height values
-
+/*
   //example: at grid B1
   printf("getXAsPixel(): %i\n",getXAsPixel()); //example: 56
   printf("getWidthAsPixel(): %i\n",getWidthAsPixel()); //example: 71
 //  printf("getXAsPixel()+getWidthAsPixel(): %i\n",getXAsPixel()+getWidthAsPixel()); //example: 127
+*/
 
 //    printf("getYAsPixel(): %i\n",getYAsPixel()); //example: 2
 //    printf("getHeightAsPixel(): %i\n",getHeightAsPixel()); //example: 80
@@ -394,8 +395,9 @@ bool MyDynamicObject::collideWithLevel2DTileRectAsPixel(int iTilePosXAsPixel, in
 		printf("iTileWidthAsPixel: %i\n",iTileWidthAsPixel);
 		printf("getXAsPixel()+getWidthAsPixel(): %i\n",getXAsPixel()+getWidthAsPixel());
 */		
+/*
 		printf("inside tile\n");
-	
+*/	
 		return true;
 }
 

@@ -482,7 +482,7 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     myWindowWidthAsPixel = (int)myWindowWidthAsPixelInput;
     myWindowHeightAsPixel = (int)myWindowHeightAsPixelInput;
     
-    printf("HALLO: myWindowWidthAsPixel: %i\n",myWindowWidthAsPixel);
+//    printf("HALLO: myWindowWidthAsPixel: %i\n",myWindowWidthAsPixel);
     
     /*	//edited by Mike, 20210710
      //added by Mike, 20210702
@@ -496,9 +496,11 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     
     fGridSquareWidth = myWindowWidthAsPixel/iColumnCountMax; //example: 136.60
     fGridSquareHeight = myWindowHeightAsPixel/iRowCountMax; //example: 76.80
-    
+
+/*    
     printf("fGridSquareWidth: %f\n",fGridSquareWidth);
     printf("fGridSquareHeight: %f\n",fGridSquareHeight);
+*/
     
     //added by Mike, 20210626
     fMyWindowWidthAsPixelRatioToHeightPixel=1.0f;
@@ -1311,8 +1313,8 @@ void OpenGLCanvas::mouseActionDown(int iMouseActionId, int iXPos, int iYPos)
     if (myButton->isActive()) {
         //	printf("actionUP Start X,Y: %f,%f\n",myUsbongUtils->autoConvertFromPixelToVertexPointX(iStartPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iStartPointY));
         
-        printf("actionUP Start X,Y: %f,%f\n",myUsbongUtils->autoConvertFromPixelToVertexPointX(iStartPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iStartPointY));
-        
+/*        printf("actionUP Start X,Y: %f,%f\n",myUsbongUtils->autoConvertFromPixelToVertexPointX(iStartPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iStartPointY));
+*/        
         //we use pixel instead of vertex points
         //	  myButton->collideWithPressedCoordPos(myUsbongUtils->autoConvertFromPixelToVertexPointX(iStartPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iStartPointY));
         myButton->collideWithPressedCoordPos(iStartPointX,iStartPointY);
@@ -1347,9 +1349,11 @@ void OpenGLCanvas::mouseActionUp(int iMouseActionId, int iXPos, int iYPos)
     iEndPointX=iXPos;
     iEndPointY=iYPos;
     
+/*    
     //added by Mike, 20210513
     printf("actionUP Start X,Y: %f,%f\n",myUsbongUtils->autoConvertFromPixelToVertexPointX(iStartPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iStartPointY));
     printf("actionUP End X,Y: %f,%f\n",myUsbongUtils->autoConvertFromPixelToVertexPointX(iEndPointX),myUsbongUtils->autoConvertFromPixelToVertexPointY(iEndPointY));
+*/
     
     //Reference: https://www.mathsisfun.com/algebra/line-equation-2points.html;
     //last accessed: 20210513
@@ -2462,17 +2466,18 @@ void OpenGLCanvas::drawGridWithZAxis() {
     else {
         glColor3f(1.0f, 1.0f, 1.0f); // white
     }
+/*    
     printf("iCountLevelM: %i\n",iCountLevelM);
-    
+*/    
     glBindTexture( GL_TEXTURE_2D, LEVEL_TEXTURE );
     sprintf(tempText,"M");
     
     //	glTranslatef(-3.5f, 0.0f, -3.2f);
     //	glTranslatef(-3.2f, 3.2f, -3.2f);
     //	glTranslatef(-3.2f, 3.2f, -3.2f);
-    
+/*    
     printf("fGridSquareWidth: %f\n",fGridSquareWidth);
-    
+*/    
     //removed by Mike, 20210520
     //	myLevel->draw_level(fGridSquareWidth*3.0f, 0.0f, fGridSquareWidth*3.0f, tempText);
     //	myLevel->draw_level(fGridSquareWidth*4.0f, -1.0f, fGridSquareWidth*11.0f, tempText);
@@ -4116,11 +4121,13 @@ void OpenGLCanvas::update()
 				//TO-DO: -add: auto-convert vertex point to pixel
 //		myWindowWidthAsPixel=myUsbongUtils->autoConvertFromPixelToVertexPointX(0);
 
+/*
         printf("myPilot->getXAsPixel(): %i\n>>",myPilot->getXAsPixel());
         printf("myPilot->getWidthAsPixel(): %i\n>>",myPilot->getWidthAsPixel());
 
         printf(">>myWindowWidthAsPixel: %i\n>>",myWindowWidthAsPixel);        
 //        printf(">>myWindowWidth: %f\n>>",myWindowWidth);
+*/
         
         //note: Pilot sticks to wall when we use myPosX, et cetera in movement(...), instead of immediately  myPosXAsPixel
         //TO-DO: -add: acceleration?

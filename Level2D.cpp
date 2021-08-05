@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210804
+ * @date updated: 20210805
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -973,9 +973,10 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 //    fTy = 1.0f-2*2*0.0625f*(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)); //row    
 //    fTy = 1.0f-2*0.0625f*(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)); //row    
 
-    	
+/*    	
 		printf(">>>%i\n",(myUsbongUtils->autoIdentifyColumnInputInLevelMapContainer(sTileId)));
 		printf(">>>%i\n",(myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId)));
+*/
 
 //    printf(">>>fTx: %f;fTy: %f\n",fTx,fTy);
 
