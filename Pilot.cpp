@@ -6617,9 +6617,10 @@ void Pilot::move(int key)
          //added by Mike, 20210725
          if (myLevel2D->isLevel2DCollideWith(this)) {
 //            printf(">>>>COLLISION!");
-//							currentMovingState=IDLE_MOVING_STATE;							
+//							currentMovingState=IDLE_MOVING_STATE;
 							bHasHitWall=true;
-        			return;
+             return;
+        	//		break;
          }
          else {         
          			//added by Mike, 20210728
@@ -6661,13 +6662,13 @@ void Pilot::move(int key)
 
             			currentMovingState=IDLE_MOVING_STATE;
               		currentFacingState=FACING_UP;
-            			break;
+                 
+                 break;
              }
              else {
                 myYPosAsPixel+=(-stepY*1.1);
                 iStepYCount+=1;
              }
-             
 
 		 					bHasHitWall=false;
 		 		}

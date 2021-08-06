@@ -320,6 +320,12 @@ public:
     int getCurrentFacing() {
     	return currentFacingState;
     }
+
+    //added by Mike, 20210806
+    //note: with Pilot.cpp, value is only LEFT or RIGHT
+    void setPrevFacingToBeCurrent() {
+        currentFacingState=prevFacingState;
+    }
     
     //added by Mike, 20210613
     virtual bool getIsMovingDown() {

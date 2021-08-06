@@ -1591,27 +1591,8 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
     else if (sTileId.compare("0-2") == 0) {//True
-       /*if (mdo->getCurrentFacing()==FACING_UP) {
-        	mdo->setYPosAsPixel(iTileYPos +this->getHeightAsPixel()/2+1);
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	mdo->setYPosAsPixel(iTileYPos -mdo->getHeightAsPixel()/2-1);
-        }
-        else*/ /*if (mdo->getCurrentFacing()==FACING_LEFT) {
-        	mdo->setYPosAsPixel(-mdo->getStepY()+iTileYPos +this->getHeightAsPixel()/2+1); //GO DOWN
-        	mdo->setXPosAsPixel(-mdo->getStepX()+iTileXPos +this->getWidthAsPixel()/2+1);    	
-        }
-        else if (mdo->getCurrentFacing()==FACING_RIGHT) {
-        	mdo->setYPosAsPixel(mdo->getStepY()+iTileYPos -this->getHeightAsPixel()/2-1); //GO UP
-        	mdo->setXPosAsPixel(mdo->getStepX()+iTileXPos -mdo->getWidthAsPixel()/2-1);
-        }*/
         
         int iTileAngle=45;
-/*      //GO UP
-        mdo->setYPosAsPixel(mdo->getYAsPixel()-sin(iTileAngle)*mdo->getStepY());
-        mdo->setXPosAsPixel(mdo->getXAsPixel()-cos(iTileAngle)*mdo->getStepX());
-*/
-
 
  				//Recommended Reading:
  				//1) https://www.mathsisfun.com/sine-cosine-tangent.html;
@@ -1636,6 +1617,34 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 // 						printf(">>>DITO");
 						fStepDashMultiplier=2.0f;
  					}
+        
+        //added by Mike, 20210806
+        if (mdo->getCurrentFacing()==FACING_UP) {
+/*  //TO-DO: -reverify: this; observed: when small JUMP as HOP executed at center of hypothenus, 
+            //resulting height is higher than when farther from center
+ 
+            //push down
+            mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()*1.5); //1);
+            mdo->setXPosAsPixel(mdo->getXAsPixel()+mdo->getStepX()/4); //1);
+            mdo->setPrevFacingToBeCurrent();
+            
+//            return false;
+*/
+
+//            mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()/2);
+
+            //note: get the hypothenus; near the start higher resulting y-axis from jump as hop
+//            mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()*(1+(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle)));
+
+//            mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()*2);
+
+/*  //TO-DO: -reverify: this
+            mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY());
+            mdo->setPrevFacingToBeCurrent();
+            
+            return false;
+*/
+        }
  								
 					if (mdo->getCurrentFacing()==FACING_LEFT) {
 					//GO LEFT
@@ -1654,9 +1663,13 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //observation: with Move upward Command, position in y-axis goes to top of tile with FACING_RIGHT
                    }
                         
-/* //escalator down; slide down
+/*
+ //escalator down; slide down
                         mdo->setYPosAsPixel(mdo->getYAsPixel()+1);
                         mdo->setXPosAsPixel(mdo->getXAsPixel()-1);
+*/
+                        
+/*
 /*
  mdo->setYPosAsPixel(mdo->getYAsPixel()+(1+mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
  mdo->setXPosAsPixel(mdo->getXAsPixel()-(1+mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
