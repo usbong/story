@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210805
+ * @date updated: 20210806
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -1461,11 +1461,11 @@ bool Level2D::isLevel2DCollideWith(MyDynamicObject* mdo)
 
         						//this->hitBy(mdo);
 
-                                //added by Mike, 20210725; edited by Mike, 20210804
-                                /*return this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount],
+                                //added by Mike, 20210725; added by Mike, 20210806
+                               return this->hitByAtTile(mdo, sCurrentLevelMapContainer[iRowCount][iColumnCount],
                                 					0.0f+fGridSquareWidth*(iColumnCount), //note: no -1 in iColumnCount
                                 					0.0f+fGridSquareHeight*(iRowCount));
-                        */
+                        
                         
 //                        return true;
                         
@@ -1496,7 +1496,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //    int iTileColumn = myUsbongUtils->autoIdentifyColumnInputInLevelMapContainer(sTileId); //column
 //    int iTileRow = myUsbongUtils->autoIdentifyRowInputInLevelMapContainer(sTileId); //row
 
-    std::cout << "sTileId: " << sTileId << "\n";
+//    std::cout << "sTileId: " << sTileId << "\n";
 /*
     std::cout << "iTileXPos: " << iTileXPos << "\n";
     std::cout << "iTileYPos: " << iTileYPos << "\n";
@@ -1514,12 +1514,8 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 
 		//edited by Mike, 20210803		
 		//TO-DO: -set: all tiles in row 0, classifed as wall collision?
-//    if (sTileId.compare("0-0") == 0) {//True
-    if ((sTileId.compare("0-0") == 0) ||
-//    if (sTileId.compare("\"0-0\"") == 0) {//True			
-    	 (sTileId.compare("1-0") == 0) ||
-    	 (sTileId.compare("2-0") == 0)) {
-        //OK
+    if (sTileId.compare("0-0") == 0) {//True
+  //OK
 //        printf(">>HALLO");
 /*
 				//note: step *6 result, pushed back hit distance
@@ -1578,8 +1574,15 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
 //        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*2);
         return true;
-*/
-        return true;
+*/        
+  	}
+		else if ((sTileId.compare("1-0") == 0) ||
+    	 (sTileId.compare("2-0") == 0)) {				
+				//added by Mike, 20210806
+				//reminder: added: gravity to exist in world
+        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+
+        return false;
     }
     //TO-DO: -update: this; use Trigonometry; triangle with 90degrees angle
     else if (sTileId.compare("0-2") == 0) {//True
@@ -1608,46 +1611,89 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
  				//Recommended Reading:
  				//1) https://www.mathsisfun.com/sine-cosine-tangent.html;
  				//last accessed: 20210803
-				
-/*	//removed by Mike, 20210804			
-        if (mdo->getCurrentFacing()==FACING_UP) {
-        	return false;
-        }
-        else if (mdo->getCurrentFacing()==FACING_DOWN) {
-        	return false;
-        }
-        else*/ if (mdo->getCurrentFacing()==FACING_LEFT) {
+ 				
+ 				//added by Mike, 20210806
+ 				//reminder: SOH-CAH-TOA;
+ 				//example: sin(iTileAngle)=O/H;
+ 				//where: O = Opposite; H = Hypothenus;
+ 				//set O = stepY
+ 				//example: cos(iTileAngle)=A/H;
+ 				//where: A = Adjacent; H = Hypothenus
+ 				//set A = stepX
+ 					
+// 					mdo->setIsExecutingDash(false);
+ 	
+ 					float fStepDashMultiplier=1.0f; //0.0f;
+ 					
+ 					//TO-DO: -reverify: this due to incorrect output when climbing stairs with DASH command
+ 					if (mdo->getIsExecutingDash()) { 					
+ 						printf(">>>DITO");
+						fStepDashMultiplier=2.0f;
+ 					}
+ 								
+					if (mdo->getCurrentFacing()==FACING_LEFT) {
 					//GO LEFT
 /*        	mdo->setYPosAsPixel(mdo->getYAsPixel()+cos(iTileAngle)*mdo->getStepY());
         	mdo->setXPosAsPixel(mdo->getXAsPixel()-sin(iTileAngle)*mdo->getStepX());
 */        	
-        	mdo->setYPosAsPixel(mdo->getYAsPixel()+cos(iTileAngle)*mdo->getStepY());
-        	mdo->setXPosAsPixel(mdo->getXAsPixel()-sin(iTileAngle)*mdo->getStepX());
-        	
-        	
-					//added by Mike, 20210803
-					//TO-DO: -reverify: this
-        	//note: push down; gravity?
-//        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1);        	
+
+				   if (mdo->getIsCurrentMovingStateIdleState()) {
+				   }
+				   else {
+				    //edited by Mike, 20210806
+//        		mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepX()/cos(iTileAngle));
+//						mdo->setXPosAsPixel(mdo->getXAsPixel()-mdo->getStepY()/sin(iTileAngle));
+				    //add this to decrease speed via push back
+/*        		mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f)/cos(iTileAngle));
+        		mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f)/sin(iTileAngle));
+*/
+/*
+        		mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f+(mdo->getStepX()*fStepDashMultiplier))/cos(iTileAngle));
+        		mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f+(mdo->getStepY()*fStepDashMultiplier))/sin(iTileAngle));
+*/
+
+        		mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+        		mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+
+					 }	
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
 					//GO RIGHT
-/*        	mdo->setYPosAsPixel(mdo->getYAsPixel()-cos(iTileAngle)*mdo->getStepY());
-        	mdo->setXPosAsPixel(mdo->getXAsPixel()+sin(iTileAngle)*mdo->getStepX());
-*/        	
+/*        //edited by Mike, 20210806
         	mdo->setYPosAsPixel(mdo->getYAsPixel()-cos(iTileAngle)*mdo->getStepY());
         	mdo->setXPosAsPixel(mdo->getXAsPixel()+sin(iTileAngle)*mdo->getStepX());
         	
-
-					//added by Mike, 20210803
+        	//added by Mike, 20210803
 					//TO-DO: -reverify: this
-        	//note: push down; gravity?
-//        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY()
+        	//note: push down; gravity?; sand, e.g. sink hole?
+//        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY());
+*/
+				   if (mdo->getIsCurrentMovingStateIdleState()) {
+				   }
+				   else {
+        	  //edited by Mike, 20210806
+//        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepX()/cos(iTileAngle));
+//        	  mdo->setXPosAsPixel(mdo->getXAsPixel()+mdo->getStepY()/sin(iTileAngle));
+        	  //add this to decrease speed via push back        
+/*        	  	  
+        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+        	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+*/
+/*
+        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f-(mdo->getStepX()*fStepDashMultiplier))/cos(iTileAngle));
+        	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f-(mdo->getStepY()*fStepDashMultiplier))/sin(iTileAngle));
+*/        	  
+        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+        	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+				  }
         }       
-        
-//        this->setYPosAsPixel(this->getYAsPixel()-this->getStepY());
+  			
+  			//add this to stop gravity via push upward      
+        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
 
-        return true;
+				//edited by Mike, 20210806
+//        return true;
+        return false;
     }
 
     

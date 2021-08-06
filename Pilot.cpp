@@ -6882,7 +6882,7 @@ void Pilot::move(int key)
          			}
 					
          			if (bIsExecutingDashArray[KEY_D]) {
-            			myXPosAsPixel+=stepX*2;
+            			myXPosAsPixel+=stepX*2;            			
 		 					}									
 							
 							bHasHitWall=false;
@@ -7034,7 +7034,9 @@ void Pilot::move(int key)
         }
         
         if (getIsPlayer1()) { //Player1: Unit Chief
+        		//edited by Mike, 20210806
             myYPosAsPixel+=stepY;
+//            myYPosAsPixel+=(stepY*1.2);
         }
     }
     bHasHitWall=false;

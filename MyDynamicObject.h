@@ -326,6 +326,14 @@ public:
         return bIsMovingDown;
     }
     
+    //added by Mike, 20210806
+    bool getIsCurrentMovingStateIdleState() {
+    	if (currentMovingState==IDLE_MOVING_STATE) {
+    		return true;
+    	}
+    	return false;
+    }
+    
     //added by Mike, 20201217
     virtual void draw();
     
@@ -366,6 +374,17 @@ public:
     virtual void setYPosAsPixel(int iY) {
         myYPosAsPixel=iY;
     }
+    
+    //added by Mike, 20210806
+    virtual void setIsExecutingDash(bool bInput) {
+    }
+    
+    virtual void setStopExecutingDash() {
+		}
+		
+		virtual bool getIsExecutingDash() {
+		}
+
     
     float getDistance(float x1, float y1, float z1, float x2, float y2, float z2);
     

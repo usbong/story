@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210805
+ * @date updated: 20210806
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -359,6 +359,29 @@ public:
     {
        return myHeight;
     }
+    
+    //added by Mike, 20210806
+    virtual void setStopExecutingDash() {
+    	bIsExecutingDash=false;
+    	    	
+    	for (int iCount=0; iCount<PILOT_MAX_DIRECTIONAL_KEY_DASH_COUNT; iCount++) {
+    		bIsExecutingDashArray[iCount]=false; 
+    	}    	
+    }
+    
+    virtual bool getIsExecutingDash() {
+//    	return bIsExecutingDash;
+
+    	for (int iCount=0; iCount<PILOT_MAX_DIRECTIONAL_KEY_DASH_COUNT; iCount++) {
+    		if (bIsExecutingDashArray[iCount]==true) {
+    			return true;
+    		} 
+    	}    	
+    	
+			return false;
+		}
+    
+    
     //int STANDING_STATE;
     //int WALKING_STATE;
     float getRotationAngle(){
