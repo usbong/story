@@ -1627,7 +1627,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
  					
  					//TO-DO: -reverify: this due to incorrect output when climbing stairs with DASH command
  					if (mdo->getIsExecutingDash()) { 					
- 						printf(">>>DITO");
+// 						printf(">>>DITO");
 						fStepDashMultiplier=2.0f;
  					}
  								
@@ -1640,6 +1640,9 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 				   if (mdo->getIsCurrentMovingStateIdleState()) {
 				   }
 				   else {
+//TO-DO: -reverify: this
+//observation: with Move upward Command, position in y-axis goes to top of tile with FACING_RIGHT
+                       
 				    //edited by Mike, 20210806
 //        		mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepX()/cos(iTileAngle));
 //						mdo->setXPosAsPixel(mdo->getXAsPixel()-mdo->getStepY()/sin(iTileAngle));
@@ -1652,9 +1655,15 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         		mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f+(mdo->getStepY()*fStepDashMultiplier))/sin(iTileAngle));
 */
 
-        		mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+/*
+        		mdo->setYPosAsPixel(mdo->getYAsPixel()+(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
         		mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
-
+*/
+                       
+/*
+                       mdo->setYPosAsPixel(mdo->getYAsPixel()+(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+                       mdo->setXPosAsPixel(mdo->getXAsPixel()-(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+*/
 					 }	
         }
         else if (mdo->getCurrentFacing()==FACING_RIGHT) {
@@ -1669,7 +1678,7 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 //        	mdo->setYPosAsPixel(mdo->getYAsPixel()+1); //mdo->getStepY());
 */
 				   if (mdo->getIsCurrentMovingStateIdleState()) {
-				   }
+                   }
 				   else {
         	  //edited by Mike, 20210806
 //        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepX()/cos(iTileAngle));
@@ -1683,14 +1692,22 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f-(mdo->getStepX()*fStepDashMultiplier))/cos(iTileAngle));
         	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f-(mdo->getStepY()*fStepDashMultiplier))/sin(iTileAngle));
 */        	  
-        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
-        	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
-				  }
+//        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+                       mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
+
+//                  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+                       mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+
+                   }
         }       
   			
-  			//add this to stop gravity via push upward      
-        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
-
+        //add this to stop gravity via push upward
+        //edited by Mike, 20210806
+//        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*fStepDashMultiplier);
+        //add this to remove excess space between feet and tile
+        //TO-DO: -reverify: cause of incorrect output with push upward if we use <0.9
+        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*0.9*fStepDashMultiplier);
+        
 				//edited by Mike, 20210806
 //        return true;
         return false;
