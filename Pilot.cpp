@@ -800,6 +800,11 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     bIsExecutingKick=false;
     iKickAnimationCount=0;
     iKickAnimationCountDelay=0;
+
+    //added by Mike, 20210805
+    bIsExecutingPunch=false;
+    bIsExecutingDefend=false;
+
     
     //init default values
     //previousFacingState=FACING_UP;
@@ -6688,7 +6693,8 @@ void Pilot::move(int key)
           break;
           
 //     case KEY_DOWN:  //removed by Mike, 20210130
-     case KEY_S: //added by Mike, 20210128		   
+     case KEY_S: //added by Mike, 20210128
+           /* //removed by Mike, 20210806
 				//added by Mike, 20210111
 				if (bIsExecutingPunch) {
 				}
@@ -6710,19 +6716,18 @@ void Pilot::move(int key)
 					  			//added by Mike, 20210728
          					if ((bHasHitWall) and (getCurrentFacingState()==FACING_DOWN)) {
          		  			return;
-         					}         		           
-         			
+         					}
         					if (getIsPlayer1()) { //Player1: Unit Chief
             					myYPosAsPixel+=stepY;
         					}
         					else {
             					myYPosAsPixel+=stepY/2;
         					}
-				 			}        		
-					if ((bIsExecutingDashArray[KEY_S])) {
+                                }
+
+ if ((bIsExecutingDashArray[KEY_S])) {
             			myYPosAsPixel+=stepY*2;
 					}
-					
 							bHasHitWall=false;
 				}
 	      //added by Mike, 20201201; edited by Mike, 20201225
@@ -6739,6 +6744,7 @@ void Pilot::move(int key)
 		  }
 
            currentMovingState=WALKING_MOVING_STATE;
+*/
           break;
 //     case KEY_LEFT: //removed by Mike, 20210130
      case KEY_A: //added by Mike, 20210128		   
