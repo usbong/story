@@ -6602,6 +6602,7 @@ void Pilot::move(int key)
 
 //	 case KEY_UP: //removed by Mike, 20210130
      case KEY_W:
+/* //removed by Mike, 20210806
        //added by Mike, 20210111
        if (bIsExecutingPunch) {
 	   }
@@ -6630,20 +6631,7 @@ void Pilot::move(int key)
          		  	return;
          		  }
          		           		  
-         		           		  
-/*	//removed by Mike, 20210805         		           		  
-         			if (getIsPlayer1()) { //Player1: Unit Chief
-            			myYPosAsPixel+=-stepY;
-         			}
-         			else {
-            			myYPosAsPixel+=-stepY/2;
-         			}
-					
-         			if (bIsExecutingDashArray[KEY_W]) {
-            			myYPosAsPixel+=-stepY*2;
-		 					}
-*/
-                //edited by Mike, 20210805
+         		                    //edited by Mike, 20210805
                 //in macOS machine, Pilot does not move up due to gravity;
                 //OK in LUBUNTU machine; JUMP height low; exerting effort to move up, but pulled by heavy force
 //            	myYPosAsPixel+=-stepY;
@@ -6692,6 +6680,8 @@ void Pilot::move(int key)
 		  
           currentMovingState=WALKING_MOVING_STATE;
           break;
+*/
+           return;
           
 //     case KEY_DOWN:  //removed by Mike, 20210130
      case KEY_S: //added by Mike, 20210128
@@ -6745,8 +6735,10 @@ void Pilot::move(int key)
 		  }
 
            currentMovingState=WALKING_MOVING_STATE;
-*/
           break;
+            */
+        //added by Mike, 20210806
+           return;
 //     case KEY_LEFT: //removed by Mike, 20210130
      case KEY_A: //added by Mike, 20210128		   
      		//removed by Mike, 20201001
