@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210805
+ * @date updated: 20210806
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -6643,9 +6643,20 @@ void Pilot::move(int key)
 //            	myYPosAsPixel+=-stepY;
 //            	myYPosAsPixel+=(-stepY*2);
 //            	myYPosAsPixel+=(-stepY*1.1);
-             
-             iStepYCountMax=20;
+  
+  						 //edited by Mike, 20210806           
+//             iStepYCountMax=20;
+             iStepYCountMax=10;
+
              if (iStepYCount>=iStepYCountMax) {
+             			//added by Mike, 20210806;
+             			//removed by Mike, 20210806;
+             			//Yosshi- Dinosaur?
+//             		return;
+
+            			currentMovingState=IDLE_MOVING_STATE;
+              		currentFacingState=FACING_UP;
+            			break;
              }
              else {
                 myYPosAsPixel+=(-stepY*1.1);
