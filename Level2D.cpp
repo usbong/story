@@ -1679,9 +1679,12 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
                         mdo->setXPosAsPixel(mdo->getXAsPixel()-mdo->getStepX()*1.22f);
 */
 
+/*  //edited by Mike, 20210807
                 mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()*(1+(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle)));
                 mdo->setXPosAsPixel(mdo->getXAsPixel()-mdo->getStepY()*(1+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle)));
-
+*/
+                        mdo->setYPosAsPixel(mdo->getYAsPixel()+mdo->getStepY()*(1+(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle))+1);
+                        mdo->setXPosAsPixel(mdo->getXAsPixel()-mdo->getStepY()*(1+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle))-1);
                         
                         //push up
                         mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*fStepDashMultiplier);
@@ -1715,13 +1718,19 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 /*
         	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f-(mdo->getStepX()*fStepDashMultiplier))/cos(iTileAngle));
         	  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f-(mdo->getStepY()*fStepDashMultiplier))/sin(iTileAngle));
-*/        	  
+*/
+         //edited by Mike, 20210807
+/*
 //        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
                        mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
 
 //                  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
                        mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
-
+*/
+                       mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle)+1);
+                       
+                       mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle)+1);
+                       
                    }
         }       
   			
