@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210806
+ * @date updated: 20210807
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -47,7 +47,10 @@
 //added by Mike, 20210202
 //TO-DO: -update: instructions when diagonal movement is combined with attack and defend keys
 
-//TO-DO: -add: in draw tile sprite texture image whose width and height is over its tile width and height used in collision detection
+//added by Mike, 20210807
+//added: in draw tile sprite texture image whose width and height is over its tile width and height used in collision detection
+
+//TO-DO: -add: acceleration down in y-axis with gravity
 
 #include <stdio.h>
 #include <math.h>
@@ -1585,7 +1588,10 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
     	 (sTileId.compare("2-0") == 0)) {				
 				//added by Mike, 20210806
 				//reminder: added: gravity to exist in world
+				//edited by Mike, 20210807
+				//TO-DO: -add: container to store gravity value
         mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY());
+//        mdo->setYPosAsPixel(mdo->getYAsPixel()-mdo->getStepY()*2);
 
         return false;
     }
@@ -1611,11 +1617,17 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
         
                     //removed by Mike, 20210806
 // 					float fStepDashMultiplier=1.0f; //0.0f;
+ 	
+ 					//removed by Mike, 20210807			
+// 					fStepDashMultiplier=2.0f;
  					
  					//TO-DO: -reverify: this due to incorrect output when climbing stairs with DASH command
  					if (mdo->getIsExecutingDash()) { 					
 // 						printf(">>>DITO");
-						fStepDashMultiplier=2.0f;
+						//edited by Mike, 20210807
+//						fStepDashMultiplier=2.0f;
+						fStepDashMultiplier*=2.0f;
+
  					}
         
         //added by Mike, 20210806
@@ -1721,11 +1733,9 @@ bool Level2D::hitByAtTile(MyDynamicObject* mdo, std::string sTileId, int iTileXP
 */
          //edited by Mike, 20210807
 /*
-//        	  mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
-                       mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle));
-
-//                  mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
-                       mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle));
+                       mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle)+1);
+                       
+                       mdo->setXPosAsPixel(mdo->getXAsPixel()+(mdo->getStepY()*0.02f*fStepDashMultiplier)/sin(iTileAngle)+1);
 */
                        mdo->setYPosAsPixel(mdo->getYAsPixel()-(mdo->getStepX()*0.02f*fStepDashMultiplier)/cos(iTileAngle)+1);
                        

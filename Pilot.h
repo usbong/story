@@ -6,7 +6,7 @@
  * 
  *     http://www.apache.org/licenses/LICENSE-2.0
  *     
- * Unless required by applicable law or agreed to in writing, software
+ * Unless required by applicable law or agreed to in wrMAX_WAIT_COUNTiting, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210806
+ * @date updated: 20210807
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -53,6 +53,9 @@
 //TO-DO: -add: texture definitions in PolygolUtils
 #define MIKE_TEXTURE_A 7 
 
+//note: wait count to receive input to execute DASH command
+//edited by Mike, 20210807
+/*
 #ifdef _WIN32
 	#define MAX_WAIT_COUNT 5 //Windows Machine
 #endif
@@ -65,6 +68,11 @@
 #if defined(__APPLE__)
     #define MAX_WAIT_COUNT 5
 #endif
+*/
+
+//TO-DO: -update: this due to redefinition in OpenGLCanvas.cpp, et cetera
+#define MAX_WAIT_COUNT 5
+
 
 //edited by Mike, 20210129
 //TO-DO: -add: robotship dash background movement animation

@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210804
+ * @date updated: 20210807
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -3321,6 +3321,10 @@ void OpenGLCanvas::update()
         
         //added by Mike, 20210606
         //TO-DO: -add: goal defender, e.g. animal as nature?
+
+				//added by Mike, 20210807
+        myPilot->update(1); //dt
+
         
         //added by Mike, 20210206
 /*  //removed by Mike, 20210804

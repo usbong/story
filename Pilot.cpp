@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210806
+ * @date updated: 20210807
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -698,8 +698,14 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     stepY=fGridSquareHeight/8;
     stepZ=fGridSquareWidth/8;
 */
+  	//edited by Mike, 20210807	
   	stepX=fGridSquareWidth/10;
+//  	stepX=fGridSquareWidth/10*2;
+
+  	//edited by Mike, 20210807	
     stepY=fGridSquareHeight/10;
+//    stepY=fGridSquareHeight/10*2;
+
     stepZ=fGridSquareWidth/10;
 	
 /*
@@ -6064,24 +6070,17 @@ void Pilot::updatePrev(float dt)
     }
 }
 
-//added by Mike, 20210423
+//added by Mike, 20210423; edited by Mike, 20210807
 //TO-DO: -update: this
 void Pilot::update(float dt)
 {
-/*
-    //added by Mike, 20210804
-    //note: gravity
-    if (bHasHitWall) {
-    }
-    else {
-    		this->setYPosAsPixel(this->getYAsPixel()+this->getStepY());
-    }
-*/
 
     switch (currentState)
     {
            case INITIALIZING_STATE:
-           case MOVING_STATE:      
+           case MOVING_STATE:   
+           //removed by Mike, 20210807
+/*              
 				switch(currentMovingState) {
 		           case WALKING_MOVING_STATE:
                         //added by Mike, 20210613
@@ -6113,10 +6112,10 @@ void Pilot::update(float dt)
                                         bIsExecutingKick=false;
                                         iKickAnimationCount=0;
                                         iKickAnimationCountDelay=0;
-/*  //removed by Mike, 20210613
-                                        armAngles[RIGHT]=0.0f;
-                                        armAngles[LEFT]=0.0f;
-*/
+  //removed by Mike, 20210613
+////                                        armAngles[RIGHT]=0.0f;
+////                                        armAngles[LEFT]=0.0f;
+
                                     
 //removed by Mike, 20210613
 //                                    }
@@ -6170,6 +6169,7 @@ void Pilot::update(float dt)
 		            default: //STANDING STATE		            
 		              break;//do nothing    
 				}
+*/
 
 				if (myKeysDown[KEY_D]==FALSE) {
 					if (iInputWaitCountArray[KEY_D]<MAX_WAIT_COUNT) {
@@ -7033,9 +7033,10 @@ void Pilot::move(int key)
         }
         
         if (getIsPlayer1()) { //Player1: Unit Chief
-        		//edited by Mike, 20210806
-            myYPosAsPixel+=stepY;
+        		//edited by Mike, 20210807
 //            myYPosAsPixel+=(stepY*1.2);
+            myYPosAsPixel+=stepY;
+//            myYPosAsPixel+=(stepY*2);
         }
     }
     bHasHitWall=false;
