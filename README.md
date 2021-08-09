@@ -1,5 +1,8 @@
 # Usbong Story
 
+## Example Output: Diagonal Movement Right Triangle Tile
+<img src="https://github.com/usbong/story/blob/main/screenshots/diagonalMovementRightTriangleTileWorkV20210807T0907.gif" width="50%">	
+
 ## Open Source Software License
 Copyright 2019~2021 SYSON, MICHAEL B.
 
