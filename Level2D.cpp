@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210807
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -806,6 +806,9 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     
     glBindTexture(GL_TEXTURE_2D, iLevelTextureObject);
     glEnable(GL_TEXTURE_2D);
+    
+    //added by Mike, 20210809
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
     //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
     //16x16pixels; 256x256pixels width x height .tga image file

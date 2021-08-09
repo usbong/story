@@ -914,7 +914,7 @@ void Pilot::drawPilotAsQuadWithTexture()
 	//TO-DO: -update: this
 	myXPosAsPixel=(int)myXPos;
 	//edited by Mike, 20210725
-
+*/
 /* //removed by Mike, 20210608
 void Pilot::drawPilotObjectPrevLargeTexture() 
 {	
@@ -1187,7 +1187,12 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
 							//printf("iTaoAnimationFrameOffset: %i",iTaoAnimationFrameOffset);
 																		
               					fTaoAnimationFrameOffsetYAxis=0.75f; //added by Mike, 20210611
-																		
+																	
+                                    
+                                    //added by Mike, 20210809
+                                    drawPilotObjectGlow();
+
+                                    
 												drawPilotObject();
 												
 												//added by Mike, 20210805; edited by Mike, 20210805
@@ -1245,6 +1250,9 @@ void Pilot::drawPilotObject()
     
     glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
     glEnable(GL_TEXTURE_2D);
+    
+    //added by Mike, 20210809
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
     //added by Mike, 20210803
     glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
@@ -1403,11 +1411,21 @@ void Pilot::drawPilotObjectGlow()
     glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
     glEnable(GL_TEXTURE_2D);
 
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
 //    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
 //    glColor3f(1.0f, 0.67f, 0.0f); //gold
-    glColor3f(0.0f, 0.0f, 0.0f); //black
+//    glColor3f(0.0f, 0.0f, 0.0f); //black
+    glColor3f(1.0f, 0.0f, 0.0f); //red
 
+    //added by Mike, 20210809
+    //https://stackoverflow.com/questions/4361023/opengl-es-1-1-how-to-change-texture-color-without-losing-luminance;
+    //last accessed: 20210809T1402
+    //answer by: Ozirus, 20101206T2236
+    glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD );
+//    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+    
     //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
     //16x16pixels; 256x256pixels width x height .tga image file
     //texture coordinates;
@@ -1482,14 +1500,16 @@ void Pilot::drawPilotObjectGlow()
 //-----		
 		
 		//added by Mike, 20210809
-		glTranslatef(0.002f, 0.002f, 0.0f);
-    glScalef(1.02f, 1.02f, 1.0f);
-
+        glScalef(1.08f, 1.08f, 1.0f);
 
 		//added by Mike, 20210727
 		//due flipped vertically
 		glRotatef(180, 0.0f, 0.0f, 1.0f);		
-		
+
+        //added by Mike, 20210809
+        //note: FACING LEFT OR RIGHT, graphics library translate COMMAND equal
+        glTranslatef(0.004f, 0.008f, 0.0f);
+
     //note: vertex position sequence to be auto-drawn
     //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
     //edited by Mike, 20210729
@@ -1498,6 +1518,9 @@ void Pilot::drawPilotObjectGlow()
         (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
             (prevFacingState==FACING_RIGHT))
         || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+
+        //added by Mike, 20210809
+//        glTranslatef(0.004f, 0.008f, 0.0f);
 
         //note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: clock-wise
@@ -1525,7 +1548,12 @@ void Pilot::drawPilotObjectGlow()
              (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
               (prevFacingState==FACING_LEFT))
              || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
-			//note: vertex positions sequence: counter-clock-wise
+
+        
+        //added by Mike, 20210809
+//        glTranslatef(0.004f, 0.008f, 0.0f);
+
+            //note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: counter-clock-wise
     	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
     		//glTexCoord2f(fTx, fTy);

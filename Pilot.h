@@ -523,6 +523,7 @@ public:
 
 	//added by Mike, 20210809
 	void drawShieldEffectAsQuadWithTexture();
+    void drawPilotObjectGlow();
 
 
 	// draws the entire robot
