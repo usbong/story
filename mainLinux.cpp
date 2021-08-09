@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210726
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -776,8 +776,8 @@ int main(int argc, char** argv) {
     //edited by Mike, 20210614
     //   glutCreateWindow("Usbong Foot"); // Create a window with the given title
     //TO-DO: -remove: window title
-    //edited by Mike, 20210726
-	   glutCreateWindow("Usbong Map System"); // Create a window with the given title
+    //edited by Mike, 20210809
+	   glutCreateWindow("Usbong Story System"); // Create a window with the given title
     
     //added by Mike, 20210614
     //note: execute after glutCreateWindow(...)

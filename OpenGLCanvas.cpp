@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210807
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -473,6 +473,10 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     
     //added by Mike, 20200930
     currentState = GAME_SCREEN; //TO-DO: -update: this
+  
+  	//added by Mike, 20210809
+  	//TO-DO: -reverify: this  
+//    myWindowWidthAsPixelInput=768;
     
     //added by Mike, 20210625
     //TO-DO: -reverify: this; draw instructions, e.g. in Text.cpp,
@@ -481,8 +485,10 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     //TO-DO: -reverify: this
     myWindowWidthAsPixel = (int)myWindowWidthAsPixelInput;
     myWindowHeightAsPixel = (int)myWindowHeightAsPixelInput;
-    
-//    printf("HALLO: myWindowWidthAsPixel: %i\n",myWindowWidthAsPixel);
+
+  	//added by Mike, 20210809    
+    printf("HALLO: myWindowWidthAsPixel: %i\n",myWindowWidthAsPixel);
+    printf(">>: myWindowHeightAsPixel: %i\n",myWindowHeightAsPixel);
     
     /*	//edited by Mike, 20210710
      //added by Mike, 20210702
