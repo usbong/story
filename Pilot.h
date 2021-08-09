@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210807
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -271,9 +271,11 @@ private:
 			 bIsPlayer2,
 			 bIsPlayer2Partner;
 	
-
     GLint tricount;
     GLint isMovingForward;
+
+		//added by Mike, 20210809
+		bool iShieldEffectCount;
 
     GLboolean test_pow2(GLushort i);
     void load_tga(char *filename);
@@ -518,6 +520,10 @@ public:
 
 	//added by Mike, 20210805
 	void drawAccelerationEffectAsQuadWithTexture();
+
+	//added by Mike, 20210809
+	void drawShieldEffectAsQuadWithTexture();
+
 
 	// draws the entire robot
 	//void drawRobot(float xPos, float yPos, float zPos);

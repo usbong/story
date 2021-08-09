@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210807
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -1161,6 +1161,10 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
 												
 												//FACING_UP...
 												drawPilotObject();
+												
+												//added by Mike, 20210809
+		     								drawShieldEffectAsQuadWithTexture();
+
 												break;
 											case WALKING_MOVING_STATE:
 							//added by Mike, 20210420
@@ -1526,6 +1530,7 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
     glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
     
 //--
+
     //TO-DO: -add: in loop, increasing size AND movement
 for (int iCount=0; iCount<3; iCount++) {
     
@@ -1539,7 +1544,6 @@ for (int iCount=0; iCount<3; iCount++) {
 	  	glPopMatrix();
 	  	return;
 	}
-
     
 /*    
     //note: 3rd quadrant
@@ -1569,8 +1573,7 @@ for (int iCount=0; iCount<3; iCount++) {
     glEnd();   	
    			
 		//reset scaled shape
-		glScalef(1.0f, 1.0f, 1.0f);		
-   	
+		glScalef(1.0f, 1.0f, 1.0f);  	
 }
 //-----		
 
@@ -1582,6 +1585,197 @@ for (int iCount=0; iCount<3; iCount++) {
     
     glPopMatrix();
 }
+
+//added by Mike, 20210809
+//sonic shield?
+void Pilot::drawShieldEffectAsQuadWithTexture()
+{
+/*	//removed by Mike, 20210805    
+    glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
+    glEnable(GL_TEXTURE_2D);
+*/    
+    //added by Mike, 20210803
+//    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+		//note: alpha last input parameter
+//    glColor4f(0.0f, 1.0f, 0.85f, 0.80f); //set to default, i.e. green + blue; 80% transparent
+		//note: fully charged to be ON; red charging; from Android
+		//reminder: additional computation due to transparent effect
+    glColor4f(0.18f, 1.0f, 0.16f, 0.60f); //set to default, i.e. lime green; 60% transparent
+
+		iShieldEffectCount=(iShieldEffectCount+1)%2;
+		if (iShieldEffectCount==0) {
+			return;
+		}
+
+
+
+    //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
+    //16x16pixels; 256x256pixels width x height .tga image file
+    //texture coordinates;
+    //width: 1.0/16.0 = 0.0625
+    //height: 1.0/16.0 = 0.0625
+
+    glPushMatrix();
+    
+    printf("drawAccelerationEffectAsQuadWithTexture\n");
+    
+    //TO-DO: -update: this
+/*    
+    printf(">>Pilot.cpp; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
+    printf(">>Pilot.cpp; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
+*/
+    
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
+    
+//    printf(">>>fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+ 
+    //get positive value
+    if (fGridTileWidthVertexPosition<0) {
+        fGridTileWidthVertexPosition=fGridTileWidthVertexPosition*(-1);
+    }    
+    if (fGridTileHeightVertexPosition<0) {
+        fGridTileHeightVertexPosition=fGridTileHeightVertexPosition*(-1);
+    }
+    
+    //  	printf (">>> fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+    
+    //added by Mike, 20210715
+    //note: add this set of instructions due to excess border visible
+    //verified: screen/monitor width and height to be OK
+    //10/3 = 3.3333... cause of problem?
+    //added by Mike, 20210717
+    //note: partly border visible occurs in Linux machine;
+    //due to instructions that I wrote
+    
+#if defined(__APPLE__)
+    //note: right border of tile only partly visible
+    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
+#endif
+    
+    //added by Mike, 20210720
+    fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
+    fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
+
+/*		
+		//added by Mike, 20210727        
+    glTranslatef(0.0f, -fGridTileHeightVertexPosition, 0.0f);
+*/
+    
+    float fTx = 0.0f; 
+    float fTy = 0.0f;
+    
+    float fTileSideXAxis = 0.0625f;
+    //from bottom; anchor; start fTy at 1.0f
+    float fTileSideYAxis = -0.0625f;
+
+    //added by Mike, 20210724
+    //background color of tile
+    //-----
+    /*
+     glDisable(GL_TEXTURE_2D);
+     glBindTexture(GL_TEXTURE_2D, 0);
+     */
+    
+    //added by Mike, 20210809
+    glTranslatef(0.0f, 0.0f+fGridTileHeightVertexPosition/3.0f, 0.0f);
+
+    //added by Mike, 20210805
+    if (currentFacingState==FACING_RIGHT) {
+        //added by Mike, 20210805
+        //note: remove when drawing quad, instead of circle
+        //note: circle radius 0.25f; OK; reminder: anchor top-left
+        //        glTranslatef(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+        //        glTranslatef(0.0f-fGridTileWidthVertexPosition/2.0f, 0.0f, 0.0f);
+        
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/2.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+    }
+    else if (currentFacingState==FACING_LEFT) {
+        //note: circle radius 0.25f; OK; reminder: anchor top-left
+        //glTranslatef(0.0f+fGridTileWidthVertexPosition*2, 0.0f, 0.0f);
+        //note: y-axis:  0.0f-fGridTileHeightVertexPosition/2.0f at middle
+//        glTranslatef(0.0f+fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/2.0f, 0.0f-fGridTileHeightVertexPosition/1.1f, 0.0f);
+    }
+    
+    //Reference: https://stackoverflow.com/questions/46258919/drawing-circle-with-gl-polygon-radius-out-of-scale;
+    //question by: emic, 20170916T2216;
+    //edited by: Rabbid76, 20180531T1930
+    //answer by: Rabbid76, 20170917T0735
+    
+    //TO-DO: -reverify: this due to drawn shape ellipse, not circle
+    //glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
+    //glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
+    //note: -reverify: anchor; facing right at center, facing left at back; trailing
+/*    
+    printf("myWindowWidth: %i\n",myWindowWidth); //example output: 1366
+    printf("myWindowHeight: %i\n",myWindowHeight); //example output: 768
+    //		glScalef(0.56f, 1.0f, 1.0f);
+*/
+    
+    //TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
+    //AND which side is longer
+    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    
+//--
+/*
+    //TO-DO: -add: in loop, increasing size AND movement
+for (int iCount=0; iCount<3; iCount++) {
+    
+    if (currentFacingState==FACING_RIGHT) {
+        glTranslatef(0.0f-fGridTileWidthVertexPosition/4.0f, 0.0f, 0.0f);
+    }
+    else if (currentFacingState==FACING_LEFT) {
+        glTranslatef(0.0f+fGridTileWidthVertexPosition/4.0f, 0.0f, 0.0f);
+    }
+	else {
+	  	glPopMatrix();
+	  	return;
+	}
+*/
+    
+/*    
+    //note: 3rd quadrant
+    glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+    	glVertex3f(0.0f, 0.0f, 0.0f);   	
+    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);    	
+    	glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);    	
+    	glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+   	glEnd();
+*/   	
+
+        //added by Mike, 20210805
+        //glScalef(1.0f*(iCount+1), 1.0f*(iCount+1), 1.0f);
+        //glScalef(0.5f*(iCount+1), 0.5f*(iCount+1), 1.0f);
+/*        glScalef(0.6f*(iCount+1), 0.6f*(iCount+1), 1.0f);
+*/    
+		float fCircleCenterX=0.0f;
+		float fCircleCenterY=0.0f;
+		float fPI=3.14f;
+    float fRadius=0.2f; //0.25f; //0.02f;//0.25f; //0.1f; //0.25f;
+				
+		//draw ellipse
+    glBegin(GL_POLYGON);
+        for(double i = 0; i < 2 * fPI; i += fPI / 24) {
+            glVertex3f((cos(i) * fRadius) + fCircleCenterX,(sin(i) * fRadius) + fCircleCenterY, 0.0);
+        }
+    glEnd();   	
+   			
+		//reset scaled shape
+		glScalef(1.0f, 1.0f, 1.0f);		
+/*   	
+}*/
+//-----		
+
+
+/*	//removed by Mike, 20210805    
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+*/
+    
+    glPopMatrix();
+}
+
 
 /*
 //added by Mike, 20210805
@@ -3007,6 +3201,10 @@ void Pilot::move(int key)
      //added by Mike, 2021011
      //TO-DO: -update: this to be defend using shield
      case KEY_H:
+     		 //added by Mike, 20210809; removed by Mike, 20210809
+//		     drawShieldEffectAsQuadWithTexture();
+     
+/* //removed by Mike, 20210809; executes kick Command     
           bIsExecutingDefend=true;
           
           bHasPressedADirectionalKey=false;
@@ -3022,7 +3220,8 @@ void Pilot::move(int key)
 		  
 //		  if (!bHasPressedADirectionalKey) {
 		  	currentMovingState=ATTACKING_MOVING_STATE;		   		  	
-//		  }          
+//		  }         
+*/ 
           break;
      case -KEY_H:
 /*          //removed by Mike, 20210124

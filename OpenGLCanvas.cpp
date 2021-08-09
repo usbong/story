@@ -1650,8 +1650,8 @@ void OpenGLCanvas::render()
     //paint the outer margins if window not square, i.e. width and height not equal
     //-----
     glBegin(GL_QUADS);
-    glColor3f(0.0f,0.0f,0.0f); //black
-    //    	glColor3f(1.0f,1.0f,1.0f); //white
+//    glColor3f(0.0f,0.0f,0.0f); //black
+        	glColor3f(1.0f,1.0f,1.0f); //white
     
     //TOP
     /*    //sky blue color; darker
@@ -3527,6 +3527,9 @@ void OpenGLCanvas::update()
         if(myKeysDown[KEY_H] == TRUE)
         {
             myRobotShip->move(KEY_H);
+            
+            //added by Mike, 20210809
+            myPilot->move(KEY_H);            
         }
         
        	//added by Mike, 20210121
