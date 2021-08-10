@@ -275,9 +275,11 @@ private:
     GLint isMovingForward;
 
 		//added by Mike, 20210809
-		bool iShieldEffectCount,
-				 iGlowEffectCount; //added by Mike, 20210810
-
+		int iShieldEffectCount,
+				 //added by Mike, 20210810
+				 iGlowEffectCount,
+				 iGlowFadeEffectCount;
+				 
     GLboolean test_pow2(GLushort i);
     void load_tga(char *filename);
 	
@@ -524,7 +526,8 @@ public:
 
 	//added by Mike, 20210809
 	void drawShieldEffectAsQuadWithTexture();
-    void drawPilotObjectGlow();
+  void drawPilotObjectGlow();
+  void drawPilotObjectGlowFade(); //added by Mike, 20210810
 
 
 	// draws the entire robot
