@@ -1610,6 +1610,18 @@ void Pilot::drawPilotObjectGlow()
 //added by Mike, 20210810
 void Pilot::drawPilotObjectGlowFade()
 {
+    //added by Mike, 20210810
+    // Disable AutoTexture Coordinates
+/*    glDisable(GL_TEXTURE_GEN_S);
+    glDisable(GL_TEXTURE_GEN_T);
+*/
+    
+//    glEnable(GL_TEXTURE_2D);                    // Enable 2D Texture Mapping
+//    glDisable(GL_DEPTH_TEST);                   // Disable Depth Testing
+/*
+    glBlendFunc(GL_SRC_ALPHA,GL_ONE);               // Set Blending Mode
+    glEnable(GL_BLEND);                     // Enable Blending
+*/
     
     glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
     glEnable(GL_TEXTURE_2D);
@@ -1671,12 +1683,18 @@ void Pilot::drawPilotObjectGlowFade()
 
 //      glScalef(1.08f, 1.08f, 1.0f);
 		
+        //reference: http://nehe.gamedev.net/tutorial/radial_blur__rendering_to_a_texture/18004/;
+        //last accessed: 20210810
+        //TO-DO: -reverify: this
 		for (iGlowFadeEffectCount=0; iGlowFadeEffectCount<iGlowFadeEffectCountMax; iGlowFadeEffectCount++) {		
 			//from red to orange to yellow
 //    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f); //red
-//    	glColor4f(1.0f, 0.0825f*iGlowFadeEffectCount, 0.0f, 1.0f); 
-    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.10f); //red
-
+//    	glColor4f(1.0f, 0.0825f*iGlowFadeEffectCount, 0.0f, 1.0f);
+            //edited by Mike, 20210810
+            glColor4f(1.0f, 1.0f-0.1f*iGlowFadeEffectCount, 0.0f, 1.0f-iGlowFadeEffectCount*0.1f);
+            //from yellow to orange to red
+//            glColor4f(1.0f, 0.1f*iGlowFadeEffectCount, 0.0f, 1.0f-iGlowFadeEffectCount*0.1f);
+            
 			if (iGlowFadeEffectCount==0) {
     		glTranslatef(0.0f, -fGridTileHeightVertexPosition, 0.0f);
 
@@ -1705,7 +1723,8 @@ void Pilot::drawPilotObjectGlowFade()
       glTranslatef(-0.0032f*iGlowFadeEffectCount, -0.0072f*iGlowFadeEffectCount, 0.0f);
 */
 
-		}
+//removed by Mike, 20210810
+//		}
 
     float fTx = 0.0f; 
     float fTy = 0.0f;
@@ -1785,6 +1804,9 @@ void Pilot::drawPilotObjectGlowFade()
 		else {
 		}
 
+    //added by Mike, 20210810
+    }
+            
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     
