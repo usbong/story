@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210809
+ * @date updated: 20210811
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -1656,8 +1656,8 @@ void OpenGLCanvas::render()
     //paint the outer margins if window not square, i.e. width and height not equal
     //-----
     glBegin(GL_QUADS);
-//    glColor3f(0.0f,0.0f,0.0f); //black
-        	glColor3f(1.0f,1.0f,1.0f); //white
+    glColor3f(0.0f,0.0f,0.0f); //black
+//        	glColor3f(1.0f,1.0f,1.0f); //white
     
     //TOP
     /*    //sky blue color; darker

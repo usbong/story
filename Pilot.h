@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210810
+ * @date updated: 20210811
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -526,9 +526,9 @@ public:
 
 	//added by Mike, 20210809
 	void drawShieldEffectAsQuadWithTexture();
-  void drawPilotObjectGlow();
-  void drawPilotObjectGlowFade(); //added by Mike, 20210810
-
+    void drawPilotObjectGlow();
+    void drawPilotObjectGlowFadePart1(); //edited by Mike, 20210811
+    void drawPilotObjectGlowFade(); //added by Mike, 20210811
 
 	// draws the entire robot
 	//void drawRobot(float xPos, float yPos, float zPos);
