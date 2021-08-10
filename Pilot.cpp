@@ -460,6 +460,11 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
 	
 	//added by Mike, 20210611
 	fTaoAnimationFrameOffsetYAxis=0.0f;
+	
+	//added by Mike, 20210810
+	iShieldEffectCount=0;
+	iGlowEffectCount=0;
+	iGlowFadeEffectCount=0;
 
 //    myXPos=0.0;
 //    myYPos=0.0;
@@ -1160,7 +1165,10 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
               					fTaoAnimationFrameOffsetYAxis=0.75f; //added by Mike, 20210611
 	
 													//added by Mike, 20210809
-												drawPilotObjectGlow();
+												//drawPilotObjectGlow();
+																								
+												//added by Mike, 20210810
+												drawPilotObjectGlowFade();
 												
 												//FACING_UP...
 												drawPilotObject();
@@ -1190,7 +1198,10 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
 																	
                                     
                                     //added by Mike, 20210809
-                                    drawPilotObjectGlow();
+//                                    drawPilotObjectGlow();
+
+												//added by Mike, 20210810
+												drawPilotObjectGlowFade();
 
                                     
 												drawPilotObject();
@@ -1518,6 +1529,190 @@ void Pilot::drawPilotObjectGlow()
         //added by Mike, 20210809
         //note: FACING LEFT OR RIGHT, graphics library translate COMMAND equal
         glTranslatef(0.004f, 0.008f, 0.0f);
+
+    //note: vertex position sequence to be auto-drawn
+    //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
+    //edited by Mike, 20210729
+//    if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+    if ((currentFacingState==FACING_RIGHT) ||
+        (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+            (prevFacingState==FACING_RIGHT))
+        || (currentFacingState==FACING_RIGHT_AND_UP) || (currentFacingState==FACING_RIGHT_AND_DOWN)) {
+
+        //added by Mike, 20210809
+//        glTranslatef(0.004f, 0.008f, 0.0f);
+
+        //note: vertex positions sequence: counter-clock-wise
+			//note:texture positions sequence: clock-wise
+    	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+    		//glTexCoord2f(fTx, fTy);
+				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);
+    		glVertex3f(0.0f, 0.0f, 0.0f);
+    		
+    		//glTexCoord2f(fTx + fTileSideXAxis, fTy);
+      	glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+    		
+    		//glTexCoord2f(fTx + fTileSideXAxis, fTy + fTileSideYAxis);
+      	glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    		
+    		//glTexCoord2f(fTx, fTy + fTileSideYAxis);
+      	glTexCoord2f(0.25+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f); //0.5f);
+    		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    	glEnd();
+    }
+    //edited by Mike, 20210729
+//    else if ((currentFacingState==FACING_LEFT) || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
+    else if ((currentFacingState==FACING_LEFT) ||
+             (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
+              (prevFacingState==FACING_LEFT))
+             || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
+
+        
+        //added by Mike, 20210809
+//        glTranslatef(0.004f, 0.008f, 0.0f);
+
+            //note: vertex positions sequence: counter-clock-wise
+			//note:texture positions sequence: counter-clock-wise
+    	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
+    		//glTexCoord2f(fTx, fTy);
+//				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	            
+    		glVertex3f(0.0f, 0.0f, 0.0f);
+    		
+    		//glTexCoord2f(fTx + fTileSideXAxis, fTy);
+      	//glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);   
+        glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);	
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+    		
+    		//glTexCoord2f(fTx + fTileSideXAxis, fTy + fTileSideYAxis);
+      	//glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    		
+    		//glTexCoord2f(fTx, fTy + fTileSideYAxis);
+      	//glTexCoord2f(0.25+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
+    		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    	glEnd();    	
+		}
+		//TO-DO: -add: facing_up, facing_down
+		else {
+		}
+
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    glPopMatrix();
+}
+
+//added by Mike, 20210810
+void Pilot::drawPilotObjectGlowFade()
+{
+    
+    glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
+    glEnable(GL_TEXTURE_2D);
+
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+    //added by Mike, 20210809
+    //https://stackoverflow.com/questions/4361023/opengl-es-1-1-how-to-change-texture-color-without-losing-luminance;
+    //last accessed: 20210809T1402
+    //answer by: Ozirus, 20101206T2236
+    glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD );
+//    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE );
+    
+    //notes: TO-DO: -reverify: indexed 64 colors max segmentation fault problem
+    //16x16pixels; 256x256pixels width x height .tga image file
+    //texture coordinates;
+    //width: 1.0/16.0 = 0.0625
+    //height: 1.0/16.0 = 0.0625
+
+    glPushMatrix();
+/*    
+    printf(">>Pilot.cpp; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
+    printf(">>Pilot.cpp; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
+*/    
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
+    
+//    printf(">>>fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+ 
+    //get positive value
+    if (fGridTileWidthVertexPosition<0) {
+        fGridTileWidthVertexPosition=fGridTileWidthVertexPosition*(-1);
+    }    
+    if (fGridTileHeightVertexPosition<0) {
+        fGridTileHeightVertexPosition=fGridTileHeightVertexPosition*(-1);
+    }
+    
+    //  	printf (">>> fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+    
+    //added by Mike, 20210715
+    //note: add this set of instructions due to excess border visible
+    //verified: screen/monitor width and height to be OK
+    //10/3 = 3.3333... cause of problem?
+    //added by Mike, 20210717
+    //note: partly border visible occurs in Linux machine;
+    //due to instructions that I wrote
+    
+#if defined(__APPLE__)
+    //note: right border of tile only partly visible
+    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
+#endif
+    
+    //added by Mike, 20210720
+    fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
+    fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
+		
+		int iGlowFadeEffectCountMax=10;
+
+//      glScalef(1.08f, 1.08f, 1.0f);
+		
+		for (iGlowFadeEffectCount=0; iGlowFadeEffectCount<iGlowFadeEffectCountMax; iGlowFadeEffectCount++) {		
+			//from red to orange to yellow
+//    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f); //red
+//    	glColor4f(1.0f, 0.0825f*iGlowFadeEffectCount, 0.0f, 1.0f); 
+    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.10f); //red
+
+			if (iGlowFadeEffectCount==0) {
+    		glTranslatef(0.0f, -fGridTileHeightVertexPosition, 0.0f);
+
+      	glScalef(1.08f, 1.08f, 1.0f);
+    	}
+    					
+			//edited by Mike, 20210810
+//      glScalef(1.08f, 1.08f, 1.0f);
+//      glScalef(1.08f*(iGlowFadeEffectCount/(iGlowFadeEffectCountMax*1.0f)), 1.08f, 1.0f);
+//      glScalef(1.0f+(iGlowFadeEffectCount/(iGlowFadeEffectCountMax*1.0f))/10, 1.0f+(iGlowFadeEffectCount/(iGlowFadeEffectCountMax*1.0f))/10, 1.0f);
+      glScalef(1.0f+(iGlowFadeEffectCount*0.001f), 1.0f+(iGlowFadeEffectCount*0.001f), 1.0f);
+		
+			if (iGlowFadeEffectCount==0) {
+				//due flipped vertically
+				glRotatef(180, 0.0f, 0.0f, 1.0f);			
+			}
+
+      //added by Mike, 20210809
+      //note: FACING LEFT OR RIGHT, graphics library translate COMMAND equal
+//TO-DO: -reverify: this
+      glTranslatef(0.004f, 0.008f, 0.0f);
+      glTranslatef(-0.0032f, -0.0072f, 0.0f);
+
+/*
+      glTranslatef(0.004f*iGlowFadeEffectCount, 0.008f*iGlowFadeEffectCount, 0.0f);
+      glTranslatef(-0.0032f*iGlowFadeEffectCount, -0.0072f*iGlowFadeEffectCount, 0.0f);
+*/
+
+		}
+
+    float fTx = 0.0f; 
+    float fTy = 0.0f;
+    
+    float fTileSideXAxis = 0.0625f;
+    //from bottom; anchor; start fTy at 1.0f
+    float fTileSideYAxis = -0.0625f;
 
     //note: vertex position sequence to be auto-drawn
     //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
