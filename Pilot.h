@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210809
+ * @date updated: 20210810
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -275,7 +275,8 @@ private:
     GLint isMovingForward;
 
 		//added by Mike, 20210809
-		bool iShieldEffectCount;
+		bool iShieldEffectCount,
+				 iGlowEffectCount; //added by Mike, 20210810
 
     GLboolean test_pow2(GLushort i);
     void load_tga(char *filename);

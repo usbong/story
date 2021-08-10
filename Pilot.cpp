@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210809
+ * @date updated: 20210810
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -1403,8 +1403,7 @@ void Pilot::drawPilotObject()
     glPopMatrix();
 }
 
-//added by Mike, 20210809
-//TO-DO: -update: this
+//added by Mike, 20210809; edited by Mike, 20210810
 void Pilot::drawPilotObjectGlow()
 {
     
@@ -1416,7 +1415,17 @@ void Pilot::drawPilotObjectGlow()
 //    glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
 //    glColor3f(1.0f, 0.67f, 0.0f); //gold
 //    glColor3f(0.0f, 0.0f, 0.0f); //black
-    glColor3f(1.0f, 0.0f, 0.0f); //red
+		//edited by Mike, 20210810
+//    glColor3f(1.0f, 0.0f, 0.0f); //red
+
+		iGlowEffectCount=(iGlowEffectCount+1)%2;
+		if (iGlowEffectCount==0) {
+    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f); //set to default, i.e. red
+		}
+		else {
+    	glColor4f(1.0f, 0.33f, 0.0f, 0.60f); //orange; 60% transparent
+		}
+
 
     //added by Mike, 20210809
     //https://stackoverflow.com/questions/4361023/opengl-es-1-1-how-to-change-texture-color-without-losing-luminance;
