@@ -1911,6 +1911,8 @@ void Pilot::drawPilotObjectGlowFade()
     
 		for (int iCount=0; iCount<4; iCount++) {
 		    
+//            glColor4f(0.8f, 0.0f, 0.0f, 1.0f-iCount*0.2f);
+            
     	for (iGlowFadeEffectCount=0; iGlowFadeEffectCount<iGlowFadeEffectCountMax; iGlowFadeEffectCount++) {
         	//from red to orange to yellow
         	//    	glColor4f(1.0f, 0.0f, 0.0f, 1.0f); //red
@@ -1919,7 +1921,15 @@ void Pilot::drawPilotObjectGlowFade()
 	//        glColor4f(1.0f, 1.0f-0.1f*iGlowFadeEffectCount, 0.0f, 1.0f-iGlowFadeEffectCount*0.1f);
 	//        glColor4f(1.0f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
 	//        glColor4f(0.8f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
-        	glColor4f(0.8f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
+            //edited by Mike, 20210812
+//        	glColor4f(0.8f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
+            //from orange to red; TO-DO: -reverify: due to iCount does not start from inside
+            if (iCount<2) {
+                glColor4f(0.8f, 0.0f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
+            }
+            else {
+                glColor4f(1.0f, 0.3f, 0.0f, 1.0f-iGlowFadeEffectCount*0.2f);
+            }
 	
         	
         	//from yellow to orange to red
@@ -1964,23 +1974,27 @@ void Pilot::drawPilotObjectGlowFade()
             if ((iGlowFadeEffectCount==0)){
 //        		glTranslatef(0.002f*iDirection, 0.002f, 0.0f);
         		glTranslatef(0.002f*iDirection, 0.002f, 0.0f);
-					}
+            }
 
 //            glTranslatef(0.002f*iDirection*iGlowFadeEffectCount, 0.002f*iDirection*iGlowFadeEffectCount, 0.0f);
-            
+
+
         	//even number
         	if (iGlowFadeEffectCount%2==0) {
 	//            glTranslatef(0.002f, -0.008f, 0.0f);
-            	glTranslatef(0.002f*iDirection, 0.002f*(iDirection*(-1)), 0.0f);
-//                glTranslatef(0.002f*iDirection*iGlowFadeEffectCount, 0.002f*(iDirection*(-1))*iGlowFadeEffectCount, 0.0f);
+                //edited by Mike, 20210812
+//            	glTranslatef(0.002f*iDirection, 0.002f*(iDirection*(-1)), 0.0f);
+                glTranslatef((0.002f*(iCount+1))*iDirection, (0.002f*(iCount+1))*(iDirection*(-1)), 0.0f);
         	}
         	//NOT even number
         	else {
 	//            glTranslatef(0.002f, 0.008f, 0.0f);
-            	glTranslatef(0.002f*iDirection, -0.002f*(iDirection*(-1)), 0.0f);
-//                glTranslatef(0.002f*iDirection*iGlowFadeEffectCount, -0.002f*(iDirection*(-1))*iGlowFadeEffectCount, 0.0f);
-        	}
-        	
+                //edited by Mike, 20210812
+//            	glTranslatef(0.002f*iDirection, -0.002f*(iDirection*(-1)), 0.0f);
+                glTranslatef((0.002f*(iCount+1))*iDirection, (-0.002f*(iCount+1))*(iDirection*(-1)), 0.0f);
+            }
+
+            
         	//removed by Mike, 20210811
 	//        glTranslatef(-0.0032f, -0.0072f, 0.0f);
 	
