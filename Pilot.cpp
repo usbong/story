@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210811
+ * @date updated: 20210812
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -3166,6 +3166,7 @@ void Pilot::updatePrev(float dt)
 						iInputWaitCountArray[KEY_A]+=1;
 					}
 				}
+/*	//removed by Mike, 20210812				
 				if (myKeysDown[KEY_W]==FALSE) {
 					if (iInputWaitCountArray[KEY_W]<MAX_WAIT_COUNT) {
 						iInputWaitCountArray[KEY_W]+=1;
@@ -3176,7 +3177,7 @@ void Pilot::updatePrev(float dt)
 						iInputWaitCountArray[KEY_S]+=1;
 					}
 				}
-
+*/
 				
 				//TO-DO: -add: these
            		//added by Mike, 20201001
@@ -3372,6 +3373,7 @@ void Pilot::update(float dt)
 						iInputWaitCountArray[KEY_A]+=1;
 					}
 				}
+/*	//removed by Mike, 20210812				
 				if (myKeysDown[KEY_W]==FALSE) {
 					if (iInputWaitCountArray[KEY_W]<MAX_WAIT_COUNT) {
 						iInputWaitCountArray[KEY_W]+=1;
@@ -3382,6 +3384,7 @@ void Pilot::update(float dt)
 						iInputWaitCountArray[KEY_S]+=1;
 					}
 				}
+*/
 
            		rotationAngle=0; //TO-DO: -update: this
 
@@ -3433,6 +3436,10 @@ void Pilot::changeState(int s)
 //added by Mike, 20201226
 void Pilot::keyDown(int keyCode) {
 	myKeysDown[keyCode] = TRUE;
+	
+	//added by Mike, 20210812
+	myKeysDown[KEY_W] = FALSE;
+	myKeysDown[KEY_S] = FALSE;
 
 	//added by Mike, 20210127; edited by Mike, 20210128
 	autoVerifyDashStateWithKeyDown();//keyCode);
@@ -3479,15 +3486,19 @@ void Pilot::autoVerifyDashStateWithKeyDown() { //int keyCode) {
 	}
 	//edited by Mike, 20210130
 //	else if ((myKeysDown[KEY_UP]==TRUE) || (myKeysDown[KEY_W]==TRUE)) {
+/*	//removed by Mike, 20210812				
 	else if (myKeysDown[KEY_W]==TRUE) {
 		setDashStateWithKeyDown(KEY_W);//KEY_UP);
 	}
+*/	
 	else if (myKeysDown[KEY_A]==TRUE) {
 		setDashStateWithKeyDown(KEY_A);
 	}
+/*	//removed by Mike, 20210812					
 	else if (myKeysDown[KEY_S]==TRUE) {
 		setDashStateWithKeyDown(KEY_S);
 	}
+*/	
 }
 
 void Pilot::keyUp(int keyCode) {
@@ -3540,18 +3551,22 @@ void Pilot::setDashStateWithKeyUp(int keyCode) {
 		}
 		//edited by Mike, 20210130
 //		else if ((bIsExecutingDashArray[KEY_UP]) || (bIsExecutingDashArray[KEY_W])) {
+/*	//removed by Mike, 20210812				
 		if (bIsExecutingDashArray[KEY_W]) {
 			bIsExecutingDashArray[KEY_W]=false;//KEY_UP);
 			bIsDashReady=false;
 		}
+*/		
 		else if (bIsExecutingDashArray[KEY_A]) {
 			bIsExecutingDashArray[KEY_A]=false;
 			bIsDashReady=false;
 		}
+/*	//removed by Mike, 20210812						
 		else if (bIsExecutingDashArray[KEY_S]) {
 			bIsExecutingDashArray[KEY_S]=false;
 			bIsDashReady=false;
 		}
+*/		
 	}
 	else {
 		bIsDashReady=true;			
@@ -3585,6 +3600,7 @@ void Pilot::autoVerifyDashStateWithKeyUp(int keyCode) {
 	}
 	//edited by Mike, 20210130
 //	else if ((keyCode==KEY_UP) || (keyCode==KEY_W)) {
+/*	//removed by Mike, 20210812				
 	else if (keyCode==KEY_W) {
 		//edited by Mike, 20210130
 //		if ((myKeysDown[KEY_UP]==TRUE) || (myKeysDown[KEY_W]==TRUE)) {
@@ -3594,6 +3610,7 @@ void Pilot::autoVerifyDashStateWithKeyUp(int keyCode) {
 			setDashStateWithKeyUp(KEY_W);
 		}
 	}
+*/	
 	else if (keyCode==KEY_A) {
 		if (myKeysDown[KEY_A]==TRUE) {
 			//edited by Mike, 20210129
@@ -3601,6 +3618,7 @@ void Pilot::autoVerifyDashStateWithKeyUp(int keyCode) {
 			setDashStateWithKeyUp(KEY_A);
 		}
 	}
+/*	//removed by Mike, 20210812					
 	else if (keyCode==KEY_S) {
 		if (myKeysDown[KEY_S]==TRUE) {
 			//edited by Mike, 20210129
@@ -3608,6 +3626,7 @@ void Pilot::autoVerifyDashStateWithKeyUp(int keyCode) {
 			setDashStateWithKeyUp(KEY_S);
 		}
 	}	
+*/	
 	//removed by Mike, 20210128
 /*
 	else {
@@ -3796,9 +3815,9 @@ void Pilot::move(int key)
 		  }			
           break;
 
+/* //removed by Mike, 20210806
 //	 case KEY_UP: //removed by Mike, 20210130
      case KEY_W:
-/* //removed by Mike, 20210806
        //added by Mike, 20210111
        if (bIsExecutingPunch) {
 	   }
@@ -3876,12 +3895,15 @@ void Pilot::move(int key)
 		  
           currentMovingState=WALKING_MOVING_STATE;
           break;
-*/
+
+		   //edited by Mike, 20210812
            return;
-          
+//           break;
+*/
+
+/* //removed by Mike, 20210806          
 //     case KEY_DOWN:  //removed by Mike, 20210130
      case KEY_S: //added by Mike, 20210128
-           /* //removed by Mike, 20210806
 				//added by Mike, 20210111
 				if (bIsExecutingPunch) {
 				}
@@ -3932,9 +3954,12 @@ void Pilot::move(int key)
 
            currentMovingState=WALKING_MOVING_STATE;
           break;
-            */
-        //added by Mike, 20210806
+        //added by Mike, 20210806; edited by Mike, 20210812
            return;
+//			break;
+            */
+			
+			
 //     case KEY_LEFT: //removed by Mike, 20210130
      case KEY_A: //added by Mike, 20210128		   
      		//removed by Mike, 20201001
@@ -4182,7 +4207,18 @@ void Pilot::move(int key)
           	//+gravity when at free fall
           	//TO-DO: -add: animation sprite image?
           	//note: stepY*2, et cetera is over what the ground/floor tile can push up
+          	//edited by Mike, 20210812
 			myYPosAsPixel+=stepY;
+			
+			//added by Mike, 20210812
+			//note: this set of instructions NOT executed 
+			//when there exists input to execute LEFT or RIGHT movement
+			//TO-DO: -update: instructions when computer receives both LEFT and RIGHT input Commands
+			if (myLevel2D->isLevel2DCollideWith(this)) {    
+			}
+			else {
+				myYPosAsPixel+=stepY; ///2.0
+			}			
           }
 		  break;		  		  
    }
