@@ -1212,21 +1212,31 @@ bool OpenGLCanvas::setupProjection()
 void OpenGLCanvas::keyDown(int keyCode)
 {
     myKeysDown[keyCode] = TRUE;
-    
+
+	//added by Mike, 20210812
+	myKeysDown[KEY_W] = FALSE;
+	myKeysDown[KEY_S] = FALSE;
+
+    myPilot->keyDown(keyCode);
+  
+  
+/* //removed by Mike, 20210812    
     //added by Mike, 20201226; edited by Mike, 20210423;
     //added by Mike, 20210507
     myRobotShip->keyDown(keyCode);
     
     myPilot->keyDown(keyCode);
+    
     //added by Mike, 20210604; removed by Mike, 20210604
-    /*    //note: myPilot as Unit Chief
+        //note: myPilot as Unit Chief
      myPilotPartner->keyDown(keyCode); //added by Mike, 20210604
      myPilotPlayer2->keyDown(keyCode); //added by Mike, 20210604
      myPilotPlayer2Partner->keyDown(keyCode); //added by Mike, 20210604
-     */
+     
     
     //added by Mike, 20210602
     myBall->keyDown(keyCode);
+*/    
     
     //added by Mike, 20210618
     myText->keyDown(keyCode);
@@ -3559,7 +3569,9 @@ void OpenGLCanvas::update()
             //removed by Mike, 20201026
             /*			  myCanvasPosZ+=myCanvasStepZ;
              */
-            
+
+
+/*	//removed by Mike, 20210812				            
             //added by Mike, 20210423
             myPilot->move(KEY_W);
             
@@ -3570,7 +3582,7 @@ void OpenGLCanvas::update()
             //added by Mike, 20210530
             myPilotPartner->setToWalkingMovingState();
             myPilotPlayer2Partner->setToWalkingMovingState();
-            
+*/            
             
             /*	//removed by Mike, 20210502
              //move forward
@@ -3595,6 +3607,8 @@ void OpenGLCanvas::update()
             //removed by Mike, 20210502
             //            myRobotShip->move(KEY_S);
             
+
+/*	//removed by Mike, 20210812				            
             //added by Mike, 20210423
             myPilot->move(KEY_S);
             
@@ -3605,7 +3619,7 @@ void OpenGLCanvas::update()
             //added by Mike, 20210530
             myPilotPartner->setToWalkingMovingState();
             myPilotPlayer2Partner->setToWalkingMovingState();
-            
+*/            
             
             /*	//removed by Mike, 20210502
              //move backward
