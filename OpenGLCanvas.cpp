@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210811
+ * @date updated: 20210813
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -1666,7 +1666,7 @@ void OpenGLCanvas::render()
     //paint the outer margins if window not square, i.e. width and height not equal
     //-----
     glBegin(GL_QUADS);
-    glColor3f(0.0f,0.0f,0.0f); //black
+//    glColor3f(0.0f,0.0f,0.0f); //black
 //        	glColor3f(1.0f,1.0f,1.0f); //white
     
     //TOP
@@ -1676,6 +1676,14 @@ void OpenGLCanvas::render()
      //	glColor3f(0.0f, 0.32f, 0.67f);
      glColor3f(0.0f, 0.44f, 0.67f);
      */
+     //edited by Mike, 20210813
+     //somete
+     //sunrise? sunset? sunset... no hou;
+     //takip-silim
+     glColor3f(0.0f, 0.44f, 0.67f); //orange
+		//sunset
+//     glColor3f(1.0f, 0.44f, 0.0f);
+     
     glVertex2f(1.0, 1.0);
     glVertex2f(-1.0, 1.0);
     
@@ -1684,6 +1692,17 @@ void OpenGLCanvas::render()
      //sky blue color; brighter
      glColor3f(0.69f, 0.84f, 1.0f);
      */
+     //edited by Mike, 20210813
+     //somete
+     //sunrise? sunset? sunset... no hou;
+     //takip-silim
+     glColor3f(1.0f, 0.88f, 0.67f);
+     //sunset
+//    glColor3f(1.0f, 0.71f, 0.28f); //dark orange
+
+		//sunset
+//    glColor3f(1.0f, 0.88f, 0.0f);
+     
     glVertex2f(-1.0,-1.0);
     glVertex2f(1.0,-1.0);
     glEnd();
