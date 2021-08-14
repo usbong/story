@@ -865,9 +865,13 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     
 //    printf(">>Level2D; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
 //    printf(">>Level2D; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
-        
+
+/*        
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
     float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
+*/
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth+1);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight+1);
     
 		//TO-DO: -reverify: this
 		//edited by Mike, 20210720

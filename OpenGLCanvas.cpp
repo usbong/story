@@ -1791,7 +1791,7 @@ void OpenGLCanvas::render()
     //TO-DO: -add: function as command to auto-draw line grid
     
     //note: coordinate system guide/map
-    /*	//removed by Mike, 20210618
+    ///*	//removed by Mike, 20210618
      glBegin(GL_LINES);
      glColor3f(0.0f,0.0f,0.0f); //black
      
@@ -1811,7 +1811,7 @@ void OpenGLCanvas::render()
      glVertex2f(-1.0f, 0.0f);
      glVertex2f(1.0f, 0.0f);
      glEnd();
-     */
+     //*/
     
     //added by Mike, 20210703
     //auto-scale to Window Width to Height
@@ -1831,7 +1831,7 @@ void OpenGLCanvas::render()
     int iNumberSign=1;
     
     
-     /*//removed by Mike, 20210723
+     ///*//removed by Mike, 20210723
      //rows
      for (int iRowCount=0; iRowCount<iRowCountMax; iRowCount++) {
    		// Draw a Green Line top-left origin
@@ -1857,7 +1857,7 @@ void OpenGLCanvas::render()
      glVertex2f(1.0f*2, 2.0f/iRowCountMax*iRowCount*iNumberSign);
    		glEnd();
      }
-     */
+     //*/
     
     //reset to 12 from 10
     //removed by Mike, 20210701
@@ -1873,7 +1873,7 @@ void OpenGLCanvas::render()
     iColumnCountMax=18;
     
     
-     /*//removed by Mike, 20210723
+     ///*//removed by Mike, 20210723
      //right part
      iNumberSign=1;
      for (int iColumnCount=0; iColumnCount<iColumnCountMax; iColumnCount++) {
@@ -1886,12 +1886,12 @@ void OpenGLCanvas::render()
      glVertex2f(2.0f/iColumnCountMax*iColumnCount*iNumberSign, 1.0f);
    		glEnd();
      }
-     */
+     //*/
     
     //left part
     iNumberSign=-1;
     for (int iColumnCount=0; iColumnCount<iColumnCountMax; iColumnCount++) {
-        /*
+        ///*
          // Draw a Green Line top-left origin
          glBegin(GL_LINES);
          //     		glColor3f(0.0f, 0.0f, 1.0f); // Blue
@@ -1900,7 +1900,7 @@ void OpenGLCanvas::render()
          //TO-DO: -add: auto-compute myWindowHeight
          glVertex2f(2.0f/iColumnCountMax*iColumnCount*iNumberSign, 1.0f);
          glEnd();
-         */
+         //*/
         //added by Mike, 20210701
         //identify column count of left margin
         ////        printf(">>> myWindowWidthAsPixel/2.0f/iColumnCountMax*iColumnCount: %f\n",myWindowWidthAsPixel/2.0f/iColumnCountMax*iColumnCount);
