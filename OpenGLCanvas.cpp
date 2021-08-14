@@ -58,6 +58,8 @@
 //TO-DO: -update: "Canvas" to "Engine"?
 //TO-DO: -update: this
 
+//TO-DO: -update: instructions in auto-drawing of tiles due to lines between tiles are visible
+
 //#include <SDL.h>
 //edited by Mike, 20200929
 
@@ -503,6 +505,8 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     fGridSquareWidth = myWindowWidthAsPixel/iColumnCountMax; //example: 136.60
     fGridSquareHeight = myWindowHeightAsPixel/iRowCountMax; //example: 76.80
 
+    printf("OpenGLCanvas.cpp; fGridSquareWidth: %f",fGridSquareWidth);
+
 /*    
     printf("fGridSquareWidth: %f\n",fGridSquareWidth);
     printf("fGridSquareHeight: %f\n",fGridSquareHeight);
@@ -539,6 +543,9 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     //added by Mike, 20210516
     myUsbongUtils = new UsbongUtils();
     myUsbongUtils->setWindowWidthHeight(myWindowWidthAsPixel, myWindowHeightAsPixel);
+    
+//    printf("OpenGLCanvas.cpp myWindowWidthAsPixel: %f\n",myWindowWidthAsPixel);
+    
     
     /*  //removed by Mike, 20210712
      //added by Mike, 20210211
@@ -1780,6 +1787,9 @@ void OpenGLCanvas::render()
     //    glLineWidth((GLfloat)3);
     glLineWidth((GLfloat)4);
     
+    //added by Mike, 20210814
+    //TO-DO: -add: function as command to auto-draw line grid
+    
     //note: coordinate system guide/map
     /*	//removed by Mike, 20210618
      glBegin(GL_LINES);
@@ -1820,8 +1830,8 @@ void OpenGLCanvas::render()
     
     int iNumberSign=1;
     
-    /*
-     //removed by Mike, 20210723
+    
+     /*//removed by Mike, 20210723
      //rows
      for (int iRowCount=0; iRowCount<iRowCountMax; iRowCount++) {
    		// Draw a Green Line top-left origin
@@ -1862,8 +1872,8 @@ void OpenGLCanvas::render()
     //     iColumnCountMax=10;
     iColumnCountMax=18;
     
-    /*
-     //removed by Mike, 20210723
+    
+     /*//removed by Mike, 20210723
      //right part
      iNumberSign=1;
      for (int iColumnCount=0; iColumnCount<iColumnCountMax; iColumnCount++) {

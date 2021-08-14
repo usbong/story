@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210813
+ * @date updated: 20210814
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -428,9 +428,24 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float wi
     
 //    printf("myWindowWidth: %i",myWindowWidth);
     
-    fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
+    //edited by Mike, 20210814
+/*    fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
     fGridSquareHeight = myWindowHeight/iRowCountMax; //example: 76.80
+*/    
+    fGridSquareWidth = ((int)myWindowWidth)/iColumnCountMax; //example: 136.60
+    fGridSquareHeight = ((int)myWindowHeight)/iRowCountMax; //example: 76.80
     
+    printf("Level2D.cpp; fGridSquareWidth: %f",fGridSquareWidth); //75.888885, instead of 75.000000
+    
+    //added by Mike, 20210814
+/*    
+    fGridSquareWidth=fGridSquareWidth+(fGridSquareWidth/iColumnCountMax*1.0);
+    fGridSquareHeight=fGridSquareHeight+(fGridSquareHeight/iRowCountMax*1.0);
+*/    
+/*
+    fGridSquareWidth=fGridSquareWidth+100;//5;
+    fGridSquareHeight=fGridSquareHeight+100;//5;
+*/    
     //auto-set width and height based on grid tile
     myWidthAsPixel=fGridSquareWidth;
     myHeightAsPixel=fGridSquareHeight;    
@@ -447,6 +462,8 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float wi
     //added by Mike, 20210516
     myUsbongUtils = new UsbongUtils();
     myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight); //added by Mike, 20210626
+    
+//    printf("Level2D.cpp myWindowWidth: %f\n",myWindowWidth);
     
     
     //    myWidthX=0.5;
@@ -848,7 +865,7 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     
 //    printf(">>Level2D; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
 //    printf(">>Level2D; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
-    
+        
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
     float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
     
@@ -857,7 +874,7 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 //    fGridTileWidthVertexPosition = fGridTileWidthVertexPosition*2.0f; //removed by Mike, 20210720
 //	  fGridTileHeightVertexPosition = fGridTileHeightVertexPosition*4.0f;//4.0f;
  
-//    printf(">>>fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
+//    printf(">>>Level2D.cpp fGridTileWidthVertexPosition: %f; fGridTileHeightVertexPosition: %f",fGridTileWidthVertexPosition,fGridTileHeightVertexPosition);
  
     //added by Mike, 20210713
     //get positive value
@@ -883,12 +900,20 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
 #endif
     
-    //added by Mike, 20210720
+        
+    //added by Mike, 20210720; edited by Mike, 20210814
     fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
+//    fGridTileWidthVertexPosition=1.0f-(fGridTileWidthVertexPosition)+1.0/18;  
     fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
+
+		//added by Mike, 20210813
+//    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.1f;
+//    glTranslatef(fGridTileWidthVertexPosition/18.0f, 0.0f, 0.0f);
     
     //note: vertex position sequence to be auto-drawn
     //counter-clockwise sequence to auto-draw front face
+
+
     
     //add this due to 3rd quadrant
     //size of tile width: 0.1f
@@ -988,8 +1013,15 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
 
 //    printf(">>>fTx: %f;fTy: %f\n",fTx,fTy);
 
-    
+  	
+  	//added by Mike, 20210814
+  	//note: texture coordinates
     float fTileSideXAxis = 0.0625f;
+//    float fTileSideXAxis = 0.07f;
+    
+//    glTranslatef(0.01f, 0.0f, 0.0f);
+    
+    
 //    float fTileSideXAxis = 0.0625f*2*2;
 //    float fTileSideXAxis = 0.0625f*2;
 
@@ -1134,7 +1166,7 @@ void Level2D::drawLevelWithTexture()
 //TO-DO: -update: this
 void Level2D::drawLevelWithTextureUsingInputFile()
 {
-    /*	//removed by Mike, 20210712
+    /* //removed by Mike, 20210712
      glPushMatrix();
      //column 1; start at 0; note +1.0f to be 2.0f due to 3rd quadrant in drawTileAsQuadWithoutTexture(...)
     	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+fGridSquareWidth*(1.0f+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+fGridSquareHeight*0.0f), 0.0f);
@@ -1147,10 +1179,10 @@ void Level2D::drawLevelWithTextureUsingInputFile()
     
     /*
      for (int iRowCountToSetDefault=0; iRowCountToSetDefault<MAX_TEXT_CHAR_ROW_RAM; iRowCountToSetDefault++) {
-     for (int iColumnCount=0; iColumnCount<MAX_TEXT_CHAR_COLUMN; iColumnCount++) {
+     	for (int iColumnCount=0; iColumnCount<MAX_TEXT_CHAR_COLUMN; iColumnCount++) {
      //verified: in macOS, with Japanese keyboard ro-maji input, "¥0", backspace is "¥"
      tempText[iRowCountToSetDefault][iColumnCount]='\0';
-     }
+     	}
      }
      */
     //TO-DO: -update: this
@@ -1159,7 +1191,7 @@ void Level2D::drawLevelWithTextureUsingInputFile()
     iRowCountMax=10;
     iColumnCountMax=18;
     iHeightCountMax=10;
-    
+        
     for (int iRowCount=0; iRowCount<iRowCountMax; iRowCount++) {
         //iCurrentMaxColumnCountPerRowContainer[iRowCount];
         for (int iColumnCount=0; iColumnCount<iColumnCountMax; iColumnCount++) {
@@ -1176,7 +1208,11 @@ void Level2D::drawLevelWithTextureUsingInputFile()
                 	//center 0,0,0 origin; vertex positions
   								
   								//edited by Mike, 20210722              	
-                	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+fGridSquareWidth*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+fGridSquareHeight*(iRowCount+1.0f)), 0.0f);
+  								//note: collision detection OK; updated: drawing of tile x and y positions
+/*                	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+fGridSquareWidth*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+fGridSquareHeight*(iRowCount+1.0f)), 0.0f);
+*/
+                	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+(fGridSquareWidth+1)*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+(fGridSquareHeight+1)*(iRowCount+1.0f)), 0.0f);
+
  										
  										//edited by Mike, 20210719
 //                		drawTileAsQuadWithTexture();

@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200930
- * @date updated: 20210807
+ * @date updated: 20210814
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -181,9 +181,11 @@ public:
     float maxYVel;
 				
     
-    //added by Mike, 20201115
-    int myWindowWidth;
-    int myWindowHeight;
+    //added by Mike, 20201115; edited by Mike, 20210814
+    //TO-DO: -update: to use fMyWindowWidth... 20210814
+    //TO-DO: -update: to use integer? shall update UsbongUtils.h, et cetera
+    float myWindowWidth;
+    float myWindowHeight;
     
     //added by Mike, 20210626
     float fMyWindowWidthAsPixelRatioToHeightPixel;
