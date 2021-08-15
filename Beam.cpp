@@ -1,5 +1,5 @@
 /*
- * Copyright 2020~2021 Usbong Social Systems, Inc.
+ * Copyright 2020~2021 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,10 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+ * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20201013
- * @date updated: 20210522
+ * @date updated: 20210815
+ * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007): 
@@ -137,7 +138,9 @@ void Beam::load_tga(char *filename)
 
 //edited by Mike, 2020116
 //Beam::Beam(): MyDynamicObject(0,0,300)
-Beam::Beam(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+//edited by Mike, 20210815
+//Beam::Beam(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+Beam::Beam(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,0.0f, fWindowWidth, fWindowHeight)
 { 
     currentState=HIDDEN_STATE;
 //    myXPos=0.0;
@@ -168,9 +171,12 @@ Beam::Beam(float xPos, float yPos, float zPos, int windowWidth, int windowHeight
     stepY=2.00;
     stepZ=2.00;
 
-	//added by Mike, 20201116
+/*	//added by Mike, 20201116; edited by Mike, 20210815
 	myWindowWidth=windowWidth;
 	myWindowHeight=windowHeight;
+*/
+	fMyWindowWidth=fWindowWidth;
+	fMyWindowHeight=fWindowHeight;
 
 	//edited by Mike, 20201013    
 /*    myWidthX=0.5;
@@ -438,10 +444,16 @@ void Beam::update(float fViewportX, float fViewportY, float fViewportZ)
 				else if (myZPos <= 0.0f-myWindowHeight/3) changeState(HIDDEN_STATE); //if top side
 */
 				//TO-DO: -reverify: beam firing stops, likely due myWindowWidth, etc
+/* //edited by Mike, 20210815				
 				if (myXPos <= fViewportX-myWindowWidth/3) changeState(HIDDEN_STATE); //if left side
 				else if (myXPos >= fViewportX+myWindowWidth/3) changeState(HIDDEN_STATE); //if right side
 				if (myZPos >= fViewportZ+myWindowHeight/3) changeState(HIDDEN_STATE); //if bottom side
 				else if (myZPos <= fViewportZ-myWindowHeight/3) changeState(HIDDEN_STATE); //if top side
+*/
+				if (myXPos <= fViewportX-fMyWindowWidth/3) changeState(HIDDEN_STATE); //if left side
+				else if (myXPos >= fViewportX+fMyWindowWidth/3) changeState(HIDDEN_STATE); //if right side
+				if (myZPos >= fViewportZ+fMyWindowHeight/3) changeState(HIDDEN_STATE); //if bottom side
+				else if (myZPos <= fViewportZ-fMyWindowHeight/3) changeState(HIDDEN_STATE); //if top side
 
                 break;
             default: //STANDING STATE

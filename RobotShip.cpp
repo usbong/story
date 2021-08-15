@@ -1,5 +1,5 @@
 /*
- * Copyright 2020~2021 Usbong Social Systems, Inc.
+ * Copyright 2020~2021 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,10 +12,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+ * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210522
+ * @date updated: 20210815
+ * @website address: http://www.usbong.ph
  *
  * Reference: 
  * 1) Astle, D. and Hawkin, K. (2004). "Beginning OpenGL game programming". USA: Thomson Course Technology
@@ -425,7 +426,9 @@ void RobotShip::drawModelRobotShip() {
 //RobotShip::RobotShip(): MyDynamicObject(0,0,300)
 //edited by Mike, 20201115
 //RobotShip::RobotShip(): MyDynamicObject(0,0,0)
-RobotShip::RobotShip(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+//edited by Mike, 20210815
+//RobotShip::RobotShip(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+RobotShip::RobotShip(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,0.0f, fWindowWidth, fWindowHeight)
 { 
     //edited by Mike, 20201001
 	//currentState=IN_TITLE_STATE;//MOVING_STATE;
@@ -533,9 +536,12 @@ RobotShip::RobotShip(float xPos, float yPos, float zPos, int windowWidth, int wi
 	//added by Mike, 20210507
 //    myZPos=0.0f+myHeight*3;
 	
-	//added by Mike, 20201115
+/*	//added by Mike, 20201115; edited by Mike, 20210815
 	myWindowWidth=windowWidth;
 	myWindowHeight=windowHeight;
+*/
+	fMyWindowWidth=fWindowWidth;
+	fMyWindowHeight=fWindowHeight;
 	
 	//added by Mike, 20210219
 	setCollidable(true);

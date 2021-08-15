@@ -1,5 +1,5 @@
 /*
- * Copyright 2020~2021 Usbong Social Systems, Inc.
+ * Copyright 2020~2021 SYSON, MICHAEL B.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -12,10 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @company: USBONG SOCIAL SYSTEMS, INC. (USBONG)
+ * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20201016
- * @date updated: 20210219
+ * @date updated: 20210815
  *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007): 
@@ -180,7 +180,9 @@ void Asteroid::setup()
 //Asteroid::Asteroid(int status, float xPos, float yPos, float zPos): MyDynamicObject(xPos,yPos,0.0f)
 //edited by Mike, 2020117
 //Asteroid::Asteroid(int status, float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
-Asteroid::Asteroid(int status, float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,zPos, windowWidth, windowHeight)
+//edited by Mike, 20210815
+//Asteroid::Asteroid(int status, float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,zPos, windowWidth, windowHeight)
+Asteroid::Asteroid(int status, float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,zPos, fWindowWidth, fWindowHeight)
 { 
     invincibleCounter=0;
     
@@ -211,9 +213,12 @@ Asteroid::Asteroid(int status, float xPos, float yPos, float zPos, int windowWid
 		stepY=2.00;
 		stepZ=2.00;
 
-		//added by Mike, 20201115
+/*		//added by Mike, 20201115; edited by Mike, 20210815
 		myWindowWidth=windowWidth;
 		myWindowHeight=windowHeight;
+*/		
+		fMyWindowWidth=fWindowWidth;
+		fMyWindowHeight=fWindowHeight;
 				
 		//added by Mike, 20201016
     	myStartXPos=xPos;
@@ -531,11 +536,17 @@ void Asteroid::update(float dt)
            		else if (myXPos >= myWindowWidth/100) myXPos = 0.0f+myWidth/8; //if right side
            		if (myZPos >= myWindowHeight/100) myZPos = 0.0f+myHeight/8; //if bottom side
            		else if (myZPos <= 0.0f) myZPos = myWindowHeight/100-myHeight/8; //if top side
-*/           		           		
+*/           		
+/*				//edited by Mike, 20210815           		
            		if (myXPos <= 0.0f) myXPos = myWindowWidth-myWidth/8; //if left side
            		else if (myXPos >= myWindowWidth) myXPos = 0.0f+myWidth/8; //if right side
            		if (myZPos >= myWindowHeight) myZPos = 0.0f+myHeight/8; //if bottom side
            		else if (myZPos <= 0.0f) myZPos = myWindowHeight-myHeight/8; //if top side
+*/
+           		if (myXPos <= 0.0f) myXPos = fMyWindowWidth-myWidth/8; //if left side
+           		else if (myXPos >= fMyWindowWidth) myXPos = 0.0f+myWidth/8; //if right side
+           		if (myZPos >= fMyWindowHeight) myZPos = 0.0f+myHeight/8; //if bottom side
+           		else if (myZPos <= 0.0f) myZPos = fMyWindowHeight-myHeight/8; //if top side
 
 				break;
            case DEATH_STATE:

@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210812
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -450,7 +450,9 @@ void Pilot::drawModelPilot() {
 //Pilot::RobotShip(): MyDynamicObject(0,0,300)
 //edited by Mike, 20201115
 //Pilot::RobotShip(): MyDynamicObject(0,0,0)
-Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+//edited by Mike, 20210815
+//Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+Pilot::Pilot(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,0.0f, fWindowWidth, fWindowHeight)
 { 
     //edited by Mike, 20201001
 	//currentState=IN_TITLE_STATE;//MOVING_STATE;
@@ -677,9 +679,13 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
     myZPos=0.0f;
 */
 	
-	//added by Mike, 20201115
+/*	//added by Mike, 20201115; edited by Mike, 20210815
 	myWindowWidth=windowWidth;
 	myWindowHeight=windowHeight;
+*/
+	fMyWindowWidth=fWindowWidth;
+	fMyWindowHeight=fWindowHeight;
+	
 /*	
 	printf(">>Pilot.cpp: myWindowWidth: %i\n",myWindowWidth);
 	printf(">>Pilot.cpp: myWindowHeight: %i\n",myWindowHeight);
@@ -689,10 +695,13 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
   iRowCountMax=10;
   iColumnCountMax=18;
   iHeightCountMax=10;
-    	
+
+/* //edited by Mike, 20210815    	
   fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
   fGridSquareHeight = myWindowHeight/iRowCountMax; //example: 76.80
-	
+*/	
+  fGridSquareWidth = fMyWindowWidth/iColumnCountMax; //example: 136.60
+  fGridSquareHeight = fMyWindowHeight/iRowCountMax; //example: 76.80
 	
 	  //added by Mike, 20210726
 		//note: auto-compute based on grid tile
@@ -783,7 +792,9 @@ Pilot::Pilot(float xPos, float yPos, float zPos, int windowWidth, int windowHeig
 	myUsbongUtils = new UsbongUtils();
 	//added by Mike, 20210726; edited by Mike, 20210727
 //  myUsbongUtils->setWindowWidthHeight(windowWidth, windowHeight);
-  myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight);
+	//edited by Mike, 20210815
+//  	myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight);
+  	myUsbongUtils->setWindowWidthHeight(fMyWindowWidth, fMyWindowHeight);
     
 //    myWidthX=0.5;
 
@@ -2446,14 +2457,21 @@ void Pilot::drawAccelerationEffectAsQuadWithTexture()
     //glOrtho(0.0, 1.0, 0.0, 1.0, -1.0, 1.0);
     //glOrtho( -myWindowWidth/2.0f, myWindowWidth/2.0f, -myWindowHeight/2.0f, myWindowHeight/2.0f, -1.0, 1.0 );
     //note: -reverify: anchor; facing right at center, facing left at back; trailing
-    
+  
+/* //edited by Mike, 20210815    
     printf("myWindowWidth: %i\n",myWindowWidth); //example output: 1366
     printf("myWindowHeight: %i\n",myWindowHeight); //example output: 768
+*/    
     //		glScalef(0.56f, 1.0f, 1.0f);
+    printf("fMyWindowWidth: %f\n",fMyWindowWidth); //example output: 1366
+    printf("fMyWindowHeight: %f\n",fMyWindowHeight); //example output: 768
+
     
     //TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
     //AND which side is longer
-    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    //edited by Mike, 20210815
+//    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    glScalef(fMyWindowHeight/(fMyWindowWidth*1.0f), 1.0f, 1.0f);
     
 //--
 
@@ -2641,7 +2659,9 @@ void Pilot::drawShieldEffectAsQuadWithTexture()
     
     //TO-DO: -add: auto-identify if computer monitor rectangle, i.e. NOT square;
     //AND which side is longer
-    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    //edited by Mike, 20210815
+//    glScalef(myWindowHeight/(myWindowWidth*1.0f), 1.0f, 1.0f);
+    glScalef(fMyWindowHeight/(fMyWindowWidth*1.0f), 1.0f, 1.0f);
     
 //--
 /*

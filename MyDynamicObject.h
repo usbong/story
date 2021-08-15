@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200930
- * @date updated: 20210814
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -184,8 +184,12 @@ public:
     //added by Mike, 20201115; edited by Mike, 20210814
     //TO-DO: -update: to use fMyWindowWidth... 20210814
     //TO-DO: -update: to use integer? shall update UsbongUtils.h, et cetera
+/*	//edited by Mike, 20210814        
     float myWindowWidth;
     float myWindowHeight;
+*/
+    float fMyWindowWidth;
+    float fMyWindowHeight;
     
     //added by Mike, 20210626
     float fMyWindowWidthAsPixelRatioToHeightPixel;
@@ -235,7 +239,7 @@ public:
     //Note:
     //fGridSquareWidth = myWindowWidth/iColumnCountMax/100.0;
     //fGridSquareHeight = myWindowHeight/iRowCountMax/100.0;
-    MyDynamicObject(float xPos=0.0f, float yPos=0.0f, float zPos=0.0f, int windowWidth=0, int windowHeight=0 ): myXPos(xPos), myYPos(yPos), myZPos(zPos), myWindowWidth(windowWidth/100), myWindowHeight(windowHeight/100)
+    MyDynamicObject(float xPos=0.0f, float yPos=0.0f, float zPos=0.0f, int windowWidth=0, int windowHeight=0 ): myXPos(xPos), myYPos(yPos), myZPos(zPos), fMyWindowWidth(windowWidth/100), fMyWindowHeight(windowHeight/100)
     {
         currentState=ACTIVE_STATE;
     }

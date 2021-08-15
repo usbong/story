@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210814
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -238,7 +238,7 @@ void Level2D::load_tga(char *filename)
 //Level2D::RobotShip(): MyDynamicObject(0,0,0)
 //edited by Mike, 20210625
 //Level2D::Text(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
-Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+Level2D::Level2D(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,0.0f, fWindowWidth, fWindowHeight)
 {
     //edited by Mike, 20201001
     //currentState=IN_TITLE_STATE;//MOVING_STATE;
@@ -379,9 +379,12 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float wi
      myZPos=0.0f;
      */
     
-    //added by Mike, 20201115
+/*    //added by Mike, 20201115; edited by Mike, 20210815
     myWindowWidth=windowWidth;
     myWindowHeight=windowHeight;
+*/
+    fMyWindowWidth=fWindowWidth;
+    fMyWindowHeight=fWindowHeight;
     
     //added by Mike, 20210626
     fMyWindowWidthAsPixelRatioToHeightPixel=1.0f;
@@ -431,10 +434,15 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float wi
     //edited by Mike, 20210814
 /*    fGridSquareWidth = myWindowWidth/iColumnCountMax; //example: 136.60
     fGridSquareHeight = myWindowHeight/iRowCountMax; //example: 76.80
-*/    
+*/
+	//edited by Mike, 20210815; TO-DO: -reverify: this 
+/*
     fGridSquareWidth = ((int)myWindowWidth)/iColumnCountMax; //example: 136.60
     fGridSquareHeight = ((int)myWindowHeight)/iRowCountMax; //example: 76.80
-    
+*/    
+    fGridSquareWidth = ((int)fMyWindowWidth)/iColumnCountMax; //example: 136.60
+    fGridSquareHeight = ((int)fMyWindowHeight)/iRowCountMax; //example: 76.80
+
     printf("Level2D.cpp; fGridSquareWidth: %f",fGridSquareWidth); //75.888885, instead of 75.000000
     
     //added by Mike, 20210814
@@ -461,7 +469,7 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float windowWidth, float wi
     
     //added by Mike, 20210516
     myUsbongUtils = new UsbongUtils();
-    myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight); //added by Mike, 20210626
+    myUsbongUtils->setWindowWidthHeight(fMyWindowWidth, fMyWindowHeight); //added by Mike, 20210626
     
 //    printf("Level2D.cpp myWindowWidth: %f\n",myWindowWidth);
     

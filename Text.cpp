@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210802
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -395,7 +395,7 @@ void Text::setupPrev()
 //Text::RobotShip(): MyDynamicObject(0,0,0)
 //edited by Mike, 20210625
 //Text::Text(float xPos, float yPos, float zPos, int windowWidth, int windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
-Text::Text(float xPos, float yPos, float zPos, float windowWidth, float windowHeight): MyDynamicObject(xPos,yPos,0.0f, windowWidth, windowHeight)
+Text::Text(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight): MyDynamicObject(xPos,yPos,0.0f, fWindowWidth, fWindowHeight)
 {
     //edited by Mike, 20201001
     //currentState=IN_TITLE_STATE;//MOVING_STATE;
@@ -516,42 +516,49 @@ Text::Text(float xPos, float yPos, float zPos, float windowWidth, float windowHe
      myZPos=0.0f;
      */
     
-    //added by Mike, 20201115
+/*    //added by Mike, 20201115; edited by Mike, 20210815
     myWindowWidth=windowWidth;
     myWindowHeight=windowHeight;
+*/
+    fMyWindowWidth=fWindowWidth;
+    fMyWindowHeight=fWindowHeight;
     
     //added by Mike, 20210626
     fMyWindowWidthAsPixelRatioToHeightPixel=1.0f;
     iMyWindowWidthAsPixelOffset=0;
     
-    if (myWindowWidth!=myWindowHeight) {
+    if (fMyWindowWidth!=fMyWindowHeight) {
         //added by Mike, 20210626
         //note: causes zero value with myWindowHeight/myWindowWidth;
         //add *1.0f, to be myWindowHeight/(myWindowWidth*1.0f);
         //NOT myWindowHeight/myWindowWidth*1.0f;
         //edited by Mike, 20210628
         //        fMyWindowWidthAsPixelRatioToHeightPixel= 0.56222;
-        fMyWindowWidthAsPixelRatioToHeightPixel= myWindowHeight/(myWindowWidth*1.0f);
+        fMyWindowWidthAsPixelRatioToHeightPixel= fMyWindowHeight/(fMyWindowWidth*1.0f);
         
         //note: width value > height value
         //TO-DO: -add: auto-update
         //height: 768; width: 1366
-        iMyWindowWidthAsPixelOffset=(myWindowWidth-myWindowHeight)/2;
+        iMyWindowWidthAsPixelOffset=(fMyWindowWidth-fMyWindowHeight)/2;
         //			iMyWindowWidthAsPixelOffset=(myWindowWidth-myWindowHeight);
         
+/*	//removed by Mike, 20210815        
         printf(">>>DITO: %f",fMyWindowWidthAsPixelRatioToHeightPixel);
         printf(">>>DITO: myWindowHeight: %i",myWindowHeight);
         printf(">>>DITO: myWindowWidth: %i",myWindowWidth);
         printf(">>>DITO: iMyWindowWidthAsPixelOffset: %i",iMyWindowWidthAsPixelOffset);
+*/
         
-        myWindowWidth = myWindowHeight; //myWindowWidthAsPixelInput;
+        fMyWindowWidth = fMyWindowHeight; //myWindowWidthAsPixelInput;
         //    	myWindowHeightAsPixel = myWindowHeightAsPixelInput;
     }
     
     
     //added by Mike, 20210516
     myUsbongUtils = new UsbongUtils();
-    myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight); //added by Mike, 20210626
+    //edited by Mike, 20210815
+//    myUsbongUtils->setWindowWidthHeight(myWindowWidth, myWindowHeight); //added by Mike, 20210626
+    myUsbongUtils->setWindowWidthHeight(fMyWindowWidth, fMyWindowHeight); //added by Mike, 20210626
     
     //    myWidthX=0.5;
     
@@ -703,7 +710,9 @@ void Text::drawPressNextSymbol()
     //TO-DO: -reverify: in LinuxOS machine
     //edited by Mike, 20210725
 //    glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(myWindowWidth/2), myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.75f), 0.0f);
-    glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(myWindowWidth/2), myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.95f), 0.0f);
+	//edited by Mike, 20210815
+//    glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(myWindowWidth/2), myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.95f), 0.0f);
+    glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(fMyWindowWidth/2), myUsbongUtils->autoConvertFromPixelToVertexPointY(fMyWindowHeight*0.95f), 0.0f);
     
     
     glRotatef(45.0f, 0.0f, 0.0f, 1.0f);
@@ -920,7 +929,9 @@ void Text::drawTextBackgroundAsQuadWithTexture()
     //edited by Mike, 20210725
     //note: from TOP; y-axis
 //    glTranslatef(fMyWindowWidthAsVertexOffset, -myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.65f), 0.0f);
-    glTranslatef(fMyWindowWidthAsVertexOffset, -myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.75f), 0.0f);
+	//edited by Mike, 20210815
+//    glTranslatef(fMyWindowWidthAsVertexOffset, -myUsbongUtils->autoConvertFromPixelToVertexPointY(myWindowHeight*0.75f), 0.0f);
+    glTranslatef(fMyWindowWidthAsVertexOffset, -myUsbongUtils->autoConvertFromPixelToVertexPointY(fMyWindowHeight*0.75f), 0.0f);
     
     //auto-scale Window Width to Height
     glScalef(fMyWindowWidthAsPixelRatioToHeightPixel,1.0f,1.0f);
@@ -1197,8 +1208,10 @@ void Text::drawTextBackgroundObject()
     //TO-DO: -reverify: in another machine
 //     glTranslatef(0.23f, 0.0f, 0.0f); //note: no need to execute glTranslatef(...)
 //     glScalef(1.0f-0.23f, 1.0f, 1.0f); //OK in macOS machine
-//    glScalef(1.0f-(iMyWindowWidthAsPixelOffset*1.0f)/(myWindowWidth+iMyWindowWidthAsPixelOffset), 1.0f, 1.0f); //OK also in macOS machine
-    glScalef(1.0f-(iMyWindowWidthAsPixelOffset*1.0f)/(myWindowWidth), 1.0f, 1.0f); //OK
+//    glScalef(1.0f-(iMyWindowWidthAsPixelOffset*1.0f)/(myWindowWidth+iMyWindowWidthAsPixelOffset), 1.0f, 1.0f); //OK also in macOS machine\
+	//edited by Mike, 20210815
+//    glScalef(1.0f-(iMyWindowWidthAsPixelOffset*1.0f)/(myWindowWidth), 1.0f, 1.0f); //OK
+    glScalef(1.0f-(iMyWindowWidthAsPixelOffset*1.0f)/(fMyWindowWidth), 1.0f, 1.0f); //OK
 
     //added by Mike, 20210725
     //TO-DO: -reverify: set of instructions with another machine's screen/monitor

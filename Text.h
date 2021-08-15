@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20210613
- * @date updated: 20210723
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -316,7 +316,9 @@ public:
     //RobotShip();
     //edited by Mike, 20210625
     //    Text(float xPos, float yPos, float zPos,int windowWidth,int windowHeight);
-    Text(float xPos, float yPos, float zPos, float windowWidth, float windowHeight);
+    //edited by Mike, 20210815
+//    Text(float xPos, float yPos, float zPos, float windowWidth, float windowHeight);
+    Text(float xPos, float yPos, float zPos, float fWindowWidth, float fWindowHeight);
     
     ~Text();
     
