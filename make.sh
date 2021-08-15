@@ -30,7 +30,7 @@ g++ -c RobotShip.cpp
 g++ -c Font.cpp
 g++ -c Beam.cpp
 g++ -c Asteroid.cpp
-#g++ -c Level.cpp
+g++ -c Level.cpp
 g++ -c PolygonUtils.cpp
 g++ -c CTargaImage.cpp
 g++ -c Pilot.cpp
@@ -48,7 +48,6 @@ g++ -c Level2D.cpp
 #g++ -o ./output/UsbongStoryLinux mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o Beam.o Asteroid.o Level.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o Ball.o Text.o Level2D.o -lGL -lGLU -lglut
 #g++ -o ./output/UsbongStoryLinux mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o Text.o Level2D.o -lGL -lGLU -lglut
 g++ -o ./output/UsbongStoryLinux mainLinux.o OpenGLCanvas.o MyDynamicObject.o RobotShip.o Font.o Beam.o Asteroid.o Level.o PolygonUtils.o CTargaImage.o Pilot.o UsbongUtils.o Button.o Ball.o Text.o Level2D.o -lGL -lGLU -lglut
-
 
 
 #added by Mike, 20210220
