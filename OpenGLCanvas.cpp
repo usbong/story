@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210815
+ * @date updated: 20210816
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -2031,7 +2031,19 @@ void OpenGLCanvas::render()
     //glScalef(fMyWindowWidthAsPixelRatioToHeightPixel,1.0f,1.0f);
     //reset to 1.0f
     //    glScalef(1.0f,1.0f,1.0f);
-    
+
+/*	//removed by Mike, 20210816; 
+	//TO-DO: -reverify: due to noticeably slow execution in Mini Computer
+	//with processor: Intel(R) Core(TM) Solo CPU U1400 @1.20GHz
+	//32-bit OS; 1GB RAM
+	//speed reminds me of Alamat ng Agimat: Anim na Perlas 
+	//executed by Nokia Series 40 Java Micro Edition Mobile Telephone
+	//.tga texture image file excessively large at 257KB?
+	//if execution speed is not increased, fast action game not recommended;
+	//turn-based Card System? Role Playing Game?
+	//note: noticeable increased speed using laptop computer 
+	//with processor Intel(R) CPU T2130 @1.86GHZ
+	//32-bit OS; 3GB RAM
     glPushMatrix();
     //    	glScalef(fMyWindowWidthAsPixelRatioToHeightPixel,1.0f,1.0f);
     
@@ -2040,6 +2052,7 @@ void OpenGLCanvas::render()
     	myLevel2D->draw();
     glPopMatrix();
     //-----
+*/
     
     //added by Mike, 20210723
     glPushMatrix();
