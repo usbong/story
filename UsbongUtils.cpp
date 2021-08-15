@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20201210
- * @date updated: 20210805
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -257,7 +257,9 @@ char* UsbongUtils::read(char *inputFilename) {
 //added by Mike, 20210516
 //TO-DO: -reverify: center draw line
 //note: vertex origin 0,0 at center
-float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
+//edited by Mike, 20210815
+//float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
+float UsbongUtils::autoConvertFromPixelToVertexPointX(float fPointX)
 {
     //max width and height: 640
     //set in mainLinux.cpp
@@ -270,7 +272,7 @@ float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
     float fHalfWindowWidth=fMaxWindowWidth/2;
     float fHalfWindowHeight=fMaxWindowHeight/2;
     
-    if (iPointX<fHalfWindowWidth) {
+    if (fPointX<fHalfWindowWidth) {
         //note: pixel point origin at top-left
         //		return -0.25+(fHalfWindowWidth-iPointX)/fMaxWindowWidth*(-1); //note: use of parenthesis
         //		return (fHalfWindowWidth-iPointX)/fMaxWindowWidth*(-1); //note: use of parenthesis
@@ -278,9 +280,9 @@ float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
         //		return (fMaxWindowWidth-iPointX)/fMaxWindowWidth*(-1); //note: use of parenthesis
         //		return (fMaxWindowWidth-iPointX)/fHalfWindowWidth*(-1); //note: use of parenthesis
         
-        return (fHalfWindowWidth-iPointX)/fHalfWindowWidth*(-1); //note: use of parenthesis
+        return (fHalfWindowWidth-fPointX)/fHalfWindowWidth*(-1); //note: use of parenthesis
     }
-    else if (iPointX==0) {
+    else if (fPointX==0) {
         return 0; //note: use of parenthesis
     }
     //edited by Mike, 20210512
@@ -288,7 +290,7 @@ float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
         //	return -0.25+iPointX/fMaxWindowWidth;
         //edited by Mike, 20210512
         //		return iPointX/fMaxWindowWidth;
-        return (iPointX-fHalfWindowWidth)/fHalfWindowWidth;
+        return (fPointX-fHalfWindowWidth)/fHalfWindowWidth;
     }
     
     //	return (fMaxWindowWidth-iPointX)/fMaxWindowWidth;
@@ -296,7 +298,9 @@ float UsbongUtils::autoConvertFromPixelToVertexPointX(int iPointX)
 
 //added by Mike, 20210511
 //note: vertex origin 0,0 at center
-float UsbongUtils::autoConvertFromPixelToVertexPointY(int iPointY)
+//edited by Mike, 20210815
+//float UsbongUtils::autoConvertFromPixelToVertexPointY(int iPointY)
+float UsbongUtils::autoConvertFromPixelToVertexPointY(float fPointY)
 {
     //max width and height: 640
     //set in mainLinux.cpp
@@ -311,17 +315,17 @@ float UsbongUtils::autoConvertFromPixelToVertexPointY(int iPointY)
     
     //TO-DO: -reverify: this
     //max 1.0f
-    if (iPointY<=fHalfWindowHeight) {
+    if (fPointY<=fHalfWindowHeight) {
         //note: pixel point origin at top-left
         //note: pixel point uses inverted y-axis
         //		return 0.25+(fHalfWindowHeight-iPointY)/fMaxWindowHeight; //note: use of parenthesis
         //		return (fHalfWindowHeight-iPointY)/fMaxWindowHeight; //note: use of parenthesis
         //edited by Mike, 20210512
         //		return (fMaxWindowHeight-iPointY)/fMaxWindowHeight; //note: use of parenthesis
-        return (fHalfWindowHeight-iPointY)/fHalfWindowHeight; //note: use of parenthesis
+        return (fHalfWindowHeight-fPointY)/fHalfWindowHeight; //note: use of parenthesis
     }
     //edited by Mike, 20210512
-    else if (iPointY==0) {
+    else if (fPointY==0) {
         return 0;
     }
     //edited by Mike, 20210512
@@ -330,20 +334,22 @@ float UsbongUtils::autoConvertFromPixelToVertexPointY(int iPointY)
         //		return iPointY/fMaxWindowHeight*(-1);	
         //edited by Mike, 20210512
         //		return iPointY/fHalfWindowHeight*(-1);			
-        return (iPointY-fHalfWindowHeight)/fHalfWindowHeight*(-1);				
+        return (fPointY-fHalfWindowHeight)/fHalfWindowHeight*(-1);
     }
 }
 
-//added by Mike, 20210712
-float UsbongUtils::autoConvertFromPixelToVertexGridTileWidth(int iGridTileWidth)
+//added by Mike, 20210712; edited by Mike, 20210815
+//float UsbongUtils::autoConvertFromPixelToVertexGridTileWidth(int iGridTileWidth)
+float UsbongUtils::autoConvertFromPixelToVertexGridTileWidth(float fGridTileWidth)
 {
-	return 0.0f+autoConvertFromPixelToVertexPointX(iGridTileWidth);
+	return 0.0f+autoConvertFromPixelToVertexPointX(fGridTileWidth);
 }
 
-//added by Mike, 20210712
-float UsbongUtils::autoConvertFromPixelToVertexGridTileHeight(int iGridTileHeight)
+//added by Mike, 20210712; edited by Mike, 20210815
+//float UsbongUtils::autoConvertFromPixelToVertexGridTileHeight(int iGridTileHeight)
+float UsbongUtils::autoConvertFromPixelToVertexGridTileHeight(float fGridTileHeight)
 {
-	return 0.0f+autoConvertFromPixelToVertexPointY(iGridTileHeight);
+	return 0.0f+autoConvertFromPixelToVertexPointY(fGridTileHeight);
 }
 
 //added by Mike, 20210720

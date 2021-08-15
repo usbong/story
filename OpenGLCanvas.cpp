@@ -502,9 +502,14 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     iColumnCountMax=18;
     iHeightCountMax=10;
     
+    //edited by Mike, 20210815
+/*
     fGridSquareWidth = myWindowWidthAsPixel/iColumnCountMax; //example: 136.60
     fGridSquareHeight = myWindowHeightAsPixel/iRowCountMax; //example: 76.80
-
+*/
+    fGridSquareWidth = (myWindowWidthAsPixel*(1.0))/iColumnCountMax; //example: 136.60
+    fGridSquareHeight = (myWindowHeightAsPixel*(1.0))/iRowCountMax; //example: 76.80
+    
     printf("OpenGLCanvas.cpp; fGridSquareWidth: %f",fGridSquareWidth);
 
 /*    

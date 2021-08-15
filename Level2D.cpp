@@ -440,10 +440,14 @@ Level2D::Level2D(float xPos, float yPos, float zPos, float fWindowWidth, float f
 /*
     fGridSquareWidth = ((int)myWindowWidth)/iColumnCountMax; //example: 136.60
     fGridSquareHeight = ((int)myWindowHeight)/iRowCountMax; //example: 76.80
-*/    
+*/
+/* //edited by Mike, 20210815
     fGridSquareWidth = ((int)fMyWindowWidth)/iColumnCountMax; //example: 136.60
     fGridSquareHeight = ((int)fMyWindowHeight)/iRowCountMax; //example: 76.80
-
+*/
+    fGridSquareWidth = (fMyWindowWidth)/iColumnCountMax; //example: 136.60
+    fGridSquareHeight = (fMyWindowHeight)/iRowCountMax; //example: 76.80
+    
     printf("Level2D.cpp; fGridSquareWidth: %f",fGridSquareWidth); //75.888885, instead of 75.000000
     
     //added by Mike, 20210814
@@ -871,16 +875,26 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth+1);
     float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight+1);
 */
-    
-//    printf(">>Level2D; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
-//    printf(">>Level2D; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
-
-/*        
+/*
+    printf(">>Level2D; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
+    printf(">>Level2D; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
+*/
+/*
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
     float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
 */
+    
+/*  //edited by Mike, 20210815; //TO-DO: -reverify: this with another computer monitor width and height
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth+1);
     float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight+1);
+*/
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight);
+    
+/*
+    float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth+2);
+    float fGridTileHeightVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileHeight(fGridSquareHeight+2);
+*/
     
 		//TO-DO: -reverify: this
 		//edited by Mike, 20210720
@@ -909,8 +923,16 @@ void Level2D::drawTileAsQuadWithTexture(std::string sTileId)
     //due to instructions that I wrote
     
 #if defined(__APPLE__)
+    //edited by Mike, 20210815
     //note: right border of tile only partly visible
-    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
+//    fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
+    
+    //1280x800; width x height;
+//    glTranslatef(-7.0f/fMyWindowWidth, 6.5f/fMyWindowHeight, 0.0f);
+//    glTranslatef(-1.0f/fGridSquareWidth, 1.0f/fGridSquareHeight, 0.0f);
+//    glTranslatef(-(fGridSquareWidth-((int)fGridSquareWidth))/fGridSquareWidth, 0.0f, 0.0f);
+//    glTranslatef(-(fGridSquareWidth-((int)fGridSquareWidth))/fMyWindowWidth, 0.0f, 0.0f);
+    
 #endif
     
         
@@ -1224,8 +1246,11 @@ void Level2D::drawLevelWithTextureUsingInputFile()
   								//note: collision detection OK; updated: drawing of tile x and y positions
 /*                	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+fGridSquareWidth*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+fGridSquareHeight*(iRowCount+1.0f)), 0.0f);
 */
+                
+/*  //edited by Mike, 20210815; TO-DO: -verify: this with another computer monitor width and height
                 	glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+(fGridSquareWidth+1)*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+(fGridSquareHeight+1)*(iRowCount+1.0f)), 0.0f);
-
+*/
+                glTranslatef(myUsbongUtils->autoConvertFromPixelToVertexPointX(0.0f+(fGridSquareWidth)*(iColumnCount+1.0f)), myUsbongUtils->autoConvertFromPixelToVertexPointY(0.0f+(fGridSquareHeight)*(iRowCount+1.0f)), 0.0f);
  										
  										//edited by Mike, 20210719
 //                		drawTileAsQuadWithTexture();

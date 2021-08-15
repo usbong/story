@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20201210
- * @date updated: 20210729
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -93,14 +93,21 @@ public:
 //char read(char *filename);
 // char[] read(char *filename);
 
-	//added by Mike, 202105016
+/*	//added by Mike, 202105016; edited by Mike, 20210815
 	float autoConvertFromPixelToVertexPointX(int iPointX);
 	float autoConvertFromPixelToVertexPointY(int iPointY);
-	
-	//added by Mike, 20210712
+*/
+    float autoConvertFromPixelToVertexPointX(float fPointX);
+    float autoConvertFromPixelToVertexPointY(float fPointY);
+    
+    
+/*	//added by Mike, 20210712; edited by Mike ,20210815
 	float autoConvertFromPixelToVertexGridTileWidth(int iGridTileWidth);
 	float autoConvertFromPixelToVertexGridTileHeight(int iGridTileHeight);
-	
+*/
+    float autoConvertFromPixelToVertexGridTileWidth(float fGridTileWidth);
+    float autoConvertFromPixelToVertexGridTileHeight(float fGridTileHeight);
+    
 	//added by Mike, 20210720
 	int autoIdentifyColumnInputInLevelMapContainer(std::string sInput);
 	int autoIdentifyRowInputInLevelMapContainer(std::string sInput);
