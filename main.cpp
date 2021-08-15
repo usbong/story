@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210714
+ * @date updated: 20210815
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -309,8 +309,9 @@ myWindowHeight = static_cast<int>(GetSystemMetrics(SM_CYSCREEN));
       0, 0, myWindowWidth, myWindowHeight,
       NULL, NULL, hInstance, NULL);
 */
+	//edited by Mike, 20210815
 	hWnd = CreateWindow(
-		"GLSample", "Usbong Map System", 
+		"GLSample", "Usbong Story System", 
       WS_POPUPWINDOW | WS_VISIBLE,
 		0, 0, myWindowWidth, myWindowHeight, 
 		NULL, NULL, hInstance, NULL); 
@@ -430,11 +431,11 @@ rectWorkArea = mi.rcWork;
 
     /* program main loop */
     while (!bQuit)
-    {
-        /* check for messages */
+    {    	    	
+        // check for messages
         if (PeekMessage (&msg, NULL, 0, 0, PM_REMOVE))
         {
-            /* handle or dispatch messages */
+            // handle or dispatch messages
             if (msg.message == WM_QUIT)
             {
                 bQuit = TRUE;
@@ -471,20 +472,29 @@ rectWorkArea = mi.rcWork;
     
                 /* OpenGL animation code goes here */
                 myOpenGLCanvas->update();
-    
+
+                //do rendering here 
+                myOpenGLCanvas->render();
+                SwapBuffers (hDC);
+				
+//				Sleep(1);				
+
+/*	//edited by Mike, 20210815                     
                 if (skip > 0)
                    skip = skip-1;
                 else {
                      //do rendering here 
                      myOpenGLCanvas->render();
                      SwapBuffers (hDC);
-                     
+
                      timeElapsed=GetTickCount()-currSysTime;
                      if (timeElapsed>idealFrameTime)
                        skip = (timeElapsed/idealFrameTime) - 1;
                      else 
                        Sleep(idealFrameTime - timeElapsed);
+//					Sleep(100000); //1
                 }
+*/
             }
         }
     }

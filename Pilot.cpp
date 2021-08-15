@@ -1178,8 +1178,8 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
 													//added by Mike, 20210809
 //												drawPilotObjectGlow();
 																								
-												//added by Mike, 20210810
-												drawPilotObjectGlowFade();
+												//added by Mike, 20210810; //removed by Mike, 20210815
+//												drawPilotObjectGlowFade();
 												//with GlowFadePart1(), SFIII's GIL?
 //												drawPilotObjectGlowFadePart1(); //added by Mike, 20210811
 												
@@ -1216,8 +1216,8 @@ if ((currentFacingState==FACING_RIGHT) || (currentFacingState==FACING_RIGHT_AND_
                                     //added by Mike, 20210809
 //                                    drawPilotObjectGlow();
 
-												//added by Mike, 20210810
-												drawPilotObjectGlowFade();
+												//added by Mike, 20210810; removed by Mike, 20210815
+//												drawPilotObjectGlowFade();
 												//with GlowFadePart1(), SFIII's GIL?												
 												//drawPilotObjectGlowFadePart1(); //added by Mike, 20210811
                                     
