@@ -50,7 +50,8 @@
 //added by Mike, 20210807
 //added: in draw tile sprite texture image whose width and height is over its tile width and height used in collision detection
 
-//TO-DO: -add: acceleration down in y-axis with gravity
+//added by Mike, 20210815
+//TO-DO: -reverify: cause why on macOS tile positions not exact with OpenGLCanvas.cpp grid lines; Window Width x Height; 1280 x 800
 
 #include <stdio.h>
 #include <math.h>
