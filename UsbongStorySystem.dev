@@ -1,7 +1,7 @@
 [Project]
 FileName=UsbongStorySystem.dev
 Name=UsbongAutomotive
-Type=3
+Type=1
 Ver=2
 ObjFiles=
 Includes=
@@ -10,8 +10,8 @@ PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
-CppCompiler="C:/Usbong/SDL2-2.0.12/include/"_@@_"C:/Usbong/SDL2_image-2.0.5/include/"_@@_
-Linker="C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libopengl32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglu32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglut32.a"_@@_
+CppCompiler=
+Linker="C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libopengl32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglu32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglut32.a"_@@_"C:/Usbong/SDL2-2.0.12/lib/x86/SDL2.dll"_@@_"C:/Usbong/SDL2_image-2.0.5/lib/x86/SDL2_image.dll"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libgdi32.a"_@@_
 IsCpp=1
 Icon=
 ExeOutput=output

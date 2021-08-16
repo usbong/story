@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210816
+ * @date updated: 20210817
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -770,6 +770,7 @@ void DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC)
     ReleaseDC (hWnd, hDC);
 }
 
+/*	//removed by Mike, 20210817
 //added by Mike, 20210816
 //Reference: https://sites.google.com/site/sdlgamer/beginner/lesson-3;
 //last accessed: 20210816
@@ -778,4 +779,4 @@ int main(int argc, char *argv[])
 {
 	return 0;
 }
-
+*/
