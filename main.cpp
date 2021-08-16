@@ -532,6 +532,9 @@ LRESULT CALLBACK WndProc (HWND hWnd, UINT message,
     case WM_CREATE:
         return 0;
     case WM_CLOSE:
+    	//added by Mike, 20210817
+    	SDL_Quit();    	
+    	
         PostQuitMessage (0);
         return 0;
 
