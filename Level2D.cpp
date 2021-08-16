@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210815
+ * @date updated: 20210816
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -23,6 +23,12 @@
  *
  * 2) https://www.mathsisfun.com/sine-cosine-tangent.html;
  *	 last accessed: 20210803
+ *
+ * 3) https://www.libsdl.org/download-2.0.php;
+ * 	 last accessed: 20210816
+ * --> SDL Installation Intructions on LUBUNTU (20.04); 
+ * --> https://askubuntu.com/questions/786300/how-to-install-all-sdl-libraries-in-ubuntu-14-04;
+ * --> last accessed: 20210816
  *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007):
@@ -199,11 +205,20 @@ void Level2D::load_tga(char *filename)
         return;
     
     /* test validity of targa file */
+  //edited by Mike, 20210816
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 32 ||
         targa.image_descriptor != 8)
+        
+/*
+    if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
+        targa.id_field_length != 0 || targa.color_map_type != 0 ||
+        targa.image_type_code != 2 || ! test_pow2(targa.width) ||
+        ! test_pow2(targa.height) || targa.image_pixel_size != 24 ||
+        targa.image_descriptor != 8)
+*/        
     {
         fclose(file);
         free(data);
@@ -232,6 +247,31 @@ void Level2D::load_tga(char *filename)
                       GL_RGBA, GL_UNSIGNED_BYTE, data);
     free(data);
 }
+
+//added by Mike, 20210816
+//TO-DO: -put: in MyDynamicObject
+//Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+void Level2D::load_png(char *filename)
+{
+	GLuint texture;
+	SDL_Surface *surface;
+	surface = IMG_Load(filename);
+	glGenTextures(1,&texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,surface->w, surface->h, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	SDL_FreeSurface(surface);
+	
+
+/*    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
+                      GL_RGBA, GL_UNSIGNED_BYTE, data);
+*/                      
+}
+
 
 //edited by Mike, 20201001
 //Level2D::RobotShip(): MyDynamicObject(0,0,300)
@@ -577,8 +617,10 @@ void Level2D::setupLevel(int myLevelTextureObject)
     glBindTexture(GL_TEXTURE_2D, iLevelTextureObject);
     
     /* create OpenGL texture out of targa file */
-    //edited by Mike, 20210420
-    load_tga("textures/level2D.tga");
+    //edited by Mike, 20210420; edited by Mike, 20210816
+//    load_tga("textures/level2D.tga");    
+    load_png("textures/level2D.tga");
+    
     //    load_tga("textures/concrete.tga");
     
     /* set texture parameters */

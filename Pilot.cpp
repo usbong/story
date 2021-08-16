@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210815
+ * @date updated: 20210816
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -192,10 +192,17 @@ void Pilot::load_tga(char *filename)
         return;
 
     /* test validity of targa file */
+/*  //edited by Mike, 20210816
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 32 ||
+        targa.image_descriptor != 8)
+*/        
+    if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
+        targa.id_field_length != 0 || targa.color_map_type != 0 ||
+        targa.image_type_code != 2 || ! test_pow2(targa.width) ||
+        ! test_pow2(targa.height) || targa.image_pixel_size != 8 ||
         targa.image_descriptor != 8)
     {
         fclose(file);
@@ -224,6 +231,30 @@ void Pilot::load_tga(char *filename)
     gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
                       GL_RGBA, GL_UNSIGNED_BYTE, data);
     free(data);
+}
+
+//added by Mike, 20210816
+//TO-DO: -put: in MyDynamicObject
+//Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+void Pilot::load_png(char *filename)
+{
+	GLuint texture;
+	SDL_Surface *surface;
+	surface = IMG_Load(filename);
+	glGenTextures(1,&texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,surface->w, surface->h, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	SDL_FreeSurface(surface);
+	
+
+/*    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
+                      GL_RGBA, GL_UNSIGNED_BYTE, data);
+*/                      
 }
 
 //added by Mike, 20210423
