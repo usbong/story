@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210815
+ * @date updated: 20210816
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -91,6 +91,15 @@
 #include <GL/gl.h>
 #include <GL/glut.h> //added by Mike, 20200927
 #include <GL/glu.h> //added by Mike, 20200926
+
+//added by Mike, 20210816
+#ifdef _WIN32 //Windows machine
+	#include <SDL.h>
+	#include <SDL_image.h>
+#else
+	#include <SDL2/SDL.h>
+	#include <SDL2/SDL_image.h>
+#endif
 
 //added by Mike, 20200930
 #include "OpenGLCanvas.h"
@@ -760,3 +769,13 @@ void DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC)
     wglDeleteContext (hRC);
     ReleaseDC (hWnd, hDC);
 }
+
+//added by Mike, 20210816
+//Reference: https://sites.google.com/site/sdlgamer/beginner/lesson-3;
+//last accessed: 20210816
+//TO-DO: -reverify: this; linker input file unused because not done
+int main(int argc, char *argv[])
+{
+	return 0;
+}
+

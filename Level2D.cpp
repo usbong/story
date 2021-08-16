@@ -92,8 +92,13 @@
 #endif
 
 //added by Mike, 20210816
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#ifdef _WIN32 //Windows machine
+	#include <SDL.h>
+	#include <SDL_image.h>
+#else
+	#include <SDL2/SDL.h>
+	#include <SDL2/SDL_image.h>
+#endif
 
 #include "Button.h"
 /* //TO-DO: -add: these

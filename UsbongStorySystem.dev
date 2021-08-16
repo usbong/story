@@ -1,7 +1,7 @@
 [Project]
-FileName=UsbongMapSystem.dev
+FileName=UsbongStorySystem.dev
 Name=UsbongAutomotive
-Type=0
+Type=3
 Ver=2
 ObjFiles=
 Includes=
@@ -10,7 +10,7 @@ PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
-CppCompiler=
+CppCompiler="C:/Usbong/SDL2-2.0.12/include/"_@@_"C:/Usbong/SDL2_image-2.0.5/include/"_@@_
 Linker="C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libopengl32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglu32.a"_@@_"C:/Program Files/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib32/libglut32.a"_@@_
 IsCpp=1
 Icon=
@@ -19,7 +19,7 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=UsbongAutomotive.exe
+OverrideOutputName=UsbongStorySystem.dll
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
