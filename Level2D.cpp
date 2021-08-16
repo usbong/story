@@ -30,6 +30,16 @@
  * --> https://askubuntu.com/questions/786300/how-to-install-all-sdl-libraries-in-ubuntu-14-04;
  * --> last accessed: 20210816
  *
+ * Note:
+ * 1) SDL installation on Linux machine; 
+ * --> Terminal Commands (select Libraries, version Downgrade to Insall)
+ * --> sudo apt-get install aptitude
+ * --> sudo aptitude install libsdl2-dev
+ *
+ * 2) SDL Image Tool installtion on Linux machine;
+ * --> Terminal Commands (select Libraries, version Downgrade to Insall)
+ * --> sudo aptitude install libsdl2-image-dev
+ *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007):
  * Syson, M., Camacho, R., Gonzales, D., Del Rosario, R., Vidal, E., et al.
@@ -80,6 +90,10 @@
 #include <GL/glu.h>
 //#include <GL/glut.h>
 #endif
+
+//added by Mike, 20210816
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 #include "Button.h"
 /* //TO-DO: -add: these

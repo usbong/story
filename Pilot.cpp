@@ -69,6 +69,10 @@
 //#include <GL/glut.h>
 #endif
 
+//added by Mike, 20210816
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 #include "Pilot.h"
 /* //TO-DO: -add: these
 #include "PolygonUtils.h"
@@ -236,21 +240,61 @@ void Pilot::load_tga(char *filename)
 //added by Mike, 20210816
 //TO-DO: -put: in MyDynamicObject
 //Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
+//TO-DO: -reverify: this; www.stackoverflow.com
 void Pilot::load_png(char *filename)
 {
 	GLuint texture;
+	
+	SDL_Surface *surfacePart1;
+	surfacePart1 = IMG_Load(filename);
+/*
 	SDL_Surface *surface;
 	surface = IMG_Load(filename);
+*/	
+	
+//SDL_DisplayFormatAlpha(surface);
+	
+	SDL_Surface *surface = SDL_ConvertSurfaceFormat(
+    surfacePart1, SDL_PIXELFORMAT_ARGB8888, 0);
+	
 	glGenTextures(1,&texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,surface->w, surface->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA,surface->w, surface->h, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+/*	
+glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);	
+*/
+	
+int iMode = NULL;
 
+if(surface->format->BytesPerPixel == 3) {iMode = GL_RGB;}
+else if(surface->format->BytesPerPixel == 4) {iMode = GL_RGBA;}
+
+//glTexImage2D(GL_TEXTURE_2D, 0, Mode, image->w, image->h, 0, Mode, GL_UNSIGNED_BYTE, image->pixels);
+
+
+	glTexImage2D(GL_TEXTURE_2D, 0, iMode, surface->w, surface->h, 
+				 0, iMode, GL_UNSIGNED_BYTE, surface->pixels);
+/*
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 
+				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+*/
+
+/*				 
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA,surface->w, surface->h, 
+				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+*/
+/*	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, surface->w, surface->h, 
+					  GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+*/					  
+/*
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	SDL_FreeSurface(surface);
-	
+*/	
+	SDL_FreeSurface(surface);	
+	SDL_FreeSurface(surfacePart1);
 
 /*    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
                       GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -270,7 +314,9 @@ void Pilot::setup()
     /* create OpenGL texture out of targa file */
 	//edited by Mike, 20210420
 //    load_tga("textures/armor.tga");	
-    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
+	//edited by Mike, 20210816
+//    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
+    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
 	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -1322,6 +1368,7 @@ void Pilot::drawPilotObject()
     
     //added by Mike, 20210803
     glColor3f(1.0f, 1.0f, 1.0f); //set to default, i.e. white
+    
 //    glColor3f(1.0f, 1.0f, 0.0f); //yellow
 //    glColor3f(0.0f, 0.0f, 0.0f); //black; removes additional color
 //    glColor3f(1.0f, 0.0f, 0.0f); //red
