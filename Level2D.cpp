@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210816
+ * @date updated: 20210817
  * @website address: http://www.usbong.ph
  *
  * Reference:
@@ -45,6 +45,10 @@
  * Syson, M., Camacho, R., Gonzales, D., Del Rosario, R., Vidal, E., et al.
  *
  */
+ 
+//added by Mike, 20210817
+//TO-DO: -reverify: http://www.imagemagick.org/script/download.php 
+ 
 //added by Mike, 20210130
 //reverify: Robotship does not execute correctly
 //when down and left buttons are pressed while firing beam down
