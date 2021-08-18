@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210816
+ * @date updated: 20210818
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -2032,7 +2032,9 @@ void OpenGLCanvas::render()
     //reset to 1.0f
     //    glScalef(1.0f,1.0f,1.0f);
 
-/*	//removed by Mike, 20210816; 
+
+	//added by Mike, 20210818
+	//TO-DO: -add: version using SDL without OpenGL
 	//TO-DO: -reverify: due to noticeably slow execution in Mini Computer
 	//with processor: Intel(R) Core(TM) Solo CPU U1400 @1.20GHz
 	//32-bit OS; 1GB RAM
@@ -2052,7 +2054,7 @@ void OpenGLCanvas::render()
     	myLevel2D->draw();
     glPopMatrix();
     //-----
-*/
+
     
     //added by Mike, 20210723
     glPushMatrix();

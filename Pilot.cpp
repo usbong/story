@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210816
+ * @date updated: 20210818
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -69,6 +69,7 @@
 //#include <GL/glut.h>
 #endif
 
+/* //removed by Mike, 20210818
 //added by Mike, 20210816
 #ifdef _WIN32 //Windows machine
 	#include <SDL.h>
@@ -77,7 +78,7 @@
 	#include <SDL2/SDL.h>
 	#include <SDL2/SDL_image.h>
 #endif
-
+*/
 
 #include "Pilot.h"
 /* //TO-DO: -add: these
@@ -202,18 +203,19 @@ void Pilot::load_tga(char *filename)
         return;
 
     /* test validity of targa file */
-/*  //edited by Mike, 20210816
+  //edited by Mike, 20210816
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 32 ||
-        targa.image_descriptor != 8)
-*/        
+        targa.image_descriptor != 8)    
+/*    
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 8 ||
         targa.image_descriptor != 8)
+*/        
     {
         fclose(file);
         free(data);
@@ -243,7 +245,9 @@ void Pilot::load_tga(char *filename)
     free(data);
 }
 
-//added by Mike, 20210816
+/*
+//added by Mike, 20210816; edited by Mike, 20210818
+//TO-DO: -add: version using SDL without OpenGL
 //TO-DO: -put: in MyDynamicObject
 //Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
 //TO-DO: -reverify: this; www.stackoverflow.com
@@ -253,10 +257,10 @@ void Pilot::load_png(char *filename)
 	
 	SDL_Surface *surfacePart1;
 	surfacePart1 = IMG_Load(filename);
-/*
-	SDL_Surface *surface;
-	surface = IMG_Load(filename);
-*/	
+////
+//	SDL_Surface *surface;
+//	surface = IMG_Load(filename);
+////	
 	
 //SDL_DisplayFormatAlpha(surface);
 	
@@ -266,12 +270,13 @@ void Pilot::load_png(char *filename)
 	glGenTextures(1,&texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
-/*	
-glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);	
-*/
+////	
+//glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+//    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);	
+////
+
 	
 int iMode = NULL;
 
@@ -283,29 +288,33 @@ else if(surface->format->BytesPerPixel == 4) {iMode = GL_RGBA;}
 
 	glTexImage2D(GL_TEXTURE_2D, 0, iMode, surface->w, surface->h, 
 				 0, iMode, GL_UNSIGNED_BYTE, surface->pixels);
-/*
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 
-				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-*/
 
-/*				 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA,surface->w, surface->h, 
-				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-*/
-/*	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, surface->w, surface->h, 
-					  GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
-*/					  
-/*
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-*/	
+////	
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 
+//				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+////
+
+////				 
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA,surface->w, surface->h, 
+//				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+////
+
+////	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, surface->w, surface->h, 
+//					  GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
+////					  
+////
+//	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+////	
 	SDL_FreeSurface(surface);	
 	SDL_FreeSurface(surfacePart1);
 
-/*    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
-                      GL_RGBA, GL_UNSIGNED_BYTE, data);
-*/                      
+/////    
+//		gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
+//                      GL_RGBA, GL_UNSIGNED_BYTE, data);
+////                      
 }
+*/
 
 //added by Mike, 20210423
 void Pilot::setup()
@@ -320,9 +329,10 @@ void Pilot::setup()
     /* create OpenGL texture out of targa file */
 	//edited by Mike, 20210420
 //    load_tga("textures/armor.tga");	
-	//edited by Mike, 20210816
-//    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
-    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
+	//edited by Mike, 20210816; edited again by Mike, 20210818
+		//TO-DO: -add: version using SDL without OpenGL
+    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
+//    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
 	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
