@@ -13,7 +13,14 @@ TO-DO: -update: this<br/><br/>
 Done! The .exe file should now execute.
   
 ## Notes:  
-TO-DO: -reverify: continuous usage of Simple Directmedia Layer (SDL)<br/>
+--> reverify: Simple Directmedia Layer (SDL) 2-Dimensional (2D) auto-computed Display Output<br/>
+--> without OpenGL<br/>
+--> https://www.parallelrealities.co.uk/tutorials/; last accessed: 20210818<br/>
+--> https://wiki.libsdl.org/Tutorials; last accessed: 20210818<br/>
+<br/>
+--> where: OpenGL (Open Graphic Library): set of reusable instructions to execute 3D in addition to 2D auto-computed Display Output<br/>
+<br/>
+TO-DO: -reverify: continuous usage of SDL<br/>
 <br/>
 --> observed: still used with https://github.com/OpenRA/OpenRA; last accessed: 20210817<br/>
 --> "Open Source real-time strategy game engine for early Westwood games such as Command & Conquer: Red Alert written in C# using SDL and OpenGL. Runs on Windows, Linux, \*BSD and Mac OS X."<br/>
