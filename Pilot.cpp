@@ -21,6 +21,9 @@
  * Reference: 
  * 1) Astle, D. and Hawkin, K. (2004). "Beginning OpenGL game programming". USA: Thomson Course Technology
  *
+ * 2) https://www.spriters-resource.com/nintendo_64/pm/sheet/11746/;
+ * last accessed: 20210820
+ *
  * Acknowledgments:
  * 1) "Bulalakaw Wars" Team (2007): 
  * Syson, M., Camacho, R., Gonzales, D., Del Rosario, R., Vidal, E., et al.
@@ -69,6 +72,7 @@
 //#include <GL/glut.h>
 #endif
 
+/*  //removed by Mike, 20210820
 //removed by Mike, 20210818; added by Mike, 20210820
 #ifdef _WIN32 //Windows machine
 	#include <SDL.h>
@@ -77,7 +81,7 @@
 	#include <SDL2/SDL.h>
 	#include <SDL2/SDL_image.h>
 #endif
-
+*/
 
 #include "Pilot.h"
 /* //TO-DO: -add: these
@@ -315,6 +319,7 @@ else if(surface->format->BytesPerPixel == 4) {iMode = GL_RGBA;}
 }
 */
 
+/* //removed by Mike, 20210820
 //edited by Mike, 20210820
 //TO-DO: -reverify: instructions due to need to use SDL_Window, instead of glut's window;
 //to execute: SDL_GL_SwapWindow(mySDLWindow);, instead of glutSwapBuffers();
@@ -322,7 +327,7 @@ else if(surface->format->BytesPerPixel == 4) {iMode = GL_RGBA;}
 void Pilot::load_png(char *filename, unsigned int glITextureObject)
 {
 //	GLuint texture;
-/*	
+	
 	SDL_Surface *surfacePart1;
 	surfacePart1 = IMG_Load(filename);
 	
@@ -330,7 +335,7 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 		printf(">> image load error\n");
 		exit(1);
 	}
-*/
+
 	SDL_Surface *surface;
 	surface = IMG_Load(filename);
 	
@@ -347,10 +352,10 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 	
 //SDL_DisplayFormatAlpha(surface);
 
-/* //edited by Mike, 20210820
+ //edited by Mike, 20210820
 	SDL_Surface *surface = SDL_ConvertSurfaceFormat(
     surfacePart1, SDL_PIXELFORMAT_ARGB8888, 0);
-*/
+
 //	SDL_Surface *surface = surfacePart1;
 	
 	bool lock = SDL_MUSTLOCK(surface);
@@ -369,10 +374,10 @@ if(lock)
 	
 //	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 //	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_ADD);
-/*
-	glGenTextures(1,glITextureObject);
-	glBindTexture(GL_TEXTURE_2D, *glITextureObject);
-*/
+
+////	glGenTextures(1,glITextureObject);
+////	glBindTexture(GL_TEXTURE_2D, *glITextureObject);
+
 
 ////	
 //glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -381,17 +386,17 @@ if(lock)
 //    glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);	
 ////
 
-/*
+
 //define the parameters of that texture object
 //how the texture should wrap in s direction
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 //how the texture should wrap in t direction
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 //how the texture lookup should be interpolated when the face is smaller than the texture
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 //how the texture lookup should be interpolated when the face is bigger than the texture
-glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-*/
+////glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 
 	// minimum required to set the min and mag texture filters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -414,14 +419,13 @@ else if(surface->format->BytesPerPixel == 4) {
 	glTexImage2D(GL_TEXTURE_2D, 0, iMode, surface->w, surface->h, 
 				 0, iMode, GL_UNSIGNED_BYTE, surface->pixels);
 
-/*  gluBuild2DMipmaps(GL_TEXTURE_2D, iMode, surface->w, surface->h,
-                      iMode, GL_UNSIGNED_BYTE, surface->pixels);
-*/
+////  gluBuild2DMipmaps(GL_TEXTURE_2D, iMode, surface->w, surface->h,
+////                      iMode, GL_UNSIGNED_BYTE, surface->pixels);
+
 	SDL_FreeSurface(surface);	
 //	SDL_FreeSurface(surfacePart1);
-
-
 }
+*/
 
 //added by Mike, 20210423
 void Pilot::setup()
@@ -434,16 +438,20 @@ void Pilot::setup()
     // select texture 1
 	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
 */
+    //added by Mike, 20210820
+    glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
 	
     /* create OpenGL texture out of targa file */
 	//edited by Mike, 20210420
 //    load_tga("textures/armor.tga");	
 	//edited by Mike, 20210816; edited again by Mike, 20210818
-		//TO-DO: -add: version using SDL without OpenGL
-//    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
-    load_png("textures/imageSpriteExampleMikeWithoutBG.png", MIKE_TEXTURE_A);	
+    //edited by Mike, 20210820
+    //verified: version using SDL without OpenGL
+    //TO-DO: -reverify: version with OpenGL without SDL
+    //to load .png, et cetera compressed image files
+    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");
+//    load_png("textures/imageSpriteExampleMikeWithoutBG.png", MIKE_TEXTURE_A);
 	
-/* //removed by Mike, 20210820	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -456,7 +464,6 @@ void Pilot::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                     GL_NEAREST);                    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-*/
 
 ////    // select texture 1
 ////	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_B);
@@ -483,7 +490,6 @@ void Pilot::setup()
 ////    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 ////                    GL_LINEAR_MIPMAP_NEAREST);
 ////    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	
-
 	
     // unselect texture myFontTextureObject
     glBindTexture(GL_TEXTURE_2D, 0);
