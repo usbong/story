@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210821
+ * @date updated: 20210809
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -53,19 +53,6 @@
  * --> answers by: Mikepote, 20100408T1912
  * --> answers by: Santilli, Ciro, 20160316T2106
  *
- * 12) https://www.parallelrealities.co.uk/tutorials/;
- * --> last accessed: 20210818
- * --> 12.1) https://www.parallelrealities.co.uk/tutorials/shooter/shooter1.php;
- * --> last accessed: 20210818
- * --> 12.2) https://www.parallelrealities.co.uk/tutorials/shooter/shooter3.php;
- * --> last accessed: 2021819
- * --> execution speed OK in 32-bit OS; using SDL and SDL Image, without OpenGL
- *
- * 13) https://wiki.libsdl.org/SDL_SetRenderDrawColor;
- * --> last accessed: 20210818
- *
- * 14) https://wiki.libsdl.org/MigrationGuide;
- * --> last accessed: 20210821
  *
  * Notes:
  * 1) We can use this software tool to extract the compressed (zipped) folder.
@@ -87,10 +74,6 @@
  *   sudo apt-get install freeglut3-dev
  */
 
-//TO-DO: -add: installation steps of SDL and SDL Image
-
-//added by Mike, 20210821
-//TO-DO: -reverify: output using https://wiki.libsdl.org/MigrationGuide
 
 /**************************
  * Includes
@@ -117,9 +100,6 @@
  #endif
  */
 
-//added by Mike, 20210818
-//TO-DO: -remvoe: this
-
 //added by Mike, 20201209
 #if defined(__APPLE__)
 #include <OpenGL/gl.h>
@@ -131,16 +111,7 @@
 #include <GL/glut.h>
 #endif
 
-//added by Mike, 20210818
-#ifdef _WIN32 //Windows machine
-	#include <SDL.h>
-	#include <SDL_image.h>
-#else
-	#include <SDL2/SDL.h>
-	#include <SDL2/SDL_image.h>
-#endif
-
-//added by Mike, 20210821
+//added by Mike, 20200930
 #include "OpenGLCanvas.h"
 
 //added by Mike, 20201210
@@ -179,28 +150,8 @@ static int myWindowWidthAsPixel=640; //2048;//320
 static int myWindowHeightAsPixel=640; //2048;//320
 //static int myWindowHeight=320; //2048;//320//640
 
-/*	//edited by Mike, 20210818
-#define SCREEN_WIDTH   1280
-#define SCREEN_HEIGHT  720
-*/
-
-//added by Mike, 20210821
+//added by Mike, 20201001
 OpenGLCanvas *myOpenGLCanvas = NULL;
-
-//added by Mike, 20210818
-SDL_Window *mySDLWindow = NULL;
-SDL_Renderer *mySDLRenderer = NULL;
-
-//added by Mike, 20210819
-int iPilotX;
-int iPilotY;
-int iCountTaoAnimationFrame;
-
-int myKeysDown[10]; //note: includes KEY_J, KEY_L, KEY_I, KEY_K,
-
-//added by Mike, 20201226
-#define TRUE 1
-#define FALSE 0
 
 //added by Mike, 20210510
 //note: keys and mouseActionIds equal with that in OpenGLCanvas.cpp
@@ -308,8 +259,8 @@ void display() { //Linux Machine
     glutSwapBuffers();
 }
 
-//added by Mike, 20200930; edited by Mike, 20210821
-void displayOpenGLCanvasPrev() {
+//added by Mike, 20200930
+void displayOpenGLCanvas() {
     //removed by Mike, 20200930
     //Linux Machine
     /*    myOpenGLCanvas = new OpenGLCanvas;
@@ -350,9 +301,7 @@ void displayOpenGLCanvasPrev() {
          else {
          */
         //do rendering here
-/* //removed by Mike, 20210818			        
         myOpenGLCanvas->render();
-*/
         
         //removed by Mike, 20201002
         //SwapBuffers (hDC); //Windows Machine
@@ -389,22 +338,8 @@ void displayOpenGLCanvasPrev() {
     }
 }
 
-void displayOpenGLCanvas() {
-	myOpenGLCanvas->render();
-	
-/*	//added by Mike, 20210821; edited by Mike, 20210821
-  SDL_GL_SwapBuffers();
-  SDL_UpdateWindowSurface(mySDLWindow);
-*/  
-  SDL_GL_SwapWindow(mySDLWindow);
-}
-
-void update(int i) {
-	myOpenGLCanvas->update();
-}
-
 //added by Mike, 20200930
-void updatePrev(int i) {
+void update(int i) {
     //removed by Mike, 20200930
     //Linux Machine
     /*    myOpenGLCanvas = new OpenGLCanvas;
@@ -428,9 +363,7 @@ void updatePrev(int i) {
         //currSysTime=GetTickCount(); //Linux Machine
         
         /* OpenGL animation code goes here */
-/* //removed by Mike, 20210818        
         myOpenGLCanvas->update();
-*/        
         /*				//removed by Mike, 20201002, Linux Machine
          if (skip > 0)
          skip = skip-1;
@@ -469,7 +402,7 @@ void updatePrev(int i) {
 }
 
 
-/*	//removed by Mike, 20210818
+
 //note: special functions, e.g. character keys
 //added by Mike, 20201002
 void keyDown (unsigned char key, int x, int y)
@@ -480,12 +413,12 @@ void keyDown (unsigned char key, int x, int y)
     //added by Mike, 20201121
     switch (key)
     {
-            ///			   //removed by Mike, 20201121
+            /*			   //removed by Mike, 20201121
              //TO-DO: -add: identify VK_SPACE in Linux Machine
              case VK_SPACE:
              myOpenGLCanvas->keyDown(KEY_SPACE);
              return;
-             ////
+             */
             
             //added by Mike, 20201013
             //reference:
@@ -555,23 +488,20 @@ void keyDown (unsigned char key, int x, int y)
             
             
             //removed by Mike, 20201001
-            ////
-//             case 13: //ENTER
-//             myOpenGLCanvas->keyDown(KEY_ENTER);
-//             return 0;
-//             case 80: //P
-//             if (myOpenGLCanvas->currentState!=TITLE_SCREEN) {
-//             if (pause==0) //false
-//			          pause=1; //make it true
-//             else pause=0;
-//             }
-//             return 0;
-             ////
+            /*
+             case 13: //ENTER
+             myOpenGLCanvas->keyDown(KEY_ENTER);
+             return 0;
+             case 80: //P
+             if (myOpenGLCanvas->currentState!=TITLE_SCREEN) {
+             if (pause==0) //false
+			          pause=1; //make it true
+             else pause=0;
+             }
+             return 0;
+             */
     }
 }
-*/
-
-/*	//removed by Mike, 20210818
 //added by Mike, 20201002
 void keyUp (unsigned char key, int x, int y)
 {
@@ -580,12 +510,12 @@ void keyUp (unsigned char key, int x, int y)
     //added by Mike, 20201121
     switch (key)
     {
-            ////removed by Mike, 20201121
-             ////TO-DO: -add: identify VK_SPACE in Linux Machine
-             //case VK_SPACE:
-             //myOpenGLCanvas->keyUp(KEY_SPACE);
-             //return;
-             ////
+            /*			   //removed by Mike, 20201121
+             //TO-DO: -add: identify VK_SPACE in Linux Machine
+             case VK_SPACE:
+             myOpenGLCanvas->keyUp(KEY_SPACE);
+             return;
+             */
 	           //added by Mike, 20201013
 	           //reference:
 	           //https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
@@ -649,15 +579,14 @@ void keyUp (unsigned char key, int x, int y)
             myOpenGLCanvas->keyUp(KEY_Z);
             return;
             
-            ////removed by Mike, 20210130
-             //case 13: //ENTER
-             //myOpenGLCanvas->keyUp(KEY_ENTER);
-             //return;
-             ////
+            /*	//removed by Mike, 20210130
+             case 13: //ENTER
+             myOpenGLCanvas->keyUp(KEY_ENTER);
+             return;
+             */
     }
     return;
 }
-*/
 
 //note: special functions, e.g. shift, control, arrow keys
 //UP: 101
@@ -770,7 +699,6 @@ void specialKeyUp (int specialKey, int x, int y)
 //question by: Aseel84, 20121108T2007; edited by: Ivanzinho, 20201221T1531
 //answer by: Xymostech, 20211108T2317
 //note: window's top-left origin
-/* //removed by Mike, 20210818
 void myMouseAction(int button, int state, int x, int y)
 {
     //added by Mike, 20210512
@@ -794,7 +722,7 @@ void myMouseAction(int button, int state, int x, int y)
                 glutPostRedisplay();
             }
             else if (state == GLUT_UP)
-            {myOpenGLCanvas
+            {
                 printf("UP mouse xPos: %i; yPos: %i\n",x,y);
                 //				myOpenGLCanvas->mouseActionUp(MOUSE_LEFT_BUTTON);
                 
@@ -807,9 +735,7 @@ void myMouseAction(int button, int state, int x, int y)
             break;
     }
 }
-*/
 
-/* //removed by Mike, 20210818
 //added by Mike, 20210514
 void myMouseMotionAction(int x, int y)
 {
@@ -823,9 +749,7 @@ void myMouseMotionAction(int x, int y)
         myOpenGLCanvas->mouseMotionActionDown(MOUSE_LEFT_BUTTON, x, y);
     }
 }
-*/
 
-/* //edited by Mike, 20210818
 int main(int argc, char** argv) {
     glutInit(&argc, argv);                 // InglutReshapeWindowitialize GLUT
     //   glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB); //added by Mike, 20201202
@@ -895,20 +819,20 @@ int main(int argc, char** argv) {
     //added by Mike, 20201002
     glutKeyboardFunc(keyDown);
     glutKeyboardUpFunc(keyUp);
-    ////	//removed by Mike, 20210130
-    //glutSpecialFunc(specialKeyDown);
-    //glutSpecialUpFunc(specialKeyUp);
-    ////
+    /*	//removed by Mike, 20210130
+     glutSpecialFunc(specialKeyDown);
+     glutSpecialUpFunc(specialKeyUp);
+     */
     //added by Mike, 20210510
     glutMouseFunc(myMouseAction);
     
     //added by Mike, 20210514
     //Reference: https://www.opengl.org/resources/libraries/glut/spec3/node51.html;
     //last accessed: 20210514
-    ////
-    // void glutMotionFunc(void (*func)(int x, int y));
-    // void glutPassiveMotionFunc(void (*func)(int x, int y));
-    ////
+    /*
+     void glutMotionFunc(void (*func)(int x, int y));
+     void glutPassiveMotionFunc(void (*func)(int x, int y));
+     */
     glutMotionFunc(myMouseMotionAction);
     
     //added by Mike, 20210128
@@ -919,409 +843,7 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-*/
 
-/* //removed by Mike, 20210818
-typedef struct {
-	SDL_Renderer *renderer;
-	SDL_Window *window;
-} app;
-*/
-
-void initSDL(void)
-{
-	int rendererFlags, windowFlags;
-
-	rendererFlags = SDL_RENDERER_ACCELERATED;
-
-	windowFlags = 0;
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
-		exit(1);
-	}
-	
-	//includes window title bar	
-	SDL_DisplayMode mySDLDisplayMode;
-	SDL_GetCurrentDisplayMode(0, &mySDLDisplayMode);
-	
-	myWindowWidthAsPixel=mySDLDisplayMode.w;
-	myWindowHeightAsPixel=mySDLDisplayMode.h;
-	
-	
-//	mySDLWindow = SDL_CreateWindow("Pagong Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, myWindowWidthAsPixel, myWindowHeightAsPixel, windowFlags);
-/* //edited by Mike, 20210821
-	mySDLWindow = SDL_CreateWindow("Pagong Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, myWindowWidthAsPixel, myWindowHeightAsPixel, windowFlags | SDL_WINDOW_BORDERLESS);
-*/	
-	mySDLWindow = SDL_CreateWindow("Usbong Story Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, myWindowWidthAsPixel, myWindowHeightAsPixel, windowFlags | SDL_WINDOW_BORDERLESS);
-
-	if (!mySDLWindow )
-	{
-		printf("Failed to open %d x %d window: %s\n", myWindowWidthAsPixel, myWindowHeightAsPixel, SDL_GetError());
-		exit(1);
-	}
-
-	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-
-	mySDLRenderer = SDL_CreateRenderer(mySDLWindow, -1, rendererFlags);
-
-	if (!mySDLRenderer)
-	{
-		printf("Failed to create renderer: %s\n", SDL_GetError());
-		exit(1);
-	}
-	
-/* //removed by Mike, 20210821	
-	//added by Mike, 20210821
-//	SDL_Surface *screen = SDL_SetVideoMode(800, 600, 32, SDL_DOUBLEBUF | SDL_HWSURFACE);
-	SDL_Surface *screen = SDL_SetVideoMode(myWindowWidthAsPixel, myWindowHeightAsPixel, 32, SDL_DOUBLEBUFFER | SDL_SWSURFACE);
-*/
-	
-	//removed by Mike, 20210819
-	//SDL_GetRendererOutputSize(mySDLRenderer, &myWindowWidthAsPixel, &myWindowHeightAsPixel);
-	
-	//added by Mike, 20210821
-	SDL_GL_CreateContext(mySDLWindow);
-}
-
-void keyDown(SDL_KeyboardEvent *event)
-{
-	if (event->repeat == 0)
-	{
-//		if (event->keysym.scancode == SDL_SCANCODE_UP)
-		if (event->keysym.scancode == SDL_SCANCODE_W)
-		{
-//			iPilotY-=4;
-			myKeysDown[KEY_W] = TRUE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_DOWN)
-		if (event->keysym.scancode == SDL_SCANCODE_S)
-		{
-//			iPilotY+=4;
-			myKeysDown[KEY_S] = TRUE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_LEFT)
-		if (event->keysym.scancode == SDL_SCANCODE_A)
-		{
-//			iPilotX-=4;
-			myKeysDown[KEY_A] = TRUE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_RIGHT)
-		if (event->keysym.scancode == SDL_SCANCODE_D)
-		{
-//			iPilotX+=4;
-			myKeysDown[KEY_D] = TRUE;					
-		}
-	}
-}
-
-void keyUp(SDL_KeyboardEvent *event)
-{
-	if (event->repeat == 0)
-	{
-//		if (event->keysym.scancode == SDL_SCANCODE_UP)
-		if (event->keysym.scancode == SDL_SCANCODE_W)
-		{
-			myKeysDown[KEY_W] = FALSE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_DOWN)
-		if (event->keysym.scancode == SDL_SCANCODE_S)
-		{
-			myKeysDown[KEY_S] = FALSE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_LEFT)
-		if (event->keysym.scancode == SDL_SCANCODE_A)
-		{
-			myKeysDown[KEY_A] = FALSE;					
-		}
-
-//		if (event->keysym.scancode == SDL_SCANCODE_RIGHT)
-		if (event->keysym.scancode == SDL_SCANCODE_D)
-		{
-			myKeysDown[KEY_D] = FALSE;					
-		}
-	}
-}
-
-void doInput(void)
-{
-	SDL_Event event;
-
-	while (SDL_PollEvent(&event))
-	{
-		switch (event.type)
-		{
-			case SDL_QUIT:
-				exit(0);
-				break;
-
-			case SDL_KEYDOWN:
-				keyDown(&event.key);
-				break;
-
-			case SDL_KEYUP:
-				keyUp(&event.key);
-				break;
-
-			default:
-				break;
-		}
-	}
-}
-
-void prepareScene(void)
-{
-	//edited by Mike, 20210818
-//	SDL_SetRenderDrawColor(mySDLRenderer, 96, 128, 255, 255);
-//	SDL_SetRenderDrawColor(mySDLRenderer, 255, 0, 0, 255); //red
-	//note: SDL color max 255; GIMP color max 100
-	SDL_SetRenderDrawColor(mySDLRenderer, 0, 255*0.667, 255*0.494, 255); //blue green
-	
-	SDL_RenderClear(mySDLRenderer);
-}
-
-void presentScene(void)
-{
-	SDL_RenderPresent(mySDLRenderer);
-}
-
-//added by Mike, 20210818
-//TO-DO: -put: this in Pilot.cpp, et cetera
-SDL_Texture *loadTexture(char *filename)
-{
-	SDL_Texture *texture;
-
-	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "Loading %s", filename);
-
-	texture = IMG_LoadTexture(mySDLRenderer, filename);
-
-	return texture;
-}
-
-
-//TO-DO: -reverify: draw refresh rate
-//Reference: http://wiki.libsdl.org/SDL_RenderCopy;
-//last accessed: 20210818
-//TO-DO: -reverify: this
-void draw(SDL_Texture *texture, int x, int y)
-{
-/* //edited by Mike, 20210818
-	SDL_Rect dest;
-	//note: not initialized?
-	dest.x = x;
-	dest.y = y;
-	
-	dest.w = iPilotWidth;
-	dest.h = iPilotHeight;
-*/	
-	//added by Mike, 20210818
-	int iPilotWidth=64;
-	int iPilotHeight=64;
-
-	
-  /* Rectangles for drawing which will specify source (inside the texture)
-  and target (on the screen) for rendering our textures. */
-  SDL_Rect SrcR;
-  SDL_Rect DestR;
-  
-	iCountTaoAnimationFrame=(iCountTaoAnimationFrame)%3;                    																				    
-
-  SrcR.x = 0+ iCountTaoAnimationFrame*iPilotWidth;
-  SrcR.y = 0;
-  SrcR.w = iPilotWidth;
-  SrcR.h = iPilotHeight;
-
-  DestR.x = x; //myWindowWidthAsPixel / 2 - iPilotWidth / 2;
-  DestR.y = y; //myWindowHeightAsPixel / 2 - iPilotHeight / 2;
-  DestR.w = iPilotWidth;
-  DestR.h = iPilotHeight;
-  	
-  int iCount;
-  for (iCount=0; iCount<iNumOfKeyTypes; iCount++) {
-		if (myKeysDown[iCount]==TRUE) {
- 			iCountTaoAnimationFrame=iCountTaoAnimationFrame+1;																				
- 			break;
-		}
-  }
-  if (iCount==iNumOfKeyTypes) {
- 			iCountTaoAnimationFrame=0;																				
-  }
-	
-/*	
-	SDL_Rect *myClip;
-	myClip->x=0;
-	myClip->y=0;
-	myClip->w=64;
-	myClip->h=64;
-	
-	dest.w = myClip->w;
-	dest.h = myClip->h;
-*/	
-	SDL_RenderClear(mySDLRenderer);
-	
-/*	
-	dest.w = iPilotWidth;
-	dest.h = iPilotHeight;
-*/	
-//	printf("dest.w: %i\n",dest.w);
-		
-/*	
-	int iDestWidth=dest.x+iPilotWidth;
-	int iDestHeight=dest.y+iPilotHeight;
-*/		
-	//edited by Mike, 20210818; removed by Mike, 20210818
-	//SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
-	
-	
-//	SDL_QueryTexture(texture, NULL, NULL, &iDestWidth, &iDestHeight);
-//	SDL_QueryTexture(texture, NULL, NULL, &iDestWidth, &iDestHeight);
-
-	//scaled down image
-/*	
-	dest.w = iPilotWidth;
-	dest.h = iPilotHeight;
-*/
-	//Reference: https://www.willusher.io/sdl2%20tutorials/2013/08/27/lesson-5-clipping-sprite-sheets;
-	//last accessed: 20210818
-	//renderTexture(texture, mySDLRenderer, dest, &myClip);
-
-/*	//removed by Mike, 20210818
-//	SDL_RenderDrawRect(mySDLRenderer, &dest);
-//	SDL_RenderCopy(mySDLRenderer, texture, NULL, &dest);
-	SDL_RenderCopy(mySDLRenderer, texture, nullptr, &dest);
-*/	
-	
-	//edited by Mike, 20210818
-	//SDL_RenderCopy(mySDLRenderer, texture, nullptr, &dest);
-
-	SDL_RenderCopy(mySDLRenderer, texture, &SrcR, &DestR);
-	SDL_RenderPresent(mySDLRenderer);
-}
-
-void update() {
-		if (myKeysDown[KEY_W])
-		{
-			iPilotY-=4;
-		}
-
-		if (myKeysDown[KEY_S])
-		{
-			iPilotY+=4;
-		}
-
-		if (myKeysDown[KEY_A])
-		{
-			iPilotX-=4;
-		}
-
-		if (myKeysDown[KEY_D])
-		{
-			iPilotX+=4;
-		}
-}
-
-/*
-int mainFromUsbongPagong(int argc, char *argv[])
-{
- 	//removed by Mike, 20210818
-//	memset(&App, 0, sizeof(App));
-
-	initSDL();
-	
-	//added by Mike, 20210818; edited by Mike, 20210818
-	//TO-DO: -add: in Pilot.cpp, et cetera	
-////	player.x = 100;
-////	player.y = 100;
-////	player.texture = loadTexture("gfx/player.png");
-
-
-////	char* pilotTextureInput = (char*)"textures/imageSpriteExampleMikeWithoutBG.png";
-////	SDL_Texture *texture = loadTexture(pilotTextureInput);
-
-	//solution to problem: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
-	SDL_Texture *texture = loadTexture((char*)"textures/imageSpriteExampleMikeWithoutBG.png");
-
-	iPilotX=myWindowWidthAsPixel/2;
-	iPilotY=myWindowHeightAsPixel/2;
-	
-	//added by Mike, 20210819
-	iCountTaoAnimationFrame=0;
-
- 	//removed by Mike, 20210818
-	//atexit(cleanup);
-
-	while (1)
-	{
-		prepareScene();
-
-		doInput();
-		
-		update();
-		
-		
-		//added by Mike, 20210818
-//		draw(player.texture, player.x, player.y);
-		//edited by Mike, 20210819
-//		draw(texture, myWindowWidthAsPixel/2, myWindowHeightAsPixel/2);
-		draw(texture, iPilotX, iPilotY);
-
-		presentScene();
-
-		SDL_Delay(16);
-	}
-
-	return 0;
-}
-*/
-
-int main(int argc, char *argv[])
-{
- 	//removed by Mike, 20210818
-//	memset(&App, 0, sizeof(App));
-
-	initSDL();
-
-	myOpenGLCanvas = new OpenGLCanvas();  
-  myOpenGLCanvas->init(myWindowWidthAsPixel,myWindowHeightAsPixel);
-  
-  //TO-DO: -add: mouse action
-  //glutMouseFunc(myMouseAction);
-
- 	//removed by Mike, 20210818
-	//atexit(cleanup);
-
-	while (1)
-	{
-		prepareScene();
-
-		doInput();
-		
-		update();
-		
-		//added by Mike, 20210821
-		displayOpenGLCanvas();
-		
-/* //removed by Mike, 20210821		
-		//added by Mike, 20210818
-//		draw(player.texture, player.x, player.y);
-		//edited by Mike, 20210819
-//		draw(texture, myWindowWidthAsPixel/2, myWindowHeightAsPixel/2);
-		draw(texture, iPilotX, iPilotY);
-*/
-
-		presentScene();
-
-		SDL_Delay(16);
-	}
-
-	return 0;
-}
 
 /**************************
  * WinMain

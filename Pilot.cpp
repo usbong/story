@@ -335,8 +335,9 @@ void Pilot::setup()
 	//edited by Mike, 20210420
 //    load_tga("textures/armor.tga");	
 	//edited by Mike, 20210821
-  load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
+//  load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
 //    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
+    load_png("textures/imageSpriteExampleMikeWithoutBG.png", MIKE_TEXTURE_A);	
 	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -1536,7 +1537,7 @@ void Pilot::drawPilotObject()
     glDisable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, 0);
     
-    glPopMatrix();
+    glPopMatrix();    
 }
 
 //added by Mike, 20210809; edited by Mike, 20210810
