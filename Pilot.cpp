@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210820
+ * @date updated: 20210821
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -69,8 +69,8 @@
 //#include <GL/glut.h>
 #endif
 
-/*	//removed by Mike, 20210820
-//added by Mike, 20210816
+//added by Mike, 20210821
+//note: reverifying: use of SDL Image + OpenGL, without GLUT
 #ifdef _WIN32 //Windows machine
 	#include <SDL.h>
 	#include <SDL_image.h>
@@ -78,14 +78,17 @@
 	#include <SDL2/SDL.h>
 	#include <SDL2/SDL_image.h>
 #endif
-*/
+
 
 //added by Mike, 20210820
 //TO-DO: -reverify: http://www.nongnu.org/pngpp/doc/0.2.9/;
 //last accessed: 20210820
 //#include "png.hpp"
 //#include <pngpp/png.hpp>
-#include <png.hpp>
+//removed by Mike, 20210821
+//note: -reverify: using SDL and SDL Image + OpenGL; without GLUT
+//to execute system development speed-up 
+//#include <png.hpp>
 
 #include "Pilot.h"
 /* //TO-DO: -add: these
@@ -210,18 +213,19 @@ void Pilot::load_tga(char *filename)
         return;
 
     /* test validity of targa file */
-/*  //edited by Mike, 20210816
+  	//edited by Mike, 20210821
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 32 ||
         targa.image_descriptor != 8)
-*/        
+/*        
     if (fread(&targa, 1, sizeof(targa), file) != sizeof(targa) ||
         targa.id_field_length != 0 || targa.color_map_type != 0 ||
         targa.image_type_code != 2 || ! test_pow2(targa.width) ||
         ! test_pow2(targa.height) || targa.image_pixel_size != 8 ||
         targa.image_descriptor != 8)
+*/        
     {
         fclose(file);
         free(data);
@@ -255,7 +259,9 @@ void Pilot::load_tga(char *filename)
 //TO-DO: -put: in MyDynamicObject
 //Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
 //TO-DO: -reverify: this; www.stackoverflow.com
-void Pilot::load_png(char *filename)
+//edited by Mike, 20210821
+//void Pilot::load_png(char *filename)
+void Pilot::load_png(char *filename, unsigned int glITextureObject)
 {
 	GLuint texture;
 	
@@ -328,9 +334,9 @@ void Pilot::setup()
     /* create OpenGL texture out of targa file */
 	//edited by Mike, 20210420
 //    load_tga("textures/armor.tga");	
-	//edited by Mike, 20210816
-//    load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
-    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
+	//edited by Mike, 20210821
+  load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
+//    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
 	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -1395,7 +1401,7 @@ void Pilot::drawPilotObject()
 
     glPushMatrix();
 /*    
-    printf(">>Pilot.cpp; fGridSquareWidth: %f",fGridSquareWidth); //example: 71.111115
+    printf(">>Pilot.cpp; fGridSquareWidth: %f",fGridSquareWidth); ///home/unit_member/Documents/USBONG/story-mainexample: 71.111115
     printf(">>Pilot.cpp; fGridSquareHeight: %f",fGridSquareHeight); //example: 80.000000
 */    
     float fGridTileWidthVertexPosition = myUsbongUtils->autoConvertFromPixelToVertexGridTileWidth(fGridSquareWidth);
