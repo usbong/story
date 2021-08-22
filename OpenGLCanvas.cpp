@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210818
+ * @date updated: 20210822
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -617,9 +617,7 @@ bool OpenGLCanvas::init(int myWindowWidthAsPixelInput, int myWindowHeightAsPixel
     //    myPilot->setOpenGLCanvas(this, fGridSquareWidth);.
     myPilot->setOpenGLCanvas(this, fGridSquareWidth, fGridSquareHeight);
     
-    myPilot->setAsPlayer1(); //added by Mike, 20210601
-    
-    
+    myPilot->setAsPlayer1(); //added by Mike, 20210601    
     
     //added by Mike, 20210530; edited by Mike, 20210605
     //edited by Mike, 20210606

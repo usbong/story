@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210821
+ * @date updated: 20210822
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -261,9 +261,16 @@ void Pilot::load_tga(char *filename)
 //TO-DO: -reverify: this; www.stackoverflow.com
 //edited by Mike, 20210821
 //void Pilot::load_png(char *filename)
+//TO-DO: -reverify: this
 void Pilot::load_png(char *filename, unsigned int glITextureObject)
+//void Pilot::load_png(char *filename, GLuint glITextureObject)
 {
-	GLuint texture;
+/* //removed by Mike, 20210822
+	//edited by Mike, 20210822
+//	GLuint texture;
+	GLuint texture = MIKE_TEXTURE_A;
+*/
+	GLuint texture = MIKE_TEXTURE_A;
 	
 	SDL_Surface *surfacePart1;
 	surfacePart1 = IMG_Load(filename);
@@ -276,9 +283,26 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 	
 	SDL_Surface *surface = SDL_ConvertSurfaceFormat(
     surfacePart1, SDL_PIXELFORMAT_ARGB8888, 0);
-	
+
+/* //removed by Mike, 20210822
+	//edited by Mike, 20210822	
 	glGenTextures(1,&texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
+*/
+	
+/*
+//	glGenTextures(1,&glITextureObject); //MIKE_TEXTURE_A
+	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A); //glITextureObject);	
+*/
+
+	//added by Mike, 20210822
+	//TO-DO: -reverify: this
+	//https://stackoverflow.com/questions/13867219/opengl-renders-texture-all-white;
+	//last accessed: 20210822
+	glGenTextures(1, &texture);
+//    printf("\ntexture = %u", textures);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	
 
 /*	
 glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -289,8 +313,15 @@ glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	
 int iMode = NULL;
 
-if(surface->format->BytesPerPixel == 3) {iMode = GL_RGB;}
-else if(surface->format->BytesPerPixel == 4) {iMode = GL_RGBA;}
+	if(surface->format->BytesPerPixel == 3) {
+		iMode = GL_RGB;
+	}
+	else if(surface->format->BytesPerPixel == 4) {
+		iMode = GL_RGBA; 
+		//printf(">>DITO\n");
+	}
+	
+//printf(">>>iMode: %i\n",iMode);
 
 //glTexImage2D(GL_TEXTURE_2D, 0, Mode, image->w, image->h, 0, Mode, GL_UNSIGNED_BYTE, image->pixels);
 
@@ -329,6 +360,7 @@ void Pilot::setup()
     //glEnable(GL_DEPTH_TEST);
 
     // select texture 1
+    //removed by Mike, 20210822
 	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
 	
     /* create OpenGL texture out of targa file */

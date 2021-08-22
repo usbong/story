@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210821
+ * @date updated: 20210822
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -389,6 +389,9 @@ void displayOpenGLCanvasPrev() {
     }
 }
 
+//added by Mike, 20210822
+//TO-DO: -reverify: refresh rate to cause displayed parts of pixel texture to be incorrect
+//note: did NOT observe this with openGL + GLUT without SDL
 void displayOpenGLCanvas() {
 	myOpenGLCanvas->render();
 	
@@ -396,12 +399,14 @@ void displayOpenGLCanvas() {
   SDL_GL_SwapBuffers();
   SDL_UpdateWindowSurface(mySDLWindow);
 */  
-  SDL_GL_SwapWindow(mySDLWindow);
+  	SDL_GL_SwapWindow(mySDLWindow);
 }
 
+/* //removed by Mike, 20210822
 void update(int i) {
 	myOpenGLCanvas->update();
 }
+*/
 
 //added by Mike, 20200930
 void updatePrev(int i) {
@@ -463,8 +468,11 @@ void updatePrev(int i) {
         //TO-DO: -reverify: add RobotShip movement animation delay
         //using lower canvas auto-draw update delay
         //glutTimerFunc(40, update, 0);
-        glutTimerFunc(50, update, 0);
         
+/*	//removed by Mike, 20210822
+	//note: uses update(int parameter);        
+        glutTimerFunc(50, update, 0);
+*/        
     }
 }
 
@@ -993,28 +1001,36 @@ void keyDown(SDL_KeyboardEvent *event)
 		if (event->keysym.scancode == SDL_SCANCODE_W)
 		{
 //			iPilotY-=4;
-			myKeysDown[KEY_W] = TRUE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_W] = TRUE;					
+			myOpenGLCanvas->keyDown(KEY_W);
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_DOWN)
 		if (event->keysym.scancode == SDL_SCANCODE_S)
 		{
 //			iPilotY+=4;
-			myKeysDown[KEY_S] = TRUE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_S] = TRUE;	
+			myOpenGLCanvas->keyDown(KEY_S);						
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_LEFT)
 		if (event->keysym.scancode == SDL_SCANCODE_A)
 		{
 //			iPilotX-=4;
-			myKeysDown[KEY_A] = TRUE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_A] = TRUE;					
+			myOpenGLCanvas->keyDown(KEY_A);
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_RIGHT)
 		if (event->keysym.scancode == SDL_SCANCODE_D)
 		{
 //			iPilotX+=4;
-			myKeysDown[KEY_D] = TRUE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_D] = TRUE;			
+			myOpenGLCanvas->keyDown(KEY_D);
 		}
 	}
 }
@@ -1026,25 +1042,33 @@ void keyUp(SDL_KeyboardEvent *event)
 //		if (event->keysym.scancode == SDL_SCANCODE_UP)
 		if (event->keysym.scancode == SDL_SCANCODE_W)
 		{
-			myKeysDown[KEY_W] = FALSE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_W] = FALSE;			
+			myOpenGLCanvas->keyUp(KEY_W);					
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_DOWN)
 		if (event->keysym.scancode == SDL_SCANCODE_S)
 		{
-			myKeysDown[KEY_S] = FALSE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_S] = FALSE;					
+			myOpenGLCanvas->keyUp(KEY_S);
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_LEFT)
 		if (event->keysym.scancode == SDL_SCANCODE_A)
 		{
-			myKeysDown[KEY_A] = FALSE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_A] = FALSE;					
+			myOpenGLCanvas->keyUp(KEY_A);
 		}
 
 //		if (event->keysym.scancode == SDL_SCANCODE_RIGHT)
 		if (event->keysym.scancode == SDL_SCANCODE_D)
 		{
-			myKeysDown[KEY_D] = FALSE;					
+			//edited by Mike, 20210822
+//			myKeysDown[KEY_D] = FALSE;					
+			myOpenGLCanvas->keyUp(KEY_D);
 		}
 	}
 }
@@ -1205,6 +1229,7 @@ void draw(SDL_Texture *texture, int x, int y)
 }
 
 void update() {
+/* //removed by Mike, 20210822
 		if (myKeysDown[KEY_W])
 		{
 			iPilotY-=4;
@@ -1224,6 +1249,9 @@ void update() {
 		{
 			iPilotX+=4;
 		}
+*/		
+ 		//added by Mike, 20210822
+		myOpenGLCanvas->update();		
 }
 
 /*
@@ -1288,7 +1316,7 @@ int main(int argc, char *argv[])
 	initSDL();
 
 	myOpenGLCanvas = new OpenGLCanvas();  
-  myOpenGLCanvas->init(myWindowWidthAsPixel,myWindowHeightAsPixel);
+  	myOpenGLCanvas->init(myWindowWidthAsPixel,myWindowHeightAsPixel);
   
   //TO-DO: -add: mouse action
   //glutMouseFunc(myMouseAction);
@@ -1315,7 +1343,8 @@ int main(int argc, char *argv[])
 		draw(texture, iPilotX, iPilotY);
 */
 
-		presentScene();
+		//removed by Mike, 20210822
+//		presentScene();
 
 		SDL_Delay(16);
 	}
