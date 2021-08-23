@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210823
+ * @date updated: 20210824
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -151,21 +151,45 @@ if (!surface){
 return 0;
 }
 
-switch (surface->format->BytesPerPixel) {
-case 4:
-if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-textureFormat = GL_BGRA;
-else
-textureFormat = GL_RGBA;
-break;
-
-case 3:
-if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-textureFormat = GL_BGR;
-else
-textureFormat = GL_RGB;
-break;
-}
+//added by Mike, 20210824
+//TO-DO: -add: image frame clipping
+#if defined(__APPLE__)
+    switch (surface->format->BytesPerPixel) {
+        case 4:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+//                textureFormat = GL_BGRA;
+                textureFormat = GL_RGBA;
+            else
+//                textureFormat = GL_RGBA;
+                textureFormat = GL_BGRA;
+            break;
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+//                textureFormat = GL_BGR;
+                textureFormat = GL_RGB;
+            else
+//                textureFormat = GL_RGB;
+                textureFormat = GL_BGR;
+            break;
+    }
+#else
+    switch (surface->format->BytesPerPixel) {
+        case 4:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                textureFormat = GL_BGRA;
+            else
+                textureFormat = GL_RGBA;
+            break;
+            
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                textureFormat = GL_BGR;
+            else
+                textureFormat = GL_RGB;
+            break;
+    }
+#endif
+    
 
 *textw = surface->w;
 *texth = surface->h;
