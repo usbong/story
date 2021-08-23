@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210822
+ * @date updated: 20210823
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -255,12 +255,27 @@ void Pilot::load_tga(char *filename)
     free(data);
 }
 
+//added by Mike, 20210823
+//Reference: https://discourse.libsdl.org/t/sdlsurface-to-opengl-texture/15597/2;
+//last accessed: 20210823
+//answer by: Holmes_Futrell, 2008-08
+int pot(int x) {
+int val = 1;
+while (val < x) {
+val *= 2;
+}
+return val;
+}
+
+
 //added by Mike, 20210816
 //TO-DO: -put: in MyDynamicObject
 //Note: [Warning] deprecated conversion from string constant to 'char*' [-Wwrite-strings]
 //TO-DO: -reverify: this; www.stackoverflow.com
 //edited by Mike, 20210821
 //void Pilot::load_png(char *filename)
+//Reference: https://discourse.libsdl.org/t/sdlsurface-to-opengl-texture/15597/2;
+//last accessed: 20210823
 //TO-DO: -reverify: this
 void Pilot::load_png(char *filename, unsigned int glITextureObject)
 //void Pilot::load_png(char *filename, GLuint glITextureObject)
@@ -270,7 +285,7 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 //	GLuint texture;
 	GLuint texture = MIKE_TEXTURE_A;
 */
-	GLuint texture = MIKE_TEXTURE_A;
+	GLuint textureId = MIKE_TEXTURE_A;
 	
 	SDL_Surface *surfacePart1;
 	surfacePart1 = IMG_Load(filename);
@@ -280,9 +295,41 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 */	
 	
 //SDL_DisplayFormatAlpha(surface);
-	
+
+/*	//edited by Mike, 20210823	
 	SDL_Surface *surface = SDL_ConvertSurfaceFormat(
     surfacePart1, SDL_PIXELFORMAT_ARGB8888, 0);
+*/    
+    
+    
+   
+SDL_Surface *converted = SDL_CreateRGBSurface(0, surfacePart1->w, surfacePart1->h, 24, 0x0000FF, 0x00FF00, 0xFF0000, 0x000000);
+SDL_BlitSurface(surfacePart1, NULL, converted, NULL);
+
+//added by Mike, 20210823	
+int iMode = NULL;
+
+	if(converted->format->BytesPerPixel == 3) {
+		iMode = GL_RGB;
+	}
+	else if(converted->format->BytesPerPixel == 4) {
+		iMode = GL_RGBA; 
+		//printf(">>DITO\n");
+	}
+
+
+//GLuint textureID;
+glGenTextures(1, &textureId);
+glBindTexture(GL_TEXTURE_2D, textureId);
+//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pot(converted->w), pot(converted->h), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+//glTexImage2D(GL_TEXTURE_2D, 0, iMode, converted->w, converted->h, 0, iMode, GL_UNSIGNED_BYTE, NULL);
+glTexImage2D(GL_TEXTURE_2D, 0, iMode, pot(converted->w), pot(converted->h), 0, iMode, GL_UNSIGNED_BYTE, NULL);
+
+glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, converted->w, converted->h, iMode, GL_UNSIGNED_BYTE, converted->pixels);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    
 
 /* //removed by Mike, 20210822
 	//edited by Mike, 20210822	
@@ -295,6 +342,7 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A); //glITextureObject);	
 */
 
+/* //removed by Mike, 20210823
 	//added by Mike, 20210822
 	//TO-DO: -reverify: this
 	//https://stackoverflow.com/questions/13867219/opengl-renders-texture-all-white;
@@ -303,6 +351,10 @@ void Pilot::load_png(char *filename, unsigned int glITextureObject)
 //    printf("\ntexture = %u", textures);
     glBindTexture(GL_TEXTURE_2D, texture);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);	
+*/    
+     
+    
+    
 
 /*	
 glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -311,6 +363,7 @@ glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);	
 */
 	
+/* //removed by Mike, 20210823	
 int iMode = NULL;
 
 	if(surface->format->BytesPerPixel == 3) {
@@ -320,14 +373,24 @@ int iMode = NULL;
 		iMode = GL_RGBA; 
 		//printf(">>DITO\n");
 	}
+*/
 	
 //printf(">>>iMode: %i\n",iMode);
 
 //glTexImage2D(GL_TEXTURE_2D, 0, Mode, image->w, image->h, 0, Mode, GL_UNSIGNED_BYTE, image->pixels);
 
-
+/* //removed by Mike, 20210823
+ //edited by Mike, 20210823
 	glTexImage2D(GL_TEXTURE_2D, 0, iMode, surface->w, surface->h, 
 				 0, iMode, GL_UNSIGNED_BYTE, surface->pixels);
+*/
+
+				 
+/*	
+	gluBuild2DMipmaps(GL_TEXTURE_2D, iMode, surface->w, surface->h, 
+					  iMode, GL_UNSIGNED_BYTE, surface->pixels);
+*/					  				 
+				 
 /*
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 
 				 0, GL_RGBA, GL_UNSIGNED_BYTE, surface->pixels);
@@ -344,8 +407,13 @@ int iMode = NULL;
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 */	
-	SDL_FreeSurface(surface);	
+	//edited by Mike, 20210823
+//	SDL_FreeSurface(surface);	
+	SDL_FreeSurface(converted);	
+
 	SDL_FreeSurface(surfacePart1);
+	
+	
 
 /*    gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGBA, targa.width, targa.height,
                       GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -1502,7 +1570,7 @@ void Pilot::drawPilotObject()
 		//added by Mike, 20210727
 		//due flipped vertically
 		glRotatef(180, 0.0f, 0.0f, 1.0f);		
-		
+				
     //note: vertex position sequence to be auto-drawn
     //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
     //edited by Mike, 20210729
