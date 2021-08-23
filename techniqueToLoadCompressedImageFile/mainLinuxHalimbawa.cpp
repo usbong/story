@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210822
+ * @date updated: 20210823
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -107,18 +107,26 @@
 #include <SDL/SDL_image.h>
 */
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+//added by Mike, 20210823
+//TO-DO: -reverify: cause of additional blue texture; big_endian, small_endian?
 
-	//added by Mike, 20201209
+//added by Mike, 20201209
 #if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#include <GLUT/glut.h>
+  #include <OpenGL/gl.h>
+  #include <OpenGL/glu.h>
+  #include <GLUT/glut.h>
+
+ //added by Mike, 20210823
+  #include <SDL2/SDL.h>
+  #include <SDL2_image/SDL_image.h>
 #else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+  #include <GL/gl.h>
+  #include <GL/glu.h>
+  #include <GL/glut.h>
+
+ //added by Mike, 20210823
+  #include <SDL2/SDL.h>
+  #include <SDL2/SDL_image.h>
 #endif
 /*
 #define WIDTH 800
