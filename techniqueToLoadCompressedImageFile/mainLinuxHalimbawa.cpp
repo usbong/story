@@ -190,9 +190,14 @@ return 0;
     }
 #endif
     
-
+/* //edited by Mike, 20210824
+//note: 4 frames per width and height of whole texture image file
 *textw = surface->w;
 *texth = surface->h;
+*/
+*textw = surface->w/4;
+*texth = surface->h/4;
+
 
 glGenTextures(1, &texture);
 glBindTexture(GL_TEXTURE_2D, texture);
@@ -212,6 +217,7 @@ void DrawTexture(int x, int y, GLuint textureid, int textw, int texth)
 glBindTexture(GL_TEXTURE_2D, textureid);
 glEnable(GL_TEXTURE_2D);
 
+/* //edited by Mike, 20210824
 glBegin(GL_QUADS);
 glTexCoord2i(0, 0);
 glVertex2f(x, y);
@@ -225,6 +231,77 @@ glVertex2f(x + textw, y + texth);
 glTexCoord2i(0, 1);
 glVertex2f(x, y + texth);
 glEnd();
+*/
+
+float fTaoAnimationFrameOffset=0.0f;
+float fTaoAnimationFrameOffsetYAxis=0.0f;
+/*
+glBegin(GL_QUADS);
+	glTexCoord2f(0+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	glVertex2f(x, y);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	glVertex2f(x + textw, y);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glVertex2f(x + textw, y + texth);
+	
+	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glVertex2f(x, y + texth);
+glEnd();
+*/
+
+glBegin(GL_QUADS);
+	glTexCoord2f(0+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	glVertex3f(x, y, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	glVertex3f(x + textw, y, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glVertex3f(x + textw, y + texth, 0);
+	
+	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glVertex3f(x, y + texth, 0);
+glEnd();
+
+/*
+float fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
+float fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
+		
+float fTaoAnimationFrameOffset=0.0f;
+float fTaoAnimationFrameOffsetYAxis=0.0f;
+
+glBegin(GL_QUADS);
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	            
+    		glVertex3f(0.0f, 0.0f, 0.0f);
+    		
+        glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);	
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f, 0.0f);
+    		
+				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+    		glVertex3f(0.0f-fGridTileWidthVertexPosition, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+    		
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
+    		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
+glEnd();
+*/
+/*
+glBegin(GL_QUADS);
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);               	            
+    		glVertex3f(0.0f, 0.0f, 0.0f);
+    		
+        glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis);	
+    		glVertex3f(0.0f+fGridTileWidthVertexPosition, 0.0f, 0.0f);
+    		
+				glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+    		glVertex3f(0.0f+fGridTileWidthVertexPosition, 0.0f+fGridTileHeightVertexPosition, 0.0f);
+    		
+				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
+    		glVertex3f(0.0f, 0.0f+fGridTileHeightVertexPosition, 0.0f);
+
+glEnd();
+*/
 
 glDisable(GL_TEXTURE_2D);
 }
