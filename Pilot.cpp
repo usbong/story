@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210823
+ * @date updated: 20210824
  * @website address: http://www.usbong.ph
  *
  * Reference: 
@@ -277,7 +277,7 @@ return val;
 //Reference: https://discourse.libsdl.org/t/sdlsurface-to-opengl-texture/15597/2;
 //last accessed: 20210823
 //TO-DO: -reverify: this
-void Pilot::load_png(char *filename, unsigned int glITextureObject)
+void Pilot::load_pngPrev(char *filename, unsigned int glITextureObject)
 //void Pilot::load_png(char *filename, GLuint glITextureObject)
 {
 /* //removed by Mike, 20210822
@@ -420,6 +420,83 @@ int iMode = NULL;
 */                      
 }
 
+//added by Mike, 20210824
+//void Pilot::load_png(char *filename, unsigned int glITextureObject)
+void Pilot::load_png(char *filename, GLuint glITextureObject)
+{
+SDL_Surface *surface;
+GLenum textureFormat;
+//GLuint texture;
+
+GLuint textureId = glITextureObject; //MIKE_TEXTURE_A;
+
+surface = IMG_Load(filename);
+
+if (!surface){
+//printf(">>>>> !surface\n");
+	return; //0;
+}
+
+//added by Mike, 20210824
+//TO-DO: -add: image frame clipping
+#if defined(__APPLE__)
+    switch (surface->format->BytesPerPixel) {
+        case 4:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+//                textureFormat = GL_BGRA;
+                textureFormat = GL_RGBA;
+            else
+//                textureFormat = GL_RGBA;
+                textureFormat = GL_BGRA;
+            break;
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+//                textureFormat = GL_BGR;
+                textureFormat = GL_RGB;
+            else
+//                textureFormat = GL_RGB;
+                textureFormat = GL_BGR;
+            break;
+    }
+#else
+    switch (surface->format->BytesPerPixel) {
+        case 4:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                textureFormat = GL_BGRA;
+            else
+                textureFormat = GL_RGBA;
+            break;
+            
+        case 3:
+            if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+                textureFormat = GL_BGR;
+            else
+                textureFormat = GL_RGB;
+            break;
+    }
+#endif
+    
+/*
+*textw = surface->w;
+*texth = surface->h;
+*/
+
+printf(">>surface->w: %i; surface->h: %i\n",surface->w,surface->h);
+
+//glGenTextures(1, &textureId);
+glBindTexture(GL_TEXTURE_2D, textureId);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+glTexImage2D(GL_TEXTURE_2D, 0, surface->format->BytesPerPixel, surface->w,
+surface->h, 0, textureFormat, GL_UNSIGNED_BYTE, surface->pixels);
+
+SDL_FreeSurface(surface);
+
+
+//return texture;
+	
+}
+
 //added by Mike, 20210423
 void Pilot::setup()
 {
@@ -429,7 +506,7 @@ void Pilot::setup()
 
     // select texture 1
     //removed by Mike, 20210822
-	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
+//	glBindTexture(GL_TEXTURE_2D, MIKE_TEXTURE_A);
 	
     /* create OpenGL texture out of targa file */
 	//edited by Mike, 20210420
@@ -438,19 +515,21 @@ void Pilot::setup()
 //  load_tga("textures/imageSpriteExampleMikeWithoutBG.tga");	
 //    load_png("textures/imageSpriteExampleMikeWithoutBG.png");	
     load_png("textures/imageSpriteExampleMikeWithoutBG.png", MIKE_TEXTURE_A);	
-	
+
+/*	
 	// set texture parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-/*	//edited by Mike, 20210723; this is due to displayed image is blurred
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                    GL_LINEAR_MIPMAP_NEAREST);                    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-*/
+////	//edited by Mike, 20210723; this is due to displayed image is blurred
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+//                    GL_LINEAR_MIPMAP_NEAREST);                    
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+////
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                     GL_NEAREST);                    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+*/
 
 /*
     // select texture 1
@@ -480,10 +559,10 @@ void Pilot::setup()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	
 */
 	
-    /* unselect texture myFontTextureObject */
+    // unselect texture myFontTextureObject
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    /* setup alpha blending */
+    // setup alpha blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
 }
@@ -1476,6 +1555,7 @@ printf(">>>>>>>>>>>>>>> ATTACK DITO");
 }
 
 //added by Mike, 20210727
+//TO-DO: -reverify: this
 void Pilot::drawPilotObject()
 {
     
@@ -1533,7 +1613,7 @@ void Pilot::drawPilotObject()
     fGridTileWidthVertexPosition=fGridTileWidthVertexPosition+0.0006f;
 #endif
     
-    //added by Mike, 20210720
+    //added by Mike, 20210720    
     fGridTileWidthVertexPosition=1.0f-fGridTileWidthVertexPosition;
     fGridTileHeightVertexPosition=1.0f-fGridTileHeightVertexPosition; //note: +, instead of -
 		
@@ -1544,8 +1624,12 @@ void Pilot::drawPilotObject()
     float fTy = 0.0f;
     
     float fTileSideXAxis = 0.0625f;
-    //from bottom; anchor; start fTy at 1.0f
+/*  //edited by Mike, 20210824; 
+		//due to rotation?    
+//from bottom; anchor; start fTy at 1.0f
     float fTileSideYAxis = -0.0625f;
+*/
+    float fTileSideYAxis = 0.0625f;
 
 		//added by Mike, 20210724
 		//background color of tile
@@ -1569,7 +1653,8 @@ void Pilot::drawPilotObject()
 
 		//added by Mike, 20210727
 		//due flipped vertically
-		glRotatef(180, 0.0f, 0.0f, 1.0f);		
+		//removed by Mike, 20210824
+//		glRotatef(180, 0.0f, 0.0f, 1.0f);		
 				
     //note: vertex position sequence to be auto-drawn
     //vertex positions sequence: counter-clockwise sequence to auto-draw front face		
@@ -1606,6 +1691,7 @@ void Pilot::drawPilotObject()
              (((currentFacingState==FACING_UP) || (currentFacingState==FACING_DOWN)) and
               (prevFacingState==FACING_LEFT))
              || (currentFacingState==FACING_LEFT_AND_UP) || (currentFacingState==FACING_LEFT_AND_DOWN)) {
+/* //edited by Mike, 20210824
 			//note: vertex positions sequence: counter-clock-wise
 			//note:texture positions sequence: counter-clock-wise
     	glBegin(GL_QUADS); // Each set of 4 vertices form a quad
@@ -1629,6 +1715,51 @@ void Pilot::drawPilotObject()
 				glTexCoord2f(0.0f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);     	
     		glVertex3f(0.0f, 0.0f-fGridTileHeightVertexPosition, 0.0f);
     	glEnd();    	
+*/    	
+
+//TO-DO: -update: this
+float fTextureWidth = 256.0f/4.0f; //surface->w/4;
+float fTextureHeight = 256.0f/4.0f; //surface->h/4;
+
+/*
+ glBegin(GL_QUADS);
+	glTexCoord2f(0+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+//	glVertex3f(x, y, 0);
+	glVertex3f(0, 0, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+//	glVertex3f(x + textw, y, 0);
+	glVertex3f(0 + ftextureWidth, 0, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+//	glVertex3f(x + textw, y + texth, 0);
+	glVertex3f(0 + ftextureWidth, 0 + ftextureHeight, 0);
+
+	
+	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+//	glVertex3f(x, y + texth, 0);
+	glVertex3f(0, 0 + ftextureHeight, 0);	
+glEnd();
+*/
+ glBegin(GL_QUADS);
+	glTexCoord2f(0+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+//	glVertex3f(x, y, 0);
+	glVertex3f(0, 0, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+//	glVertex3f(x + textw, y, 0);
+	glVertex3f(0 + fTextureWidth, 0, 0);
+	
+	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+//	glVertex3f(x + textw, y + texth, 0);
+	glVertex3f(0 + fTextureWidth, 0 + fTextureHeight, 0);
+	
+	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+//	glVertex3f(x, y + texth, 0);
+	glVertex3f(0, 0 + fTextureHeight, 0);	
+glEnd();
+
+   	
 		}
 		//TO-DO: -add: facing_up, facing_down
 		else {

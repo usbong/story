@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B. 
  * @date created: 20200930
- * @date updated: 20210821
+ * @date updated: 20210824
  * @website address: http://www.usbong.ph
  *
  * Acknowledgments:
@@ -284,7 +284,9 @@ private:
     void load_tga(char *filename);
     //edited by Mike, 20210820
     //void load_png(char *filename);
-    void load_png(char *filename, unsigned int glITextureObject);
+    //edited by Mike, 20210824
+    void load_pngPrev(char *filename, unsigned int glITextureObject);
+    void load_png(char *filename, GLuint glITextureObject);
 
 	
     //draw texture

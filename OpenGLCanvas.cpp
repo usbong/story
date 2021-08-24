@@ -15,7 +15,7 @@
  * @company: USBONG
  * @author: SYSON, MICHAEL B.
  * @date created: 20200926
- * @date updated: 20210822
+ * @date updated: 20210824
  * @website address: http://www.usbong.ph
  *
  * References:
@@ -2068,8 +2068,36 @@ void OpenGLCanvas::render()
     //added by Mike, 20210722
     //TO-DO: -update: screen width and height max position;
     //used in wrap world, et cetera
-    glPushMatrix();
+    glPushMatrix();    
+/*
+//enable    
+glMatrixMode(GL_PROJECTION);
+glPushMatrix();
+glLoadIdentity();
+
+//glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+glOrtho(0, myWindowWidthAsPixel, myWindowHeightAsPixel, 0, -1, 1);
+
+glDisable(GL_DEPTH_TEST);
+glMatrixMode(GL_MODELVIEW);
+
+glPushMatrix();
+glLoadIdentity();    
+*/
+//--
+    
     	myPilot->draw();
+    	
+/*//disable
+glMatrixMode(GL_PROJECTION);
+glPopMatrix();
+glMatrixMode(GL_MODELVIEW);
+
+glPopMatrix();
+glEnable(GL_DEPTH_TEST);    	
+*/
+//--
+    	
     glPopMatrix();
     
     
