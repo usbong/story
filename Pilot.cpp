@@ -1718,8 +1718,13 @@ void Pilot::drawPilotObject()
 */    	
 
 //TO-DO: -update: this
+fTaoAnimationFrameOffset=0;
+
 float fTextureWidth = 256.0f/4.0f; //surface->w/4;
 float fTextureHeight = 256.0f/4.0f; //surface->h/4;
+
+float fTaoAnimationFrameOffset=0.0f;
+float fTaoAnimationFrameOffsetYAxis=0.0f;
 
 /*
  glBegin(GL_QUADS);
@@ -1744,19 +1749,30 @@ glEnd();
  glBegin(GL_QUADS);
 	glTexCoord2f(0+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
 //	glVertex3f(x, y, 0);
-	glVertex3f(0, 0, 0);
+//	glVertex3f(0, 0, 0);
+	glVertex3f(myXPosAsPixel, myYPosAsPixel, 0);
 	
-	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	
+//	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, 0+fTaoAnimationFrameOffsetYAxis);
+	glTexCoord2f(1.0f, 0+fTaoAnimationFrameOffsetYAxis);
 //	glVertex3f(x + textw, y, 0);
-	glVertex3f(0 + fTextureWidth, 0, 0);
+//	glVertex3f(0 + fTextureWidth, 0, 0);
+	glVertex3f(myXPosAsPixel + fTextureWidth, myYPosAsPixel, 0);
 	
-	glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	//glTexCoord2f(0.25f+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glTexCoord2f(1.0f, 1.0f);
+
 //	glVertex3f(x + textw, y + texth, 0);
-	glVertex3f(0 + fTextureWidth, 0 + fTextureHeight, 0);
+//	glVertex3f(0 + fTextureWidth, 0 + fTextureHeight, 0);
+	glVertex3f(myXPosAsPixel + fTextureWidth, myYPosAsPixel + fTextureHeight, 0);	
 	
-	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+//	glTexCoord2f(0+fTaoAnimationFrameOffset, fTaoAnimationFrameOffsetYAxis+0.25f);
+	glTexCoord2f(0.0f, 1.0f);
+	
 //	glVertex3f(x, y + texth, 0);
-	glVertex3f(0, 0 + fTextureHeight, 0);	
+//	glVertex3f(0, 0 + fTextureHeight, 0);	
+	glVertex3f(myXPosAsPixel, myYPosAsPixel + fTextureHeight, 0);	
+
 glEnd();
 
    	

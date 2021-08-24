@@ -2085,7 +2085,7 @@ glPushMatrix();
 glLoadIdentity();    
 */
 //--
-    
+  		//TO-DO: -reverify: this  
     	myPilot->draw();
     	
 /*//disable
