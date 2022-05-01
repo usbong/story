@@ -3,8 +3,24 @@
 ## Example Output: Diagonal Movement Right Triangle Tile
 <img src="https://github.com/usbong/story/blob/main/screenshots/diagonalMovementRightTriangleTileWorkV20210807T0907.gif" width="50%">	
 
+## Required Libraries
+
+### 1) Windows Machine
+#### Steps
+1.1) Download <b>glut-3.7.6-bin.zip (117 KB)</b> from https://user.xmission.com/~nate/glut.html;<br/>
+--> last accessed: 20220501; from 20210216<br/>
+<br/>
+1.2) Extract zip file to present directory.<br/>
+<br/>
+1.3) Copy "glut32.dll" from extracted folder.<br/>
+<br/>
+1.4) Paste "glut32.dll" to UsbongStorySystem's output folder.<br/>
+--> Reminder: UsbongStorySystem.exe is also located in the output folder.<br/>
+<br/>
+Done! You can now execute UsbongStorySystem.exe!
+
 ## Open Source Software License
-Copyright 2019~2021 SYSON, MICHAEL B.
+Copyright 2019~2022 SYSON, MICHAEL B.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
