@@ -12,7 +12,11 @@ System type: 32-bit Operating System<br/>
 Operating System (OS): Windows 7 Ultimate Service Pack 1
 
 ## Example Output: Diagonal Movement Right Triangle Tile
+<b>Operating System (OS):</b> Linux Machine ([LUBUNTU 20.04 LTS](https://lubuntu.me/))<br/>
+
 <img src="https://github.com/usbong/story/blob/main/screenshots/diagonalMovementRightTriangleTileWorkV20210807T0907.gif" width="50%">	
+
+
 
 ## Required Libraries
 ### 1) Windows Machine
