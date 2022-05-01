@@ -1,10 +1,20 @@
 # Usbong Story
 
+## Current Output version (Windows Machine)
+https://github.com/usbong/story/tree/main/output
+
+<b>keyphrase:</b> 重力（じゅうりょく; bigat + lakas, weight）；動き（うごき; kilos, movement）
+
+### System Details
+Genuine Intel(R) CPU T2130 @1.86GHz<br/>
+Installed memory (RAM): 3.00GB<br/>
+System type: 32-bit Operating System<br/>
+Operating System (OS): Windows 7 Ultimate Service Pack 1
+
 ## Example Output: Diagonal Movement Right Triangle Tile
 <img src="https://github.com/usbong/story/blob/main/screenshots/diagonalMovementRightTriangleTileWorkV20210807T0907.gif" width="50%">	
 
 ## Required Libraries
-
 ### 1) Windows Machine
 #### Steps
 1.1) Download <b>glut-3.7.6-bin.zip (117 KB)</b> from https://user.xmission.com/~nate/glut.html;<br/>
